@@ -66,7 +66,7 @@ void resorte::activarMovimiento()
 {
     time = new QTimer();
 
-    time->start(100);
+    time->start(10);
 
     connect(time,&QTimer::timeout,this,&resorte::calcularPosicion);
 }

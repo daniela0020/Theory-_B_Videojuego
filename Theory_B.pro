@@ -14,14 +14,16 @@ SOURCES += \
     mainwindow.cpp \
     personaje.cpp \
     piso.cpp \
-    resorte.cpp
+    resorte.cpp \
+    utilidades.cpp
 
 HEADERS += \
     basededatos.h \
     mainwindow.h \
     personaje.h \
     piso.h \
-    resorte.h
+    resorte.h \
+    utilidades.h
 
 FORMS += \
     mainwindow.ui
