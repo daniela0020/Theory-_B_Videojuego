@@ -2,7 +2,10 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-
+#include<QKeyEvent>
+#include<personaje.h>
+#include<resorte.h>
+#include<QTimer>
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -17,6 +20,13 @@ public:
 
 private:
     Ui::MainWindow *ui;
-    bool hola;
+    QGraphicsScene *scene;
+
+    personaje *perso;
+
+    resorte *resort;
+    QTimer *timer;
+    void keyPressEvent(QKeyEvent *evento);
+    bool evaluarFantasmaColisionMuro(resorte *resorte);
 };
 #endif // MAINWINDOW_H
