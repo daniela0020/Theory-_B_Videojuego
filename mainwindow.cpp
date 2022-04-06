@@ -14,6 +14,7 @@ MainWindow::MainWindow(QWidget *parent)
     setWindowTitle("THEORY B");
 
     scene->setSceneRect(0,0,567,224);
+<<<<<<< HEAD
 
     scene->setBackgroundBrush(Qt::green);
 
@@ -21,6 +22,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     scene->addItem(player);
 
+=======
+>>>>>>> cd6d557d414d3dd9bcda905c9d8c3f1293a97014
 }
 
 MainWindow::~MainWindow()
