@@ -3,7 +3,8 @@
 
 #include <QMainWindow>
 #include<QGraphicsScene>
-
+#include"personajeprincipal.h"
+#include <QKeyEvent>
 
 using namespace std;
 QT_BEGIN_NAMESPACE
@@ -21,6 +22,9 @@ public:
 private:
     Ui::MainWindow *ui;
     QGraphicsScene *scene;
+    PersonajePrincipal* player;
+    void keyPressEvent(QKeyEvent *ev);
+
 
 };
 #endif // MAINWINDOW_H
