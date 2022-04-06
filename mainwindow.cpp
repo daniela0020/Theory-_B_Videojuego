@@ -16,56 +16,64 @@ MainWindow::MainWindow(QWidget *parent)
 
        scene->setBackgroundBrush(Qt::black);
 
-       perso=new personaje(300,310);
+       perso=new personaje(300,310,34,34);
 
        scene->addItem(perso);
 
-       resort=new resorte(200,300,50);
+       resort=new resorte(250,550,20,50,50);
 
        scene->addItem(resort);
 
+       floor= new piso(0,-550,300,10);
+
+       scene->addItem(floor);
+
 }
 
-MainWindow::~MainWindow()
-{
-    delete ui;
-}
 
 void MainWindow::keyPressEvent(QKeyEvent *evento)
 {
     if(evento->key()==Qt::Key_W){
-        perso->MoveUp();
-        if(evaluarFantasmaColisionMuro(resort)){
-        perso->MoveDown();
+        perso->MoveUp(4);
+
+        if(colisionConMuro<personaje,resorte>(perso,resort) || colisionConMuro<personaje,piso>(perso,floor)){
+        perso->MoveDown(4);
         }
     }
     else if(evento->key()==Qt::Key_S){
-        perso->MoveDown();
-        if(evaluarFantasmaColisionMuro(resort)){
+        perso->MoveDown(4);
+        if(colisionConMuro<personaje,resorte>(perso,resort)){
         resort->activarMovimiento();
+        colisionResorte();
+        }
+        if( colisionConMuro<personaje,piso>(perso,floor)){
+        perso->MoveUp(4);
         }
     }
 
     else if(evento->key()==Qt::Key_D){
-        perso->MoveRight();
-        if(evaluarFantasmaColisionMuro(resort)){
-        perso->MoveLeft();
+        perso->MoveRight(4);
+        if(colisionConMuro<personaje,resorte>(perso,resort)|| colisionConMuro<personaje,piso>(perso,floor)){
+        perso->MoveLeft(4);
         }
     }
     else if(evento->key()==Qt::Key_A){
-        perso->MoveLeft();
-        if(evaluarFantasmaColisionMuro(resort)){
-        perso->MoveRight();
+        perso->MoveLeft(4);
+        if(colisionConMuro<personaje,resorte>(perso,resort)|| colisionConMuro<personaje,piso>(perso,floor)){
+        perso->MoveRight(4);
         }
     }
 
 }
-bool MainWindow::evaluarFantasmaColisionMuro(resorte *res)
+
+void MainWindow::colisionResorte()
 {
-    bool colision=false;
-    if(perso->collidesWithItem(res)){
-        colision=true;
-    }
-    return colision;
+
+        if(colisionConMuro<resorte,piso>(resort,floor)){
+            resort->MoveUp(4);
+        }
 }
+
+
+
 

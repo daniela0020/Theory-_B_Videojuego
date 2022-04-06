@@ -1,44 +1,27 @@
 #include "personaje.h"
 
-float personaje::getMasa() const
-{
-    return masa;
-}
 
-float personaje::getPosx() const
-{
-    return posx;
-}
 
-void personaje::setPosx(float newPosx)
-{
-    posx = newPosx;
-}
 
-float personaje::getPosy() const
-{
-    return posy;
-}
-
-void personaje::setPosy(float newPosy)
-{
-    posy = newPosy;
-}
 
 personaje::personaje()
 {
 
 }
 
-personaje::personaje(float posx, float posy)
+personaje::personaje(double posx,double posy, double ancho, double alto)
 {
     this->posx=posx;
 
     this->posy=posy;
 
+    this->ancho=ancho;
+
+    this->alto=alto;
+
     setPos(posx,posy);
 
-    ancho=34;alto=34;
+
 
 }
 
@@ -53,27 +36,27 @@ void personaje::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
     painter->drawRect(boundingRect());
 }
 
-void personaje::MoveRight()
+void personaje::MoveRight(double velocidad)
 {
     this->posx+=velocidad;
     setPos(posx,posy);
 }
 
-void personaje::MoveLeft()
+void personaje::MoveLeft(double velocidad)
 {
     this->posx-=velocidad;
 
     setPos(posx,posy);
 }
 
-void personaje::MoveUp()
+void personaje::MoveUp(double velocidad)
 {
     this->posy-=velocidad;
 
     setPos(posx,posy);
 }
 
-void personaje::MoveDown()
+void personaje::MoveDown(double velocidad)
 {
     this->posy+=velocidad;
 

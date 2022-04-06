@@ -5,24 +5,24 @@
 #include<QPainter>
 #include<QObject>
 
+#define Masa 100.0
 
 class personaje:public QGraphicsItem,public QObject
 {
-     float posx,posy,ancho,alto,velocidad=4,masa=100;
+
 public:
+     double posx, posy;
+     double ancho,alto;
      personaje();
-     personaje(float posx,float posy);
+     personaje(double posx,double posy,double ancho,double alto);
      QRectF boundingRect() const;
      void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr);
-     void MoveRight();
-     void MoveLeft();
-     void MoveUp();
-     void MoveDown();
-     float getMasa() const;
-     float getPosx() const;
-     void setPosx(float newPosx);
-     float getPosy() const;
-     void setPosy(float newPosy);
+     void MoveRight(double velocidad);
+     void MoveLeft(double velocidad);
+     void MoveUp(double velocidad);
+     void MoveDown(double velocidad);
+
+
 };
 
 #endif // PERSONAJE_H

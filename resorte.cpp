@@ -1,36 +1,26 @@
 #include "resorte.h"
 
-float resorte::getPosy() const
-{
-    return posy;
-}
 
-void resorte::setMasa(float newMasa)
-{
-    Masa = newMasa;
-}
-
-double resorte::getPosx() const
-{
-    return posx;
-}
 
 resorte::resorte()
 {
 
 }
 
-resorte::resorte(double posx, double posy, double k)
+resorte::resorte(double posx, double posy,double ancho, double alto, double k)
 {
+
     this->posx=posx;
 
     this->posy=posy;
 
+    this->ancho=ancho;
+
+    this->alto=alto;
+
     this->k=k;
 
     setPos(posx,posy);
-
-    ancho=34;alto=34;
 
     alpha=-(B/(2*Masa));
 
@@ -38,7 +28,6 @@ resorte::resorte(double posx, double posy, double k)
 
 
 }
-
 QRectF resorte::boundingRect() const
 {
     return QRectF(-ancho,-alto,ancho,alto);
