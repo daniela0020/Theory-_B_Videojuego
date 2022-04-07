@@ -2,8 +2,8 @@
 
 PersonajePrincipal::PersonajePrincipal(float x, float y)
 {
-    posicionx = x;
-    posiciony = y;
+    posx = x;
+    posy = y;
     velocidadx = 0;
     velocidady = 0;
     velInicialX = 0;
@@ -14,45 +14,10 @@ PersonajePrincipal::PersonajePrincipal(float x, float y)
     alto = 25;
     vidas = 3;
 
-    time = new QTimer(this);
+    timer = new QTimer(this);
     //connect(time,SIGNAL(timeout()), this, SLOT(actualizarSalto()));
-    connect(time,&QTimer::timeout,this,&PersonajePrincipal::actualizarSalto);
-    setPos(posicionx,posiciony);
-}
-
-float PersonajePrincipal::getPosx() const
-{
-    return posicionx;
-}
-/*
-void PersonajePrincipal::setPosx(float newPosx)
-{
-    posicionx = newPosx;
-}
-*/
-float PersonajePrincipal::getPosy() const
-{
-    return posiciony;
-}
-
-void PersonajePrincipal::setPosy(float newPosy)
-{
-    posiciony = newPosy;
-}
-
-
-void PersonajePrincipal::MoveRight()
-{
-    this->posicionx+=velocidadPaso;
-    //filas=0;
-    setPos(posicionx,posiciony);
-}
-
-void PersonajePrincipal::MoveLeft()
-{
-    this->posicionx-=velocidadPaso;
-    //filas=39;
-    setPos(posicionx,posiciony);
+    connect(timer,&QTimer::timeout,this,&PersonajePrincipal::actualizarSalto);
+    setPos(posx,posy);
 }
 
 QRectF PersonajePrincipal::boundingRect() const
@@ -67,36 +32,47 @@ void PersonajePrincipal::paint(QPainter *painter, const QStyleOptionGraphicsItem
     painter->drawRect(boundingRect());
 }
 
-void PersonajePrincipal::VelocidadInicial(int angulo)
+void PersonajePrincipal::setAng(float newAng)
 {
-    velInicialX = velocidadPaso * cos(angulo);
-    velInicialY = velocidadPaso * sin(angulo);
-    velocidady = velInicialY;
+    ang = newAng;
+}
+
+void PersonajePrincipal::VelocidadInicial()
+{
+    //velInicialX = velocidadPaso * cos(angulo);
+    //velInicialY = velocidadPaso * sin(angulo);
+    //velocidady = velInicialY;
+    velocidadx=velocidadPaso*cos(ang);
+    velocidady=velocidadPaso*sin(ang)-GR*dt;
+    velocidadPaso=sqrt((velocidadx*velocidadx)+(velocidady*velocidady));
+    ang=atan2(velocidady,velocidadx);
 }
 
 void PersonajePrincipal::actualizarSalto()
 {
 
-    velocidadx = velInicialX;
-    velocidady = velocidady + (GR*dt);
+    //velocidadx = velInicialX;
+    //velocidady = velocidady + (GR*dt);
 
-    posicionx = posicionx + (velocidadx*dt);
-    posiciony = posiciony + (velocidady*dt) - (0.5*GR*(dt*dt));
+    posx = posx + (velocidadx*dt);
+    posy -= (velocidady*dt) - (0.5*GR*(dt*dt));
 
-    setPos(posicionx,posiciony);
-
-    if(posiciony < 310){
-        time->stop();
-        posiciony = 310;
+    setPos(posx,posy);
+    VelocidadInicial();
+/*
+    if(posy < 310){
+        timer->stop();
+        posy = 310;
     }
-
+*/
 
 }
 
-void PersonajePrincipal::activarMovimiento()
+void PersonajePrincipal::activarSalto(double ang)
 {
-
-    time->start(10);
+    this->ang = ang;
+    VelocidadInicial();
+    timer->start(10);
 
 }
 

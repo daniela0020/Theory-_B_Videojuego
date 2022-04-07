@@ -5,6 +5,7 @@
 #include<QGraphicsScene>
 #include"personajeprincipal.h"
 #include <QKeyEvent>
+#include <QScreen>
 
 using namespace std;
 QT_BEGIN_NAMESPACE

@@ -4,16 +4,14 @@
 #include <QGraphicsItem>
 #include <QTimer>
 #include <math.h>
-#define MASA 70
-#define GR -9.8
+#include <objetodinamico.h>
+#define GR 9.8
 #define dt 0.1
 
-class PersonajePrincipal:public QObject, public QGraphicsItem
+class PersonajePrincipal:public objetoDinamico
 {
 
 private:
-    float posicionx;
-    float posiciony;
     float velocidadx;
     float velocidady;
     float velInicialX;
@@ -22,35 +20,24 @@ private:
     //float aceleraciony;
     float velocidadPaso = 30;
     //float dt;
-    int ancho;
-    int alto;
     int vidas;
-    QTimer *time;
-    int filas=0, columnas=0;
+
 public:
     PersonajePrincipal(float x, float y);
 
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr);
 
-    void MoveRight();
-    void MoveLeft();
 
-    void setPosy(float newPosx);
-
-    void setPosx(float newPosy);
-
-    float getPosx() const;
-
-    float ang = 45;
-
-    float getPosy() const;
+    float ang = 0;
 
     void actualizarImagen();
 
-    void activarMovimiento();
+    void activarSalto(double angulo);
 
-    void VelocidadInicial(int angulo);
+    void VelocidadInicial();
+
+    void setAng(float newAng);
 
 public slots:
 

@@ -11,11 +11,13 @@ CONFIG += c++11
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
+    objetodinamico.cpp \
     personajeprincipal.cpp \
     ventana.cpp
 
 HEADERS += \
     mainwindow.h \
+    objetodinamico.h \
     personajeprincipal.h \
     ventana.h
 
