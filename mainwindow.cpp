@@ -8,21 +8,29 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->setupUi(this);
 
-    this->setFixedSize(this->screen()->availableSize().width(),700);
-
-    ui->graphicsView->setFixedSize(this->screen()->availableSize().width()-70,700);
 
     scene=new QGraphicsScene();
 
-    scene->setSceneRect(0,0,ui->graphicsView->width(),ui->graphicsView->height()-150);
+    this->setFixedSize(this->screen()->availableSize().width(),this->screen()->availableSize().height());
+
+    ui->graphicsView->setFixedSize(this->screen()->availableSize().width(),this->screen()->availableSize().height());
+
+    scene=new QGraphicsScene();
+
+    scene->setSceneRect(0,0,ui->graphicsView->width()-70,ui->graphicsView->height()-150);
 
     ui->graphicsView->setScene(scene);
 
-    scene->setBackgroundBrush(Qt::black);
+    scene->setBackgroundBrush(Qt::green);
 
-    perso=new personaje(300,310,34,34);
+    player = new PersonajePrincipal(300,310);
 
-    scene->addItem(perso);
+    movCircular = new ObjetoMovCircular(400,410);
+
+    scene->addItem(movCircular);
+
+    scene->addItem(player);
+
 
     resort=new resorte(250,550,20,40,50);
 
@@ -32,20 +40,21 @@ MainWindow::MainWindow(QWidget *parent)
 
     scene->addItem(floor);
 
+
 }
 
 
 void MainWindow::keyPressEvent(QKeyEvent *evento)
 {
     if(evento->key()==Qt::Key_W){
-        perso->MoveUp(4);
+        player->MoveUp(30);
 
         if(colisionConMuro<personaje,resorte>(perso,resort) || colisionConMuro<personaje,piso>(perso,floor)){
-        perso->MoveDown(4);
+        player->MoveDown(30);
         }
     }
     else if(evento->key()==Qt::Key_S){
-        perso->MoveDown(4);
+        player->MoveDown(30);
         if(colisionConMuro<personaje,resorte>(perso,resort)){
         resort->activarMovimiento();
         resort->setColision(colisionConMuro<resorte,piso>(resort,floor));
@@ -55,27 +64,22 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
     }
 
     else if(evento->key()==Qt::Key_D){
-        perso->MoveRight(4);
+        player->MoveRight(30);
         if(colisionConMuro<personaje,resorte>(perso,resort)|| colisionConMuro<personaje,piso>(perso,floor)){
-        perso->MoveLeft(4);
+        player->MoveLeft(30);
         }
     }
     else if(evento->key()==Qt::Key_A){
-        perso->MoveLeft(4);
+        player->MoveLeft(30);
         if(colisionConMuro<personaje,resorte>(perso,resort)|| colisionConMuro<personaje,piso>(perso,floor)){
-        perso->MoveRight(4);
+        player->MoveRight(30);
         }
     }
 
 }
 
-void MainWindow::colisionResorte()
-{
 
-        if(colisionConMuro<resorte,piso>(resort,floor)){
-            resort->MoveUp(4);
-        }
-}
+
 
 
 

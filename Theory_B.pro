@@ -10,27 +10,36 @@ CONFIG += c++11
 
 SOURCES += \
     basededatos.cpp \
+    bomba.cpp \
     main.cpp \
     mainwindow.cpp \
     objetodinamico.cpp \
     objetoestatico.cpp \
-    personaje.cpp \
+    objetomovcircular.cpp \
+    personajeprincipal.cpp \
     piso.cpp \
     resorte.cpp \
     utilidades.cpp
+    ventana.cpp
 
 HEADERS += \
-    basededatos.h \
+    bomba.h \
     mainwindow.h \
     objetodinamico.h \
+    objetomovcircular.h \
+    personajeprincipal.h \
+    basededatos.h \
     objetoestatico.h \
-    personaje.h \
     piso.h \
     resorte.h \
     utilidades.h
+    ventana.h
+
+    
 
 FORMS += \
-    mainwindow.ui
+    mainwindow.ui \
+    ventana.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

@@ -2,15 +2,20 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include<QKeyEvent>
-#include<personaje.h>
+#include<QGraphicsScene>
+#include"personajeprincipal.h"
+#include"objetomovcircular.h"
+#include <QKeyEvent>
+#include <QScreen>
+
 #include<resorte.h>
 #include<piso.h>
-#include<QTimer>
+
 #include<QMetaType>
 
 
 
+using namespace std;
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -28,12 +33,14 @@ private:
     Ui::MainWindow *ui;
     QGraphicsScene *scene;
 
-    personaje *perso;
+    PersonajePrincipal* player;
+    ObjetoMovCircular* movCircular;
+    
     piso * floor;
     resorte *resort;
     QTimer *timer;
     void keyPressEvent(QKeyEvent *evento);
-    void colisionResorte();
+   
     template<typename T1,typename T2>
     bool colisionConMuro(T1 *objeto1, T2 *objeto2)
     {
@@ -43,6 +50,7 @@ private:
         }
         return colision;
     }
+
 };
 
 #endif // MAINWINDOW_H

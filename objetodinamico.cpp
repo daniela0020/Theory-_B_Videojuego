@@ -20,32 +20,25 @@ void objetoDinamico::setPosy(double newPosy)
     posy = newPosy;
 }
 
-QRectF objetoDinamico::boundingRect() const
-{
-    return QRectF();
-}
 
-void objetoDinamico::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
-{
 
-}
+
 
 void objetoDinamico::sprint()
 {
 
 }
 
-void objetoDinamico::actualizarPosicion()
-{
 
-}
 
 objetoDinamico::objetoDinamico()
 {
 
 }
 
+
 objetoDinamico::objetoDinamico(double posx,double posy,int ancho,int alto)
+
 {
     this->posx=posx;
 
@@ -84,3 +77,20 @@ void objetoDinamico::MoveDown(double velocidad)
 
     setPos(posx,posy);
 }
+
+QRectF objetoDinamico::boundingRect() const
+{
+      return QRect();
+}
+void objetoDinamico::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+}
+void objetoDinamico::sprint()
+{
+
+}
+void objetoDinamico::actualizarPosicion()
+{
+
+}
+
