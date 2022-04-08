@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include<QGraphicsScene>
 #include"personajeprincipal.h"
+#include"objetomovcircular.h"
 #include <QKeyEvent>
 #include <QScreen>
 
@@ -24,6 +25,7 @@ private:
     Ui::MainWindow *ui;
     QGraphicsScene *scene;
     PersonajePrincipal* player;
+    ObjetoMovCircular* movCircular;
     void keyPressEvent(QKeyEvent *ev);
 
 

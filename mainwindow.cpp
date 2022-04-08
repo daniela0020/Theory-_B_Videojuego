@@ -9,13 +9,21 @@ MainWindow::MainWindow(QWidget *parent)
 
     scene=new QGraphicsScene();
 
-    this->setFixedSize(this->screen()->availableSize().width(),700);
+    //this->setFixedSize(this->screen()->availableSize().width(),700);
 
-    ui->graphicsView->setFixedSize(this->screen()->availableSize().width()-70,700);
+    //ui->graphicsView->setFixedSize(this->screen()->availableGeometry().width(),this->screen()->availableGeometry().height());
+
+    //scene=new QGraphicsScene();
+
+    //scene->setSceneRect(-ui->graphicsView->width()/2,(-ui->graphicsView->height()/2),ui->graphicsView->width(),ui->graphicsView->height());
+
+    this->setFixedSize(this->screen()->availableSize().width(),this->screen()->availableSize().height());
+
+    ui->graphicsView->setFixedSize(this->screen()->availableSize().width(),this->screen()->availableSize().height());
 
     scene=new QGraphicsScene();
 
-    scene->setSceneRect(0,0,ui->graphicsView->width(),ui->graphicsView->height()-150);
+    scene->setSceneRect(0,0,ui->graphicsView->width()-70,ui->graphicsView->height()-150);
 
     ui->graphicsView->setScene(scene);
 
@@ -29,6 +37,10 @@ MainWindow::MainWindow(QWidget *parent)
     // scene->setBackgroundBrush(Qt::green);
 
     player = new PersonajePrincipal(300,310);
+
+    movCircular = new ObjetoMovCircular(400,410);
+
+    scene->addItem(movCircular);
 
     scene->addItem(player);
 

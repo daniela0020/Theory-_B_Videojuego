@@ -66,7 +66,7 @@ void objetoDinamico::MoveDown(double velocidad)
 }
 QRectF objetoDinamico::boundingRect() const
 {
-      return QRect(-ancho, -alto, ancho, alto);//return QRect(-ancho/2, -alto/2, ancho, alto);
+      return QRect();
 }
 void objetoDinamico::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {

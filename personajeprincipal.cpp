@@ -1,6 +1,6 @@
 #include "personajeprincipal.h"
 
-PersonajePrincipal::PersonajePrincipal(float x, float y)
+PersonajePrincipal::PersonajePrincipal(double x, double y)
 {
     posx = x;
     posy = y;

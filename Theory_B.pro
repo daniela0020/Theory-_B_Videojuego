@@ -12,12 +12,14 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     objetodinamico.cpp \
+    objetomovcircular.cpp \
     personajeprincipal.cpp \
     ventana.cpp
 
 HEADERS += \
     mainwindow.h \
     objetodinamico.h \
+    objetomovcircular.h \
     personajeprincipal.h \
     ventana.h
 

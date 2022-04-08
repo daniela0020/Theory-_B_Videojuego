@@ -23,7 +23,7 @@ private:
     int vidas;
 
 public:
-    PersonajePrincipal(float x, float y);
+    PersonajePrincipal(double x, double y);
 
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr);
@@ -38,6 +38,8 @@ public:
     void VelocidadInicial();
 
     void setAng(float newAng);
+
+signals:
 
 public slots:
 
