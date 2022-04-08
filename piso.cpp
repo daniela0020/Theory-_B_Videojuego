@@ -5,7 +5,7 @@ piso::piso()
 
 }
 
-piso::piso(int posx, int posy, int ancho, int alto)
+piso::piso(double posx,double posy, double ancho, double alto)
 {
     this->ancho=ancho;
     this->alto=alto;

@@ -2,21 +2,17 @@
 #define PISO_H
 
 
-#include<QGraphicsItem>
-#include<QPainter>
-#include<QObject>
+#include<personaje.h>
 
-class piso: public QObject, public QGraphicsItem
+class piso:public personaje
 {
-    int posx,posy,ancho,alto;
+
 public:
     piso();
-    piso(int posx,int posy, int ancho, int alto);
+    piso(double posx,double posy, double ancho, double alto);
     QRectF boundingRect() const;
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr);
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
-    int getPosx() ;
-    int getPosy() ;
 };
 
 #endif // PISO_H

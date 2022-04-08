@@ -12,6 +12,8 @@ SOURCES += \
     basededatos.cpp \
     main.cpp \
     mainwindow.cpp \
+    objetodinamico.cpp \
+    objetoestatico.cpp \
     personaje.cpp \
     piso.cpp \
     resorte.cpp \
@@ -20,6 +22,8 @@ SOURCES += \
 HEADERS += \
     basededatos.h \
     mainwindow.h \
+    objetodinamico.h \
+    objetoestatico.h \
     personaje.h \
     piso.h \
     resorte.h \

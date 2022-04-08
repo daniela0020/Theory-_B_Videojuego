@@ -2,6 +2,16 @@
 
 
 
+double resorte::getVelocidad() const
+{
+    return velocidad;
+}
+
+void resorte::setColision(bool newColision)
+{
+    colision = newColision;
+}
+
 resorte::resorte()
 {
 
@@ -39,12 +49,6 @@ void resorte::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
     painter->drawRect(boundingRect());
 }
 
-void resorte::calcularPosicion()
-{
-    posy+=exp(expo)*sin(angu);
-    setPos(posx,posy);
-    this->actualizarValores();
-}
 void resorte::actualizarValores()
 {
     expo+=alpha*dt;
@@ -53,9 +57,32 @@ void resorte::actualizarValores()
 
 void resorte::activarMovimiento()
 {
-    time = new QTimer();
+    timer = new QTimer();
 
-    time->start(10);
+    timer->start(10);
 
-    connect(time,&QTimer::timeout,this,&resorte::calcularPosicion);
+    connect(timer,&QTimer::timeout,this,&resorte::actualizarPosicion);
+
+}
+
+void resorte::actualizarPosicion()
+{
+    posy+=sin(angu);
+    velocidad+=W*cos(angu);
+    if(!colision){
+        setPos(posx,posy);
+    }
+    this->actualizarValores();
+    counterTime++;
+    if(counterTime>1000){
+        timer->deleteLater();
+        counterTime=0;
+    }
+
+
+}
+
+void resorte::sprint()
+{
+
 }

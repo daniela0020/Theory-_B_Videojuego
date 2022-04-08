@@ -5,28 +5,32 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+
     ui->setupUi(this);
+
+    this->setFixedSize(this->screen()->availableSize().width(),700);
+
+    ui->graphicsView->setFixedSize(this->screen()->availableSize().width()-70,700);
+
     scene=new QGraphicsScene();
 
-       ui->graphicsView->setScene(scene);
+    scene->setSceneRect(0,0,ui->graphicsView->width(),ui->graphicsView->height()-150);
 
-       setWindowTitle("prueba resorte");
+    ui->graphicsView->setScene(scene);
 
-       scene->setSceneRect(0,0,600,650);
+    scene->setBackgroundBrush(Qt::black);
 
-       scene->setBackgroundBrush(Qt::black);
+    perso=new personaje(300,310,34,34);
 
-       perso=new personaje(300,310,34,34);
+    scene->addItem(perso);
 
-       scene->addItem(perso);
+    resort=new resorte(250,550,20,40,50);
 
-       resort=new resorte(250,550,20,50,50);
+    scene->addItem(resort);
 
-       scene->addItem(resort);
+    floor= new piso(0,-550,scene->width(),10);
 
-       floor= new piso(0,-550,300,10);
-
-       scene->addItem(floor);
+    scene->addItem(floor);
 
 }
 
@@ -44,11 +48,10 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
         perso->MoveDown(4);
         if(colisionConMuro<personaje,resorte>(perso,resort)){
         resort->activarMovimiento();
-        colisionResorte();
+        resort->setColision(colisionConMuro<resorte,piso>(resort,floor));
+
         }
-        if( colisionConMuro<personaje,piso>(perso,floor)){
-        perso->MoveUp(4);
-        }
+
     }
 
     else if(evento->key()==Qt::Key_D){
