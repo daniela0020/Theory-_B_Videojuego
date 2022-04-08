@@ -9,14 +9,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     scene=new QGraphicsScene();
 
-    //this->setFixedSize(this->screen()->availableSize().width(),700);
-
-    //ui->graphicsView->setFixedSize(this->screen()->availableGeometry().width(),this->screen()->availableGeometry().height());
-
-    //scene=new QGraphicsScene();
-
-    //scene->setSceneRect(-ui->graphicsView->width()/2,(-ui->graphicsView->height()/2),ui->graphicsView->width(),ui->graphicsView->height());
-
     this->setFixedSize(this->screen()->availableSize().width(),this->screen()->availableSize().height());
 
     ui->graphicsView->setFixedSize(this->screen()->availableSize().width(),this->screen()->availableSize().height());
@@ -28,13 +20,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->graphicsView->setScene(scene);
 
     scene->setBackgroundBrush(Qt::green);
-
-
-    //setWindowTitle("THEORY B");
-
-    //scene->setSceneRect(0,-590,600,650);
-
-    // scene->setBackgroundBrush(Qt::green);
 
     player = new PersonajePrincipal(300,310);
 

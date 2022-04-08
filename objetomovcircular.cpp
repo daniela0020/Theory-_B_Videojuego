@@ -6,20 +6,20 @@ ObjetoMovCircular::ObjetoMovCircular(int k,int h)
     radio = 25;
     this->h = h;
     this->k = k;
+    ancho = 10;
+    alto = 10;
     timer = new QTimer(this);
-    //connect(time,SIGNAL(timeout()), this, SLOT(actualizarSalto()));
     connect(timer,&QTimer::timeout,this,&ObjetoMovCircular::actualizarPosicion);
     timer->start(10);
 }
 
 QRectF ObjetoMovCircular::boundingRect() const
 {
-      return QRect(-10, -10, 10, 10);
+      return QRect(-ancho, -alto, ancho, alto);
 }
 
 void ObjetoMovCircular::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    // Hay que cambiar esto cuando tengamos el sprite
     painter->setBrush(Qt::black);
     painter->drawRect(boundingRect());
 }

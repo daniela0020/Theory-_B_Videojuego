@@ -14,12 +14,7 @@ class PersonajePrincipal:public objetoDinamico
 private:
     float velocidadx;
     float velocidady;
-    float velInicialX;
-    float velInicialY;
-    //float aceleracionx;
-    //float aceleraciony;
     float velocidadPaso = 30;
-    //float dt;
     int vidas;
 
 public:
