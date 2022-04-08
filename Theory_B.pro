@@ -9,12 +9,17 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    basededatos.cpp \
     bomba.cpp \
     main.cpp \
     mainwindow.cpp \
     objetodinamico.cpp \
+    objetoestatico.cpp \
     objetomovcircular.cpp \
     personajeprincipal.cpp \
+    piso.cpp \
+    resorte.cpp \
+    utilidades.cpp
     ventana.cpp
 
 HEADERS += \
@@ -23,7 +28,14 @@ HEADERS += \
     objetodinamico.h \
     objetomovcircular.h \
     personajeprincipal.h \
+    basededatos.h \
+    objetoestatico.h \
+    piso.h \
+    resorte.h \
+    utilidades.h
     ventana.h
+
+    
 
 FORMS += \
     mainwindow.ui \

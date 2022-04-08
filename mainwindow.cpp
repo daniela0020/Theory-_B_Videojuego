@@ -5,7 +5,9 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+
     ui->setupUi(this);
+
 
     scene=new QGraphicsScene();
 
@@ -29,34 +31,56 @@ MainWindow::MainWindow(QWidget *parent)
 
     scene->addItem(player);
 
+
+    resort=new resorte(250,550,20,40,50);
+
+    scene->addItem(resort);
+
+    floor= new piso(0,-550,scene->width(),10);
+
+    scene->addItem(floor);
+
+
 }
 
-MainWindow::~MainWindow()
+
+void MainWindow::keyPressEvent(QKeyEvent *evento)
 {
-    delete ui;
-}
+    if(evento->key()==Qt::Key_W){
+        player->MoveUp(30);
 
-void MainWindow::keyPressEvent(QKeyEvent *ev)
-{
+        if(colisionConMuro<personaje,resorte>(perso,resort) || colisionConMuro<personaje,piso>(perso,floor)){
+        player->MoveDown(30);
+        }
+    }
+    else if(evento->key()==Qt::Key_S){
+        player->MoveDown(30);
+        if(colisionConMuro<personaje,resorte>(perso,resort)){
+        resort->activarMovimiento();
+        resort->setColision(colisionConMuro<resorte,piso>(resort,floor));
 
-    if(ev->key()==Qt::Key_A)
-
-    {
-        player->MoveLeft(30);
+        }
 
     }
-    else if(ev->key()==Qt::Key_D)
-    {
+
+    else if(evento->key()==Qt::Key_D){
         player->MoveRight(30);
+        if(colisionConMuro<personaje,resorte>(perso,resort)|| colisionConMuro<personaje,piso>(perso,floor)){
+        player->MoveLeft(30);
+        }
+    }
+    else if(evento->key()==Qt::Key_A){
+        player->MoveLeft(30);
+        if(colisionConMuro<personaje,resorte>(perso,resort)|| colisionConMuro<personaje,piso>(perso,floor)){
+        player->MoveRight(30);
+        }
+    }
 
-    }
-    else if(ev->key()==Qt::Key_Space)
-    {
-        player->activarSalto(45);
-    }
-    else if(ev->key()==Qt::Key_Z)
-    {
-
-    }
 }
+
+
+
+
+
+
 

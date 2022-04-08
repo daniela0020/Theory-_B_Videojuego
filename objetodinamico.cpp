@@ -20,12 +20,25 @@ void objetoDinamico::setPosy(double newPosy)
     posy = newPosy;
 }
 
+
+
+
+
+void objetoDinamico::sprint()
+{
+
+}
+
+
+
 objetoDinamico::objetoDinamico()
 {
 
 }
 
-objetoDinamico::objetoDinamico(double posx, double posy, int ancho, int alto)
+
+objetoDinamico::objetoDinamico(double posx,double posy,int ancho,int alto)
+
 {
     this->posx=posx;
 
@@ -64,6 +77,7 @@ void objetoDinamico::MoveDown(double velocidad)
 
     setPos(posx,posy);
 }
+
 QRectF objetoDinamico::boundingRect() const
 {
       return QRect();
@@ -79,3 +93,4 @@ void objetoDinamico::actualizarPosicion()
 {
 
 }
+

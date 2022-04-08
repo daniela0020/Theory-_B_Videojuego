@@ -1,5 +1,6 @@
 #ifndef OBJETODINAMICO_H
 #define OBJETODINAMICO_H
+
 #include<QTimer>
 #include<QObject>
 #include<QGraphicsItem>
@@ -11,7 +12,9 @@ class objetoDinamico:public QObject,public QGraphicsItem
 public:
     //atributos publicos para su facil empleo en la herencia
     double posx=0,posy=0;
+
     int ancho=0,alto=0,filas=0, columnas=0;
+
 
     QTimer *timer;
     //constructuroes
@@ -29,15 +32,20 @@ public:
     void setPosy(double newPosy);
 
     //Metodos abstractos
+
     virtual QRectF boundingRect() const;
+
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr);
 
 signals:
 public slots:
+
     //slot abstracto
+
     virtual void sprint();
     virtual void actualizarPosicion();
 
 
 };
+
 #endif // OBJETODINAMICO_H
