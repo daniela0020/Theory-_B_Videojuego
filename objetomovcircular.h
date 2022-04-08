@@ -3,7 +3,7 @@
 #include <objetodinamico.h>
 #include <math.h>
 #define dt 0.1
-#define W 40
+#define Wa 40
 
 class ObjetoMovCircular:public objetoDinamico
 {

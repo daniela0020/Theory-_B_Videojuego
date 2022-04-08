@@ -26,7 +26,7 @@ void ObjetoMovCircular::paint(QPainter *painter, const QStyleOptionGraphicsItem 
 
 void ObjetoMovCircular::actualizarPosicion()
 {
-    angulo = angulo + (W*dt);
+    angulo = angulo + (Wa*dt);
     if (angulo>360){
         angulo = 0;
     }

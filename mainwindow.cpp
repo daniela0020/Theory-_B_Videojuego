@@ -49,30 +49,38 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
     if(evento->key()==Qt::Key_W){
         player->MoveUp(30);
 
-        if(colisionConMuro<personaje,resorte>(perso,resort) || colisionConMuro<personaje,piso>(perso,floor)){
+        if(colisionConMuro<PersonajePrincipal,resorte>(player,resort) || colisionConMuro<PersonajePrincipal,piso>(player,floor)){
         player->MoveDown(30);
         }
     }
     else if(evento->key()==Qt::Key_S){
         player->MoveDown(30);
-        if(colisionConMuro<personaje,resorte>(perso,resort)){
+        if(colisionConMuro<PersonajePrincipal,resorte>(player,resort)){
         resort->activarMovimiento();
         resort->setColision(colisionConMuro<resorte,piso>(resort,floor));
 
         }
-
+        if(colisionConMuro<PersonajePrincipal,resorte>(player,resort) || colisionConMuro<PersonajePrincipal,piso>(player,floor)){
+        player->MoveUp(30);
+        }
     }
 
     else if(evento->key()==Qt::Key_D){
         player->MoveRight(30);
-        if(colisionConMuro<personaje,resorte>(perso,resort)|| colisionConMuro<personaje,piso>(perso,floor)){
+        if(colisionConMuro<PersonajePrincipal,resorte>(player,resort) || colisionConMuro<PersonajePrincipal,piso>(player,floor)){
         player->MoveLeft(30);
         }
     }
     else if(evento->key()==Qt::Key_A){
         player->MoveLeft(30);
-        if(colisionConMuro<personaje,resorte>(perso,resort)|| colisionConMuro<personaje,piso>(perso,floor)){
+        if(colisionConMuro<PersonajePrincipal,resorte>(player,resort) || colisionConMuro<PersonajePrincipal,piso>(player,floor)){
         player->MoveRight(30);
+        }
+    }
+    else if(evento->key()==Qt::Key_Space){
+        player->activarSalto(45);
+        if(colisionConMuro<PersonajePrincipal,piso>(player,floor)){
+
         }
     }
 

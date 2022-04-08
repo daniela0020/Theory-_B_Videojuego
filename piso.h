@@ -4,7 +4,7 @@
 
 #include<personaje.h>
 
-class piso:public personaje
+class piso:public objetoDinamico
 {
 
 public:
