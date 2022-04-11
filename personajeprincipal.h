@@ -16,6 +16,7 @@ private:
     float velocidady;
     float velocidadPaso = 30;
     int vidas;
+    bool derecha=true;
 
 public:
     PersonajePrincipal(double x, double y);
@@ -33,6 +34,8 @@ public:
     void VelocidadInicial();
 
     void setAng(float newAng);
+
+    void setDerecha(bool newDerecha);
 
 signals:
 

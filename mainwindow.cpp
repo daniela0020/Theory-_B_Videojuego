@@ -98,7 +98,8 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
            }
            else if ( pressedKeys.contains(Qt::Key_A) && pressedKeys.contains(Qt::Key_Space) )
            {
-               player->activarSalto(195);
+               player->setDerecha(false);
+               player->activarSalto(45);
                pressedKeys.clear();
            }
     }

@@ -1,5 +1,10 @@
 #include "personajeprincipal.h"
 
+void PersonajePrincipal::setDerecha(bool newDerecha)
+{
+    derecha = newDerecha;
+}
+
 PersonajePrincipal::PersonajePrincipal(double x, double y)
 {
     posx = x;
@@ -41,8 +46,14 @@ void PersonajePrincipal::VelocidadInicial()
 
 void PersonajePrincipal::actualizarSalto()
 {
-    posx = posx + (velocidadx*Dt);
-    posy -= (velocidady*Dt) - (0.5*GR*Dt*Dt);
+    if(derecha){
+        posx = posx + (velocidadx*Dt);
+        posy -= (velocidady*Dt) - (0.5*GR*Dt*Dt);
+
+    }else{
+        posx -= (velocidadx*Dt);
+        posy -= (velocidady*Dt) - (0.5*GR*Dt*Dt);
+    }
 
     setPos(posx,posy);
     VelocidadInicial();
