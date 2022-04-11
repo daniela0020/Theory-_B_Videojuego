@@ -31,18 +31,13 @@ MainWindow::MainWindow(QWidget *parent)
 
     scene->addItem(player);
 
-
-    resort=new resorte(250,550,20,40,50);
+    resort=new resorte(250,550,50);
 
     scene->addItem(resort);
 
-    floor= new piso(0,-550,scene->width(),10);
+    enemigovolador=new enemigoVolador(500,300);
 
-    scene->addItem(floor);
-
-    if(player->timer->isActive() && colisionConMuro<PersonajePrincipal,piso>(player,floor)){
-        player->timer->deleteLater();
-    }
+    scene->addItem(enemigovolador);
 
 
 }
@@ -53,7 +48,7 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
     if(evento->key()==Qt::Key_W){
         player->MoveUp(30);
 
-        if(colisionConMuro<PersonajePrincipal,resorte>(player,resort) || colisionConMuro<PersonajePrincipal,piso>(player,floor)){
+        if(colisionConMuro<PersonajePrincipal,resorte>(player,resort) ){
         player->MoveDown(30);
 
         }
@@ -66,14 +61,14 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
 
 
         }
-        if(colisionConMuro<PersonajePrincipal,resorte>(player,resort) || colisionConMuro<PersonajePrincipal,piso>(player,floor)){
+        if(colisionConMuro<PersonajePrincipal,resorte>(player,resort) ){
         player->MoveUp(30);
       }
     }
 
     else if(evento->key()==Qt::Key_D){
         player->MoveRight(30);
-        if(colisionConMuro<PersonajePrincipal,resorte>(player,resort) || colisionConMuro<PersonajePrincipal,piso>(player,floor)){
+        if(colisionConMuro<PersonajePrincipal,resorte>(player,resort) ){
         player->MoveLeft(30);
 
         }
@@ -81,7 +76,7 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
     }
     else if(evento->key()==Qt::Key_A){
         player->MoveLeft(30);
-        if(colisionConMuro<PersonajePrincipal,resorte>(player,resort) || colisionConMuro<PersonajePrincipal,piso>(player,floor)){
+        if(colisionConMuro<PersonajePrincipal,resorte>(player,resort) ){
         player->MoveRight(30);
 
         }

@@ -7,9 +7,9 @@
 #include"objetomovcircular.h"
 #include <QKeyEvent>
 #include <QScreen>
-
+#include<enemigovolador.h>
 #include<resorte.h>
-#include<piso.h>
+
 
 #include<QMetaType>
 
@@ -36,7 +36,8 @@ private:
     PersonajePrincipal* player;
     ObjetoMovCircular* movCircular;
     QSet<int> pressedKeys;
-    piso * floor;
+    enemigoVolador *enemigovolador;
+
     resorte *resort;
     QTimer *timer;
     void keyPressEvent(QKeyEvent *evento);

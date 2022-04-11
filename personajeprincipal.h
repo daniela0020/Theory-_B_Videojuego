@@ -2,8 +2,7 @@
 #define PERSONAJEPRINCIPAL_H
 #include <QPainter>
 #include <QGraphicsItem>
-#include <QTimer>
-#include <math.h>
+
 #include <objetodinamico.h>
 #define GR 9.8
 #define Dt 0.1
@@ -21,9 +20,8 @@ private:
 public:
     PersonajePrincipal(double x, double y);
 
-    QRectF boundingRect() const;
+    QRectF boundingRect() const ;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr);
-
 
     float ang = 0;
 

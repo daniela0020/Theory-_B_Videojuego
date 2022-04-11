@@ -13,30 +13,29 @@ resorte::resorte()
 
 }
 
-resorte::resorte(float posx, float posy,float ancho, float alto, float k)
+resorte::resorte(float posx, float posy, float k)
 {
 
     this->posx=posx;
 
     this->posy=posy;
 
-    this->ancho=ancho;
+    ancho=20;
 
-    this->alto=alto;
+    alto=50;
 
     this->k=k;
 
     setPos(posx,posy);
 
-    alpha=-(B/(2*Masa));
-
-    W=sqrt(((k/Masa)-pow(alpha,2)));
+    W=(k/Masa);
 
 
 }
+
 QRectF resorte::boundingRect() const
 {
-    return QRectF(-ancho,-alto,ancho,alto);
+    return QRectF(-ancho,-alto,ancho,alto) ;
 }
 
 void resorte::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -47,8 +46,7 @@ void resorte::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
 
 void resorte::actualizarValores()
 {
-    expo+=alpha*dt;
-    angu+=W*dt;
+     angu+=W*dT;
 }
 
 void resorte::activarMovimiento()
@@ -61,20 +59,26 @@ void resorte::activarMovimiento()
 
 }
 
+void resorte::cambiarForma()
+{
+     float oldPosy=posy;
+     alto+=(oldPosy-posy);
+}
+
 void resorte::actualizarPosicion()
 {
-    float oldPosy=posy;
+
     posy+=sin(angu);
     velocidad+=W*cos(angu);
-    alto+=(oldPosy-posy);
+    cambiarForma();
     setPos(posx,posy);
     actualizarValores();
-
 
     counterTime++;
     if(counterTime>1000){
         timer->deleteLater();
         counterTime=0;
+
     }
 }
 

@@ -6,6 +6,7 @@
 #include<QGraphicsItem>
 #include<QPainter>
 #include<QMetaType>
+#include<math.h>
 #define Masa 100.0
 class objetoDinamico:public QObject,public QGraphicsItem
 {
@@ -33,9 +34,7 @@ public:
 
     //Metodos abstractos
 
-    virtual QRectF boundingRect() const;
 
-    virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr);
 
 signals:
 public slots:

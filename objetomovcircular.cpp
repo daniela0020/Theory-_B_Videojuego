@@ -16,7 +16,7 @@ ObjetoMovCircular::ObjetoMovCircular(int k,int h)
 
 QRectF ObjetoMovCircular::boundingRect() const
 {
-      return QRect(-radio/2, -radio/2, radio*2, radio*2);
+    return QRectF(-radio/2, -radio/2, radio*2, radio*2) ;
 }
 
 void ObjetoMovCircular::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)

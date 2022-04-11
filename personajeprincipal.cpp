@@ -18,12 +18,14 @@ PersonajePrincipal::PersonajePrincipal(double x, double y)
     timer = new QTimer(this);
     connect(timer,&QTimer::timeout,this,&PersonajePrincipal::actualizarSalto);
     setPos(posx,posy);
+
 }
 
 QRectF PersonajePrincipal::boundingRect() const
 {
-      return QRect(-ancho, -alto, ancho, alto);
+    return QRectF(-ancho,-alto,ancho,alto) ;
 }
+
 
 void PersonajePrincipal::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
@@ -57,9 +59,7 @@ void PersonajePrincipal::actualizarSalto()
 
     setPos(posx,posy);
     VelocidadInicial();
-    if(colisionConMuro<>()){
 
-    }
 
 
 }
