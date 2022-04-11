@@ -10,6 +10,11 @@ void PersonajePrincipal::setVelocidadPaso(float newVelocidadPaso)
     velocidadPaso += newVelocidadPaso;
 }
 
+float PersonajePrincipal::getVelocidadPaso() const
+{
+    return velocidadPaso;
+}
+
 PersonajePrincipal::PersonajePrincipal(double x, double y)
 {
     posx = x;
@@ -19,10 +24,9 @@ PersonajePrincipal::PersonajePrincipal(double x, double y)
     ancho = 25;
     alto = 25;
     vidas = 3;
-
+    setPos(posx,posy);
     timer = new QTimer(this);
     connect(timer,&QTimer::timeout,this,&PersonajePrincipal::actualizarPosicion);
-    setPos(posx,posy);
 
 }
 
@@ -71,7 +75,7 @@ void PersonajePrincipal::actualizarPosicion()
 
 void PersonajePrincipal::activarSalto(double ang)
 {
-    this->ang = ang;
+    this->ang = ang*(PI/180);
     VelocidadInicial();
     timer->start(10);
 

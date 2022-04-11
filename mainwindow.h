@@ -3,9 +3,11 @@
 
 #include <QMainWindow>
 #include<QGraphicsScene>
+#include<QScreen>
 #include"personajeprincipal.h"
 #include"objetomovcircular.h"
 #include <QKeyEvent>
+#include <bomba.h>
 
 #include<enemigovolador.h>
 
