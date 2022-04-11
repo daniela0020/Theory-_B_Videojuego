@@ -7,6 +7,7 @@
 #include"objetomovcircular.h"
 #include <QKeyEvent>
 #include <QScreen>
+#include <bomba.h>
 
 #include<resorte.h>
 #include<piso.h>
@@ -38,6 +39,7 @@ private:
     
     piso * floor;
     resorte *resort;
+    Bomba *bomba;
     QTimer *timer;
     void keyPressEvent(QKeyEvent *evento);
    

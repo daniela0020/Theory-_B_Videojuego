@@ -85,10 +85,7 @@ QRectF objetoDinamico::boundingRect() const
 void objetoDinamico::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
 }
-void objetoDinamico::sprint()
-{
 
-}
 void objetoDinamico::actualizarPosicion()
 {
 

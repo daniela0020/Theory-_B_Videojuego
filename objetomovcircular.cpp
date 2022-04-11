@@ -10,7 +10,7 @@ ObjetoMovCircular::ObjetoMovCircular(int k,int h)
     alto = 10;
     timer = new QTimer(this);
     connect(timer,&QTimer::timeout,this,&ObjetoMovCircular::actualizarPosicion);
-    timer->start(10);
+    timer->start(1000);
 }
 
 QRectF ObjetoMovCircular::boundingRect() const
@@ -21,12 +21,12 @@ QRectF ObjetoMovCircular::boundingRect() const
 void ObjetoMovCircular::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     painter->setBrush(Qt::black);
-    painter->drawRect(boundingRect());
+    painter->drawEllipse(boundingRect());
 }
 
 void ObjetoMovCircular::actualizarPosicion()
 {
-    angulo = angulo + (W*dt);
+    angulo = angulo + (Wa*dt);
     if (angulo>360){
         angulo = 0;
     }

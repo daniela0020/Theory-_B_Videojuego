@@ -1,8 +1,5 @@
 #ifndef PERSONAJEPRINCIPAL_H
 #define PERSONAJEPRINCIPAL_H
-#include <QPainter>
-#include <QGraphicsItem>
-#include <QTimer>
 #include <math.h>
 #include <objetodinamico.h>
 #define GR 9.8
