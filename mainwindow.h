@@ -6,8 +6,10 @@
 #include"personajeprincipal.h"
 #include"objetomovcircular.h"
 #include <QKeyEvent>
-#include <QScreen>
+
 #include<enemigovolador.h>
+
+
 #include<resorte.h>
 
 
@@ -39,7 +41,12 @@ private:
     enemigoVolador *enemigovolador;
 
     resorte *resort;
+
     QList<QTimer *> timers;
+
+    Bomba *bomba;
+ 
+
     void keyPressEvent(QKeyEvent *evento);
     void inicializacionTimers();
    

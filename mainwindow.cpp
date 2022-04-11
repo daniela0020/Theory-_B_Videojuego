@@ -15,8 +15,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->graphicsView->setFixedSize(this->screen()->availableSize().width(),this->screen()->availableSize().height());
 
-    scene=new QGraphicsScene();
-
     scene->setSceneRect(0,0,ui->graphicsView->width()-70,ui->graphicsView->height()-150);
 
     ui->graphicsView->setScene(scene);
@@ -27,9 +25,12 @@ MainWindow::MainWindow(QWidget *parent)
 
     movCircular = new ObjetoMovCircular(400,410);
 
+    bomba = new Bomba(500,510);
+
     scene->addItem(movCircular);
 
     scene->addItem(player);
+
 
     resort=new resorte(250,550,50);
 
@@ -47,24 +48,15 @@ MainWindow::MainWindow(QWidget *parent)
 
 void MainWindow::keyPressEvent(QKeyEvent *evento)
 {
-     /*if(evento->key()==Qt::Key_S){
-        player->MoveDown(30);
-        if(resort->getCounterColision()==1){
-
-                player->setVelocidadPaso(resort->getVelocidad());
-                player->setDerecha(true);
-                player->activarSalto(45);
-       }
-        if(colisionConMuro<PersonajePrincipal,resorte>(player,resort)){
-        resort->activarMovimiento();
-        resort->setCounterColision(1);
-        }
-
-    }*/
 
     if(evento->key()==Qt::Key_D){
         player->MoveRight(30);
+
         if(colisionConMuro<PersonajePrincipal,resorte>(player,resort) ){
+
+        scene->setSceneRect(player->getPosx(),50,ui->graphicsView->width()-70,ui->graphicsView->height()-150);
+        if(colisionConMuro<PersonajePrincipal,resorte>(player,resort)){
+
         player->MoveLeft(30);
 
         }
@@ -72,7 +64,10 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
     }
     else if(evento->key()==Qt::Key_A){
         player->MoveLeft(30);
-        if(colisionConMuro<PersonajePrincipal,resorte>(player,resort) ){
+
+
+       if(colisionConMuro<PersonajePrincipal,resorte>(player,resort) ){
+
         player->MoveRight(30);
 
         }
@@ -107,6 +102,22 @@ void MainWindow::inicializacionTimers()
     for(int i=0;i<timers.size();i++){
         timers.at(i)->start(10);
     }
+    else if(evento->key()==Qt::Key_Space){
+        player->activarSalto(45);
+
+       if( colisionConMuro<PersonajePrincipal,piso>(player,floor)){
+           player->timer->stop();
+           player->setPosy(-540);
+       }
+    }
+    else if(evento->key()==Qt::Key_M){
+        bomba->setPosx(player->getPosx()+10);
+        bomba->setPosy(player->getPosy()+10);
+        scene->addItem(bomba);
+        bomba->activarMovimiento(45);
+
+
+    }
 
     connect(timers.at(0),&QTimer::timeout,this,&MainWindow::verificarPosicionPersonaje);
 
@@ -117,7 +128,7 @@ void MainWindow::verificarPosicionPersonaje()
     if(player->getPosy()>551){
         player->setPosy(550);
         player->timer->stop();
-                //disconnect(player->timer,&QTimer::timeout,this,&PersonajePrincipal::actualizarSalto);
+             
     }
 
 }

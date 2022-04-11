@@ -11,7 +11,9 @@ ObjetoMovCircular::ObjetoMovCircular(int k,int h)
     alto = 10;
     timer = new QTimer(this);
     connect(timer,&QTimer::timeout,this,&ObjetoMovCircular::actualizarPosicion);
+
     timer->start(100);
+
 }
 
 QRectF ObjetoMovCircular::boundingRect() const
@@ -26,6 +28,7 @@ void ObjetoMovCircular::paint(QPainter *painter, const QStyleOptionGraphicsItem 
 }
 
 void ObjetoMovCircular::actualizarPosicion()
+
 { 
     posx = (distancia*cos(angulo)) + h;
     posy = (distancia*sin(angulo)) + k;
