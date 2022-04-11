@@ -39,6 +39,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     scene->addItem(enemigovolador);
 
+    inicializacionTimers();
+
 
 }
 
@@ -55,15 +57,17 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
     }
     else if(evento->key()==Qt::Key_S){
         player->MoveDown(30);
+        if(resort->getCounterColision()==1){
 
+                player->setVelocidadPaso(resort->getVelocidad());
+                player->setDerecha(true);
+                player->activarSalto(45);
+       }
         if(colisionConMuro<PersonajePrincipal,resorte>(player,resort)){
         resort->activarMovimiento();
-
-
+        resort->setCounterColision(1);
         }
-        if(colisionConMuro<PersonajePrincipal,resorte>(player,resort) ){
-        player->MoveUp(30);
-      }
+
     }
 
     else if(evento->key()==Qt::Key_D){
@@ -99,6 +103,34 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
            }
     }
 
+
+}
+
+void MainWindow::inicializacionTimers()
+{
+    timers.append(new QTimer());
+    timers.append(new QTimer());
+
+    for(int i=0;i<timers.size();i++){
+        timers.at(i)->start(10);
+    }
+
+    connect(timers.at(0),&QTimer::timeout,this,&MainWindow::verificarPosicionPersonaje);
+
+}
+
+void MainWindow::verificarPosicionPersonaje()
+{
+    if(player->getPosy()>551){
+        player->setPosy(550);
+        player->timer->stop();
+                //disconnect(player->timer,&QTimer::timeout,this,&PersonajePrincipal::actualizarSalto);
+    }
+
+}
+
+void MainWindow::colisionResorte()
+{
 
 }
 

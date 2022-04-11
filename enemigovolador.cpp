@@ -40,7 +40,7 @@ void enemigoVolador::paint(QPainter *painter, const QStyleOptionGraphicsItem *op
 
 void enemigoVolador::actualizarPosicion()
 {
-    posx+=10*sin(angu);
+    posx+=5*sin(angu);
     setPos(posx,posy);
     angu+=W*dT;
 }

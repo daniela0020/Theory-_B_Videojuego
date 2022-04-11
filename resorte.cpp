@@ -8,6 +8,16 @@ double resorte::getVelocidad() const
 }
 
 
+int resorte::getCounterColision() const
+{
+    return counterColision;
+}
+
+void resorte::setCounterColision(int newCounterColision)
+{
+    counterColision = newCounterColision;
+}
+
 resorte::resorte()
 {
 
@@ -61,16 +71,16 @@ void resorte::activarMovimiento()
 
 void resorte::cambiarForma()
 {
-     float oldPosy=posy;
-     alto+=(oldPosy-posy);
+
 }
 
 void resorte::actualizarPosicion()
 {
-
+    float oldPosy=posy;
     posy+=sin(angu);
-    velocidad+=W*cos(angu);
-    cambiarForma();
+    velocidad=10*abs(W*cos(angu));
+
+    alto+=(oldPosy-posy);
     setPos(posx,posy);
     actualizarValores();
 

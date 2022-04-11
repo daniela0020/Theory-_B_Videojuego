@@ -39,10 +39,15 @@ private:
     enemigoVolador *enemigovolador;
 
     resorte *resort;
-    QTimer *timer;
+    QList<QTimer *> timers;
     void keyPressEvent(QKeyEvent *evento);
+    void inicializacionTimers();
    
+signals:
+public slots:
 
+    void verificarPosicionPersonaje();
+    void colisionResorte();
 
 
 };

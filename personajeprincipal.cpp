@@ -5,6 +5,11 @@ void PersonajePrincipal::setDerecha(bool newDerecha)
     derecha = newDerecha;
 }
 
+void PersonajePrincipal::setVelocidadPaso(float newVelocidadPaso)
+{
+    velocidadPaso += newVelocidadPaso;
+}
+
 PersonajePrincipal::PersonajePrincipal(double x, double y)
 {
     posx = x;
@@ -16,7 +21,7 @@ PersonajePrincipal::PersonajePrincipal(double x, double y)
     vidas = 3;
 
     timer = new QTimer(this);
-    connect(timer,&QTimer::timeout,this,&PersonajePrincipal::actualizarSalto);
+    connect(timer,&QTimer::timeout,this,&PersonajePrincipal::actualizarPosicion);
     setPos(posx,posy);
 
 }
@@ -46,7 +51,7 @@ void PersonajePrincipal::VelocidadInicial()
     ang=atan2(velocidady,velocidadx);
 }
 
-void PersonajePrincipal::actualizarSalto()
+void PersonajePrincipal::actualizarPosicion()
 {
     if(derecha){
         posx = posx + (velocidadx*Dt);

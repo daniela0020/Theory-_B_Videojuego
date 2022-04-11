@@ -37,11 +37,13 @@ public:
 
 
 
+    void setVelocidadPaso(float newVelocidadPaso);
+
 signals:
 
 public slots:
 
-    void actualizarSalto();
+    void actualizarPosicion();
 
 
 };
