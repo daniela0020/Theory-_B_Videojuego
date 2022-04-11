@@ -62,7 +62,7 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
 
     }*/
 
-    else if(evento->key()==Qt::Key_D){
+    if(evento->key()==Qt::Key_D){
         player->MoveRight(30);
         if(colisionConMuro<PersonajePrincipal,resorte>(player,resort) ){
         player->MoveLeft(30);
