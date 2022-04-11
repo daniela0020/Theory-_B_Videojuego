@@ -47,15 +47,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 void MainWindow::keyPressEvent(QKeyEvent *evento)
 {
-    if(evento->key()==Qt::Key_W){
-        player->MoveUp(30);
-
-        if(colisionConMuro<PersonajePrincipal,resorte>(player,resort) ){
-        player->MoveDown(30);
-
-        }
-    }
-    else if(evento->key()==Qt::Key_S){
+     /*if(evento->key()==Qt::Key_S){
         player->MoveDown(30);
         if(resort->getCounterColision()==1){
 
@@ -68,7 +60,7 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
         resort->setCounterColision(1);
         }
 
-    }
+    }*/
 
     else if(evento->key()==Qt::Key_D){
         player->MoveRight(30);
@@ -92,6 +84,7 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
 
            if ( pressedKeys.contains(Qt::Key_D) && pressedKeys.contains(Qt::Key_Space) )
            {
+               player->setDerecha(true);
                player->activarSalto(45);
                pressedKeys.clear();
            }
