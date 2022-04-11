@@ -37,6 +37,8 @@ public:
 
     void setDerecha(bool newDerecha);
 
+
+
 signals:
 
 public slots:
@@ -45,5 +47,7 @@ public slots:
 
 
 };
+
+
 
 #endif // PERSONAJEPRINCIPAL_H

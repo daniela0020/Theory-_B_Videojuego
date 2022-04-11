@@ -5,7 +5,7 @@
 #include<QObject>
 #include<QGraphicsItem>
 #include<QPainter>
-
+#include<QMetaType>
 #define Masa 100.0
 class objetoDinamico:public QObject,public QGraphicsItem
 {

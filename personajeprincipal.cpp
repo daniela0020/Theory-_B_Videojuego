@@ -57,12 +57,10 @@ void PersonajePrincipal::actualizarSalto()
 
     setPos(posx,posy);
     VelocidadInicial();
-/*
-    if(posy < 310){
-        timer->stop();
-        posy = 310;
+    if(colisionConMuro<>()){
+
     }
-*/
+
 
 }
 
