@@ -5,6 +5,8 @@
 #define dt 0.001
 #define Wa 90
 
+
+
 class ObjetoMovCircular:public objetoDinamico
 {
     int h,k;

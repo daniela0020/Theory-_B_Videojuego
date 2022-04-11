@@ -76,6 +76,15 @@ void objetoDinamico::MoveDown(float velocidad)
 }
 
 
+QRectF objetoDinamico::boundingRect() const
+{
+      return QRect();
+}
+void objetoDinamico::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+}
+
+
 void objetoDinamico::actualizarPosicion()
 {
 
