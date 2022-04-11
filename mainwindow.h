@@ -61,7 +61,7 @@ public slots:
 
 };
 template<typename T1,typename T2>
-bool colisionConMuro(T1 *objeto1, T2 *objeto2)
+bool colision(T1 *objeto1, T2 *objeto2)
 {
     bool colision=false;
     if(objeto1->collidesWithItem(objeto2)){

@@ -5,14 +5,17 @@ void PersonajePrincipal::setDerecha(bool newDerecha)
     derecha = newDerecha;
 }
 
-void PersonajePrincipal::setVelocidadPaso(float newVelocidadPaso)
+
+
+
+void PersonajePrincipal::setVelocidadInicial(float newVelocidadInicial)
 {
-    velocidadPaso += newVelocidadPaso;
+    velocidadInicial = newVelocidadInicial;
 }
 
-float PersonajePrincipal::getVelocidadPaso() const
+float PersonajePrincipal::getVelocidadInicial()
 {
-    return velocidadPaso;
+    return velocidadInicial;
 }
 
 PersonajePrincipal::PersonajePrincipal(double x, double y)
@@ -49,9 +52,9 @@ void PersonajePrincipal::setAng(float newAng)
 
 void PersonajePrincipal::VelocidadInicial()
 {
-    velocidadx=velocidadPaso*cos(ang);
-    velocidady=velocidadPaso*sin(ang)-GR*Dt;
-    velocidadPaso=sqrt((velocidadx*velocidadx)+(velocidady*velocidady));
+    velocidadx=velocidadInicial*cos(ang);
+    velocidady=velocidadInicial*sin(ang)-GR*Dt;
+    velocidadInicial=sqrt((velocidadx*velocidadx)+(velocidady*velocidady));
     ang=atan2(velocidady,velocidadx);
 }
 

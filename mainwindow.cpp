@@ -48,24 +48,24 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
 {
 
     if(evento->key()==Qt::Key_D){
-        player->MoveRight(30);
+        player->MoveRight();
 
         //scene->setSceneRect(player->getVelocidadPaso()+ ui->graphicsView->width()-70,0,ui->graphicsView->width()-70,ui->graphicsView->height()-150);
 
-        if(colisionConMuro<PersonajePrincipal,resorte>(player,resort)){
+        if(colision<PersonajePrincipal,resorte>(player,resort)){
 
-        player->MoveLeft(30);
+        player->MoveLeft();
 
         }
 
     }
     else if(evento->key()==Qt::Key_A){
-        player->MoveLeft(30);
+        player->MoveLeft();
         //scene->setSceneRect(-player->getVelocidadPaso(),0,ui->graphicsView->width()-70,ui->graphicsView->height()-150);
 
-       if(colisionConMuro<PersonajePrincipal,resorte>(player,resort) ){
+       if(colision<PersonajePrincipal,resorte>(player,resort) ){
 
-        player->MoveRight(30);
+        player->MoveRight();
 
         }
 
@@ -75,7 +75,7 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
 
 
          player->setDerecha(true);
-         player->activarSalto(45);
+         player->activarSalto(70);
 
         }
     if (evento->type() == QEvent::KeyPress ) {
@@ -85,7 +85,7 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
            if ( pressedKeys.contains(Qt::Key_A) && pressedKeys.contains(Qt::Key_Space) )
            {
                player->setDerecha(false);
-               player->activarSalto(45);
+               player->activarSalto(70);
                pressedKeys.clear();
            }
            else if ( pressedKeys.contains(Qt::Key_A) && pressedKeys.contains(Qt::Key_F) )
@@ -120,12 +120,19 @@ void MainWindow::verificarPosicionPersonaje()
         player->timer->stop();
              
     }
+    if(colision<PersonajePrincipal,resorte>(player,resort)){
+
+    }
 
 }
 
 void MainWindow::colisionResorte()
 {
-
+    if(player->getPosy()<resort->getPosy() && colision<PersonajePrincipal,resorte>(player,resort)){
+        resort->activarMovimiento();
+        player->setVelocidadInicial(player->getVelocidadInicial()+resort->getVelocidad());
+        player->activarSalto(70);
+    }
 }
 
 void MainWindow::inicializacionTimers()
@@ -138,6 +145,7 @@ void MainWindow::inicializacionTimers()
     }
 
     connect(timers.at(0),&QTimer::timeout,this,&MainWindow::verificarPosicionPersonaje);
+    connect(timers.at(1),&QTimer::timeout,this,&MainWindow::colisionResorte);
 }
 
 

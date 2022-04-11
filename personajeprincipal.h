@@ -11,7 +11,7 @@ class PersonajePrincipal:public objetoDinamico
 private:
     float velocidadx;
     float velocidady;
-    float velocidadPaso = 30;
+    float velocidadInicial=50;
     int vidas;
     bool derecha=true;
 
@@ -33,11 +33,9 @@ public:
 
     void setDerecha(bool newDerecha);
 
+    void setVelocidadInicial(float newVelocidadInicial);
 
-
-    void setVelocidadPaso(float newVelocidadPaso);
-
-    float getVelocidadPaso() const;
+    float getVelocidadInicial();
 
 signals:
 
