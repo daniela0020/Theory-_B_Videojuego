@@ -37,6 +37,8 @@ public:
 
     void setVelocidadPaso(float newVelocidadPaso);
 
+    float getVelocidadPaso() const;
+
 signals:
 
 public slots:

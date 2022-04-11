@@ -8,6 +8,7 @@
 #include<QMetaType>
 #include<math.h>
 #define Masa 100.0
+#define PI 3.141516
 class objetoDinamico:public QObject,public QGraphicsItem
 {
 public:
@@ -15,6 +16,7 @@ public:
     float posx=0,posy=0,alto=0;
 
     int ancho=0,filas=0, columnas=0;
+
 
 
     QTimer *timer;
