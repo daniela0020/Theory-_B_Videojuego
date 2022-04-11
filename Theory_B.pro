@@ -11,26 +11,24 @@ CONFIG += c++11
 SOURCES += \
     basededatos.cpp \
     bomba.cpp \
+    enemigovolador.cpp \
     main.cpp \
     mainwindow.cpp \
     objetodinamico.cpp \
-    objetoestatico.cpp \
     objetomovcircular.cpp \
     personajeprincipal.cpp \
-    piso.cpp \
     resorte.cpp \
     utilidades.cpp
     ventana.cpp
 
 HEADERS += \
     bomba.h \
+    enemigovolador.h \
     mainwindow.h \
     objetodinamico.h \
     objetomovcircular.h \
     personajeprincipal.h \
     basededatos.h \
-    objetoestatico.h \
-    piso.h \
     resorte.h \
     utilidades.h
     ventana.h

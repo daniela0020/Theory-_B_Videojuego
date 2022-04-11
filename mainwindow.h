@@ -6,11 +6,12 @@
 #include"personajeprincipal.h"
 #include"objetomovcircular.h"
 #include <QKeyEvent>
-#include <QScreen>
-#include <bomba.h>
+
+#include<enemigovolador.h>
+
 
 #include<resorte.h>
-#include<piso.h>
+
 
 #include<QMetaType>
 
@@ -36,23 +37,34 @@ private:
 
     PersonajePrincipal* player;
     ObjetoMovCircular* movCircular;
-    
-    piso * floor;
+    QSet<int> pressedKeys;
+    enemigoVolador *enemigovolador;
+
     resorte *resort;
+
+    QList<QTimer *> timers;
+
     Bomba *bomba;
-    QTimer *timer;
+ 
+
     void keyPressEvent(QKeyEvent *evento);
+    void inicializacionTimers();
    
-    template<typename T1,typename T2>
-    bool colisionConMuro(T1 *objeto1, T2 *objeto2)
-    {
-        bool colision=false;
-        if(objeto1->collidesWithItem(objeto2)){
-            colision=true;
-        }
-        return colision;
-    }
+signals:
+public slots:
+
+    void verificarPosicionPersonaje();
+    void colisionResorte();
+
 
 };
-
+template<typename T1,typename T2>
+bool colisionConMuro(T1 *objeto1, T2 *objeto2)
+{
+    bool colision=false;
+    if(objeto1->collidesWithItem(objeto2)){
+        colision=true;
+    }
+    return colision;
+}
 #endif // MAINWINDOW_H

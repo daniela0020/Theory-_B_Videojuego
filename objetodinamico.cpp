@@ -5,7 +5,7 @@ double objetoDinamico::getPosx()
     return posx;
 }
 
-void objetoDinamico::setPosx(double newPosx)
+void objetoDinamico::setPosx(float newPosx)
 {
     posx = newPosx;
 }
@@ -15,13 +15,10 @@ double objetoDinamico::getPosy()
     return posy;
 }
 
-void objetoDinamico::setPosy(double newPosy)
+void objetoDinamico::setPosy(float newPosy)
 {
     posy = newPosy;
 }
-
-
-
 
 
 void objetoDinamico::sprint()
@@ -37,7 +34,7 @@ objetoDinamico::objetoDinamico()
 }
 
 
-objetoDinamico::objetoDinamico(double posx,double posy,int ancho,int alto)
+objetoDinamico::objetoDinamico(float posx,float posy,int ancho,int alto)
 
 {
     this->posx=posx;
@@ -51,32 +48,33 @@ objetoDinamico::objetoDinamico(double posx,double posy,int ancho,int alto)
     setPos(posx,posy);
 
 }
-void objetoDinamico::MoveRight(double velocidad)
+void objetoDinamico::MoveRight(float velocidad)
 {
     this->posx+=velocidad;
     setPos(posx,posy);
 }
 
-void objetoDinamico::MoveLeft(double velocidad)
+void objetoDinamico::MoveLeft(float velocidad)
 {
     this->posx-=velocidad;
 
     setPos(posx,posy);
 }
 
-void objetoDinamico::MoveUp(double velocidad)
+void objetoDinamico::MoveUp(float velocidad)
 {
     this->posy-=velocidad;
 
     setPos(posx,posy);
 }
 
-void objetoDinamico::MoveDown(double velocidad)
+void objetoDinamico::MoveDown(float velocidad)
 {
     this->posy+=velocidad;
 
     setPos(posx,posy);
 }
+
 
 QRectF objetoDinamico::boundingRect() const
 {
@@ -85,6 +83,7 @@ QRectF objetoDinamico::boundingRect() const
 void objetoDinamico::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
 }
+
 
 void objetoDinamico::actualizarPosicion()
 {

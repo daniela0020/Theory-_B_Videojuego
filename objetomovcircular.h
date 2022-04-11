@@ -1,18 +1,20 @@
 #ifndef OBJETOMOVCIRCULAR_H
 #define OBJETOMOVCIRCULAR_H
 #include <objetodinamico.h>
-#include <math.h>
-#define dt 0.1
-#define Wa 10
+
+#define dt 0.001
+#define Wa 90
+
+
 
 class ObjetoMovCircular:public objetoDinamico
 {
     int h,k;
-    float angulo,radio;
+    float angulo,radio,distancia;
 
 public:
     ObjetoMovCircular(int k,int h);
-    QRectF boundingRect() const;
+    QRectF boundingRect() const ;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr);
 
 

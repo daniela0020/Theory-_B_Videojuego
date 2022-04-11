@@ -3,31 +3,37 @@
 
 
 
-#include<math.h>
+
 #include<objetodinamico.h>
 #include<QMetaType>
 #include<piso.h>
 
 #define B 20.0
-#define dt 0.1
+#define dT 0.1
 
 
 class resorte:public objetoDinamico
 {
-    double alpha=0,k=0,W=0,expo=0,angu=0,velocidad=0;
-    int counterTime=0;
-    bool colision=false;
+    float k=0,W=0,angu=0,velocidad=0;
+    int counterTime=0,counterColision=0;
+
+
 public:
+
     resorte();
-    resorte(double posx, double posy,double ancho, double alto,double k);
+    resorte(float posx, float posy,float k);
     QRectF boundingRect() const ;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) ;
     void actualizarValores();
     void activarMovimiento();
+    void cambiarForma();
 
     double getVelocidad() const;
 
-    void setColision(bool newColision);
+
+
+    int getCounterColision() const;
+    void setCounterColision(int newCounterColision);
 
 signals:
 public slots:
