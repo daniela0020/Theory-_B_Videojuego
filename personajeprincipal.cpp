@@ -34,15 +34,15 @@ void PersonajePrincipal::setAng(float newAng)
 void PersonajePrincipal::VelocidadInicial()
 {
     velocidadx=velocidadPaso*cos(ang);
-    velocidady=velocidadPaso*sin(ang)-GR*dt;
+    velocidady=velocidadPaso*sin(ang)-GR*Dt;
     velocidadPaso=sqrt((velocidadx*velocidadx)+(velocidady*velocidady));
     ang=atan2(velocidady,velocidadx);
 }
 
 void PersonajePrincipal::actualizarSalto()
 {
-    posx = posx + (velocidadx*dt);
-    posy -= (velocidady*dt) - (0.5*GR*(dt*dt));
+    posx = posx + (velocidadx*Dt);
+    posy -= (velocidady*Dt) - (0.5*GR*Dt*Dt);
 
     setPos(posx,posy);
     VelocidadInicial();

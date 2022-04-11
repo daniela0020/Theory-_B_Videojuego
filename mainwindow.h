@@ -35,22 +35,23 @@ private:
 
     PersonajePrincipal* player;
     ObjetoMovCircular* movCircular;
-    
+    QSet<int> pressedKeys;
     piso * floor;
     resorte *resort;
     QTimer *timer;
     void keyPressEvent(QKeyEvent *evento);
    
-    template<typename T1,typename T2>
-    bool colisionConMuro(T1 *objeto1, T2 *objeto2)
-    {
-        bool colision=false;
-        if(objeto1->collidesWithItem(objeto2)){
-            colision=true;
-        }
-        return colision;
-    }
+
+
 
 };
-
+template<typename T1,typename T2>
+bool colisionConMuro(T1 *objeto1, T2 *objeto2)
+{
+    bool colision=false;
+    if(objeto1->collidesWithItem(objeto2)){
+        colision=true;
+    }
+    return colision;
+}
 #endif // MAINWINDOW_H

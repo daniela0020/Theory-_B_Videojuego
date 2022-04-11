@@ -11,25 +11,25 @@ class objetoDinamico:public QObject,public QGraphicsItem
 {
 public:
     //atributos publicos para su facil empleo en la herencia
-    double posx=0,posy=0;
+    float posx=0,posy=0,alto=0;
 
-    int ancho=0,alto=0,filas=0, columnas=0;
+    int ancho=0,filas=0, columnas=0;
 
 
     QTimer *timer;
     //constructuroes
     objetoDinamico();
-    objetoDinamico(double posx,double posy,int ancho,int alto);
+    objetoDinamico(float posx,float posy,int ancho,int alto);
 
     //metodos
-    void MoveRight(double pixeles);
-    void MoveLeft(double pixeles);
-    void MoveUp(double pixeles);
-    void MoveDown(double pixeles);
+    void MoveRight(float pixeles);
+    void MoveLeft(float pixeles);
+    void MoveUp(float pixeles);
+    void MoveDown(float pixeles);
     double getPosx() ;
-    void setPosx(double newPosx);
+    void setPosx(float newPosx);
     double getPosy() ;
-    void setPosy(double newPosy);
+    void setPosy(float newPosy);
 
     //Metodos abstractos
 

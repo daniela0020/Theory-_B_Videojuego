@@ -23,7 +23,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     scene->setBackgroundBrush(Qt::green);
 
-    player = new PersonajePrincipal(300,310);
+    player = new PersonajePrincipal(300,550);
 
     movCircular = new ObjetoMovCircular(400,410);
 
@@ -40,6 +40,10 @@ MainWindow::MainWindow(QWidget *parent)
 
     scene->addItem(floor);
 
+    if(player->timer->isActive() && colisionConMuro<PersonajePrincipal,piso>(player,floor)){
+        player->timer->deleteLater();
+    }
+
 
 }
 
@@ -51,41 +55,56 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
 
         if(colisionConMuro<PersonajePrincipal,resorte>(player,resort) || colisionConMuro<PersonajePrincipal,piso>(player,floor)){
         player->MoveDown(30);
+
         }
     }
     else if(evento->key()==Qt::Key_S){
         player->MoveDown(30);
+
         if(colisionConMuro<PersonajePrincipal,resorte>(player,resort)){
         resort->activarMovimiento();
-        resort->setColision(colisionConMuro<resorte,piso>(resort,floor));
+
 
         }
         if(colisionConMuro<PersonajePrincipal,resorte>(player,resort) || colisionConMuro<PersonajePrincipal,piso>(player,floor)){
         player->MoveUp(30);
-        }
+      }
     }
 
     else if(evento->key()==Qt::Key_D){
         player->MoveRight(30);
         if(colisionConMuro<PersonajePrincipal,resorte>(player,resort) || colisionConMuro<PersonajePrincipal,piso>(player,floor)){
         player->MoveLeft(30);
+
         }
+
     }
     else if(evento->key()==Qt::Key_A){
         player->MoveLeft(30);
         if(colisionConMuro<PersonajePrincipal,resorte>(player,resort) || colisionConMuro<PersonajePrincipal,piso>(player,floor)){
         player->MoveRight(30);
-        }
-    }
-    else if(evento->key()==Qt::Key_Space){
-        player->activarSalto(45);
-        if(colisionConMuro<PersonajePrincipal,piso>(player,floor)){
 
         }
+
     }
+    if (evento->type() == QEvent::KeyPress ) {
+
+           pressedKeys += ((QKeyEvent*)evento)->key();
+
+           if ( pressedKeys.contains(Qt::Key_D) && pressedKeys.contains(Qt::Key_Space) )
+           {
+               player->activarSalto(45);
+               pressedKeys.clear();
+           }
+           else if ( pressedKeys.contains(Qt::Key_A) && pressedKeys.contains(Qt::Key_Space) )
+           {
+               player->activarSalto(195);
+               pressedKeys.clear();
+           }
+    }
+
 
 }
-
 
 
 

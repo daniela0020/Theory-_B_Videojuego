@@ -7,17 +7,13 @@ double resorte::getVelocidad() const
     return velocidad;
 }
 
-void resorte::setColision(bool newColision)
-{
-    colision = newColision;
-}
 
 resorte::resorte()
 {
 
 }
 
-resorte::resorte(double posx, double posy,double ancho, double alto, double k)
+resorte::resorte(float posx, float posy,float ancho, float alto, float k)
 {
 
     this->posx=posx;
@@ -67,19 +63,19 @@ void resorte::activarMovimiento()
 
 void resorte::actualizarPosicion()
 {
+    float oldPosy=posy;
     posy+=sin(angu);
     velocidad+=W*cos(angu);
-    if(!colision){
-        setPos(posx,posy);
-    }
-    this->actualizarValores();
+    alto+=(oldPosy-posy);
+    setPos(posx,posy);
+    actualizarValores();
+
+
     counterTime++;
     if(counterTime>1000){
         timer->deleteLater();
         counterTime=0;
     }
-
-
 }
 
 void resorte::sprint()

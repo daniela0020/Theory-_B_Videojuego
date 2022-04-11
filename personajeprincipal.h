@@ -6,7 +6,7 @@
 #include <math.h>
 #include <objetodinamico.h>
 #define GR 9.8
-#define dt 0.1
+#define Dt 0.1
 
 class PersonajePrincipal:public objetoDinamico
 {
