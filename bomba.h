@@ -14,7 +14,8 @@ class Bomba:public objetoDinamico
     bool derecha = true;
 public:
     Bomba(float x,float y);
-
+    Bomba();
+    void setDerecha(bool newDerecha);
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr);
 
@@ -29,8 +30,5 @@ public slots:
 
     void actualizarPosicion();
 
-public:
-    Bomba();
-    void setDerecha(bool newDerecha);
 };
 #endif // BOMBA_H

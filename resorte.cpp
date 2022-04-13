@@ -7,15 +7,14 @@ double resorte::getVelocidad() const
     return velocidad;
 }
 
-
-int resorte::getCounterColision() const
+bool resorte::getActivado() const
 {
-    return counterColision;
+    return activado;
 }
 
-void resorte::setCounterColision(int newCounterColision)
+void resorte::setActivado(bool newActivado)
 {
-    counterColision = newCounterColision;
+    activado = newActivado;
 }
 
 resorte::resorte()
@@ -40,6 +39,7 @@ resorte::resorte(float posx, float posy, float k)
 
     W=(k/Masa);
 
+    timer = new QTimer();
 
 }
 
@@ -61,7 +61,7 @@ void resorte::actualizarValores()
 
 void resorte::activarMovimiento()
 {
-    timer = new QTimer();
+    activado=true;
 
     timer->start(10);
 
@@ -78,15 +78,16 @@ void resorte::actualizarPosicion()
 {
     float oldPosy=posy;
     posy+=sin(angu);
-    velocidad=10*abs(W*cos(angu));
+    velocidad=30*abs(W*cos(angu));
 
     alto+=(oldPosy-posy);
     setPos(posx,posy);
     actualizarValores();
 
     counterTime++;
-    if(counterTime>1000){
-        timer->deleteLater();
+    if(counterTime>500){
+        activado=false;
+        timer->stop();
         counterTime=0;
 
     }

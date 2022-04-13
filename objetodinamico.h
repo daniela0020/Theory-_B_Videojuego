@@ -29,9 +29,9 @@ public:
     void MoveLeft();
     void MoveUp();
     void MoveDown();
-    double getPosx() ;
+    float getPosx() ;
     void setPosx(float newPosx);
-    double getPosy() ;
+    float getPosy() ;
     void setPosy(float newPosy);
 
     //Metodos abstractos

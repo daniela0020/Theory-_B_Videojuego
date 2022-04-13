@@ -12,18 +12,17 @@ private:
     float velocidadx;
     float velocidady;
     float velocidadInicial=50;
+    float ang = 0;
     int vidas;
-    bool derecha=true;
+    bool direccion=true,parabolico=true,saltando=false;
 
 public:
+
     PersonajePrincipal(double x, double y);
 
     QRectF boundingRect() const ;
+
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr);
-
-    float ang = 0;
-
-    void actualizarImagen();
 
     void activarSalto(double angulo);
 
@@ -31,11 +30,19 @@ public:
 
     void setAng(float newAng);
 
-    void setDerecha(bool newDerecha);
-
     void setVelocidadInicial(float newVelocidadInicial);
 
     float getVelocidadInicial();
+
+    void setDireccion(bool newDireccion);
+
+    void setParabolico(bool newParabolico);
+
+    bool getParabolico() const;
+
+    void setSaltando(bool newSaltando);
+
+    bool getSaltando() const;
 
 signals:
 

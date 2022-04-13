@@ -11,8 +11,6 @@ enemigoVolador::enemigoVolador(float posx, float posy)
     this->posy=posy;
     this->ancho=25;
     this->alto=25;
-
-
     this->k=300;
 
     setPos(posx,posy);

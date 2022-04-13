@@ -8,27 +8,23 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->setupUi(this);
 
+    scene=new QGraphicsScene(0,0,969,499);
 
-    scene=new QGraphicsScene();
+    QImage imgBackground(":/imagenes/mapa1.png");
 
-    this->setFixedSize(this->screen()->availableSize().width(),this->screen()->availableSize().height());
+    QBrush background(imgBackground);
 
-    ui->graphicsView->setFixedSize(this->screen()->availableSize().width(),this->screen()->availableSize().height());
-
-    scene->setSceneRect(0,0,ui->graphicsView->width()-70,ui->graphicsView->height()-150);
+    scene->setBackgroundBrush(background);
 
     ui->graphicsView->setScene(scene);
 
-    scene->setBackgroundBrush(Qt::green);
-
-    player = new PersonajePrincipal(300,550);
+    player = new PersonajePrincipal(40,390);
 
     movCircular = new ObjetoMovCircular(400,410);
 
     scene->addItem(movCircular);
 
     scene->addItem(player);
-
 
     resort=new resorte(250,550,50);
 
@@ -40,6 +36,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     inicializacionTimers();
 
+    bbdd->getStaticObjects<float>("murosHorizontales.txt","muros",murosHorizontales);
+
 
 }
 
@@ -49,9 +47,7 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
 
     if(evento->key()==Qt::Key_D){
         player->MoveRight();
-
-        //scene->setSceneRect(player->getVelocidadPaso()+ ui->graphicsView->width()-70,0,ui->graphicsView->width()-70,ui->graphicsView->height()-150);
-
+        player->setParabolico(false);
         if(colision<PersonajePrincipal,resorte>(player,resort)){
 
         player->MoveLeft();
@@ -61,8 +57,7 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
     }
     else if(evento->key()==Qt::Key_A){
         player->MoveLeft();
-        //scene->setSceneRect(-player->getVelocidadPaso(),0,ui->graphicsView->width()-70,ui->graphicsView->height()-150);
-
+        player->setParabolico(false);
        if(colision<PersonajePrincipal,resorte>(player,resort) ){
 
         player->MoveRight();
@@ -71,20 +66,23 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
 
     }
 
-    else if(evento->key()==Qt::Key_Space){
-
-
-         player->setDerecha(true);
-         player->activarSalto(70);
-
-        }
     if (evento->type() == QEvent::KeyPress ) {
 
            pressedKeys += ((QKeyEvent*)evento)->key();
 
            if ( pressedKeys.contains(Qt::Key_A) && pressedKeys.contains(Qt::Key_Space) )
            {
-               player->setDerecha(false);
+
+               player->setParabolico(true);
+               player->setDireccion(false);
+               player->activarSalto(70);
+               pressedKeys.clear();
+           }
+           else if ( pressedKeys.contains(Qt::Key_D) && pressedKeys.contains(Qt::Key_Space) )
+           {
+
+               player->setParabolico(true);
+               player->setDireccion(true);
                player->activarSalto(70);
                pressedKeys.clear();
            }
@@ -104,35 +102,37 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
                bomba->activarMovimiento(70);
                pressedKeys.clear();
            }
-
     }
-
-
-
 }
 
 
 
 void MainWindow::verificarPosicionPersonaje()
 {
-    if(player->getPosy()>551){
-        player->setPosy(550);
+    if(player->getPosy()>492){
+        player->setPosy(492);
         player->timer->stop();
+
+        player->setSaltando(false);
              
     }
-    if(colision<PersonajePrincipal,resorte>(player,resort)){
-
+    for(int i=0;i<murosHorizontales.size()-3;i++){
+        murosHorizontales.at(i);
     }
 
 }
 
 void MainWindow::colisionResorte()
 {
-    if(player->getPosy()<resort->getPosy() && colision<PersonajePrincipal,resorte>(player,resort)){
-        resort->activarMovimiento();
+    if(colision<PersonajePrincipal,resorte>(player,resort)&& resort->getActivado()){
         player->setVelocidadInicial(player->getVelocidadInicial()+resort->getVelocidad());
+        player->setParabolico(true);
         player->activarSalto(70);
     }
+    if(colision<PersonajePrincipal,resorte>(player,resort)&&player->getPosy()<resort->getPosy() && !resort->getActivado()){
+        resort->activarMovimiento();
+    }
+
 }
 
 void MainWindow::inicializacionTimers()

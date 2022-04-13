@@ -8,14 +8,10 @@
 #include"objetomovcircular.h"
 #include <QKeyEvent>
 #include <bomba.h>
-
 #include<enemigovolador.h>
-
-
 #include<resorte.h>
-
-
 #include<QMetaType>
+#include<basededatos.h>
 
 
 
@@ -35,19 +31,26 @@ public:
 
 private:
     Ui::MainWindow *ui;
+
     QGraphicsScene *scene;
 
     PersonajePrincipal* player;
+
+    baseDeDatos *bbdd = new baseDeDatos();
+
     ObjetoMovCircular* movCircular;
+
     QSet<int> pressedKeys;
+
     enemigoVolador *enemigovolador;
 
     resorte *resort;
 
     QList<QTimer *> timers;
 
+    QList<float*> murosHorizontales;
+
     Bomba *bomba;
- 
 
     void keyPressEvent(QKeyEvent *evento);
     void inicializacionTimers();
