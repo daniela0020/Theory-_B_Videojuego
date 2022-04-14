@@ -1,24 +1,24 @@
 #include "personajeprincipal.h"
 
-void PersonajePrincipal::setDerecha(bool newDerecha)
+void PersonajePrincipal::setDireccion(bool isDerecha)
 {
-    derecha = newDerecha;
+    direccion = isDerecha;
 }
-bool PersonajePrincipal::getDerecha(){
-    return derecha;
+bool PersonajePrincipal::getDireccion(){
+    return direccion;
 }
 
-void PersonajePrincipal::setVelocidadPaso(float newVelocidadPaso)
+void PersonajePrincipal::setVelocidad(float newVelocidad)
 {
-    velocidadPaso += newVelocidadPaso;
+    velocidad += newVelocidad;
 }
 
-float PersonajePrincipal::getVelocidadPaso() const
+float PersonajePrincipal::getVelocidad() const
 {
-    return velocidadPaso;
+    return velocidad;
 }
 
-PersonajePrincipal::PersonajePrincipal(double x, double y):objetoDinamico(x,y,25,25)
+PersonajePrincipal::PersonajePrincipal(float x, float y):objetoDinamico(x,y,25,25)
 {
     velocidadx = 0;
     velocidady = 0;
@@ -47,15 +47,15 @@ void PersonajePrincipal::setAng(float newAng)
 
 void PersonajePrincipal::VelocidadInicial()
 {
-    velocidadx=velocidadPaso*cos(ang);
-    velocidady=velocidadPaso*sin(ang)-GR*Dt;
-    velocidadPaso=sqrt((velocidadx*velocidadx)+(velocidady*velocidady));
+    velocidadx=velocidad*cos(ang);
+    velocidady=velocidad*sin(ang)-GR*Dt;
+    velocidad=sqrt((velocidadx*velocidadx)+(velocidady*velocidady));
     ang=atan2(velocidady,velocidadx);
 }
 
 void PersonajePrincipal::actualizarPosicion()
 {
-    if(derecha){
+    if(direccion){
         posx = posx + (velocidadx*Dt);
         posy -= (velocidady*Dt) - (0.5*GR*Dt*Dt);
 
@@ -106,9 +106,6 @@ void PersonajePrincipal::MoveDown(float velocidad)
     setPos(posx,posy);
 }
 
-void PersonajePrincipal::actualizarImagen()
-{
 
-}
 
 
