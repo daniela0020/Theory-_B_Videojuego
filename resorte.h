@@ -7,7 +7,7 @@
 #include<objetodinamico.h>
 #include<QMetaType>
 #define B 20.0
-#define dT 0.1
+#define dT 1
 
 
 class resorte:public objetoDinamico
@@ -33,8 +33,11 @@ public:
 
 
 
-    int getCounterColision() const;
+
     void setCounterColision(int newCounterColision);
+
+    bool getActivado() const;
+    void setActivado(bool newActivado);
 
 signals:
 public slots:

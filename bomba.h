@@ -10,7 +10,7 @@ class Bomba:public objetoDinamico
 {
     float velocidadx;
     float velocidady;
-    float velocidad = 30;
+    float velocidadInicial =90;
     bool derecha = true;
 public:
     Bomba();
@@ -31,5 +31,4 @@ public slots:
     void actualizarPosicion();
 
 };
-
 #endif // BOMBA_H
