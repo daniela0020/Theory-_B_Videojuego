@@ -33,11 +33,16 @@ public:
 
     void setDerecha(bool newDerecha);
 
-
+    bool getDerecha();
 
     void setVelocidadPaso(float newVelocidadPaso);
 
     float getVelocidadPaso() const;
+
+    void MoveRight(float pixeles);
+    void MoveLeft(float pixeles);
+    void MoveUp(float pixeles);
+    void MoveDown(float pixeles);
 
 signals:
 

@@ -4,6 +4,9 @@ void PersonajePrincipal::setDerecha(bool newDerecha)
 {
     derecha = newDerecha;
 }
+bool PersonajePrincipal::getDerecha(){
+    return derecha;
+}
 
 void PersonajePrincipal::setVelocidadPaso(float newVelocidadPaso)
 {
@@ -15,16 +18,11 @@ float PersonajePrincipal::getVelocidadPaso() const
     return velocidadPaso;
 }
 
-PersonajePrincipal::PersonajePrincipal(double x, double y)
+PersonajePrincipal::PersonajePrincipal(double x, double y):objetoDinamico(x,y,25,25)
 {
-    posx = x;
-    posy = y;
     velocidadx = 0;
     velocidady = 0;
-    ancho = 25;
-    alto = 25;
     vidas = 3;
-    setPos(posx,posy);
     timer = new QTimer(this);
     connect(timer,&QTimer::timeout,this,&PersonajePrincipal::actualizarPosicion);
 
@@ -81,8 +79,36 @@ void PersonajePrincipal::activarSalto(double ang)
 
 }
 
+void PersonajePrincipal::MoveRight(float velocidad)
+{
+    this->posx+=velocidad;
+    setPos(posx,posy);
+}
+
+void PersonajePrincipal::MoveLeft(float velocidad)
+{
+    this->posx-=velocidad;
+
+    setPos(posx,posy);
+}
+
+void PersonajePrincipal::MoveUp(float velocidad)
+{
+    this->posy-=velocidad;
+
+    setPos(posx,posy);
+}
+
+void PersonajePrincipal::MoveDown(float velocidad)
+{
+    this->posy+=velocidad;
+
+    setPos(posx,posy);
+}
+
 void PersonajePrincipal::actualizarImagen()
 {
 
 }
+
 

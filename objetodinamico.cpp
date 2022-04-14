@@ -48,33 +48,6 @@ objetoDinamico::objetoDinamico(float posx,float posy,int ancho,int alto)
     setPos(posx,posy);
 
 }
-void objetoDinamico::MoveRight(float velocidad)
-{
-    this->posx+=velocidad;
-    setPos(posx,posy);
-}
-
-void objetoDinamico::MoveLeft(float velocidad)
-{
-    this->posx-=velocidad;
-
-    setPos(posx,posy);
-}
-
-void objetoDinamico::MoveUp(float velocidad)
-{
-    this->posy-=velocidad;
-
-    setPos(posx,posy);
-}
-
-void objetoDinamico::MoveDown(float velocidad)
-{
-    this->posy+=velocidad;
-
-    setPos(posx,posy);
-}
-
 
 void objetoDinamico::actualizarPosicion()
 {

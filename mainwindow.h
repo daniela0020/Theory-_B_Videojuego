@@ -8,8 +8,10 @@
 #include"objetomovcircular.h"
 #include <QKeyEvent>
 #include <bomba.h>
+#include <button.h>
 
 #include<enemigovolador.h>
+#include<enemigoterrestre.h>
 
 
 #include<resorte.h>
@@ -31,6 +33,7 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow(QWidget *parent = nullptr);
+    void menu();
 //    ~MainWindow();
 
 private:
@@ -41,6 +44,7 @@ private:
     ObjetoMovCircular* movCircular;
     QSet<int> pressedKeys;
     enemigoVolador *enemigovolador;
+    enemigoTerrestre *enemigoterrestre;
 
     resorte *resort;
 
@@ -57,6 +61,7 @@ public slots:
 
     void verificarPosicionPersonaje();
     void colisionResorte();
+    void PlayStart();
 
 
 };

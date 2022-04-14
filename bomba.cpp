@@ -5,15 +5,10 @@ void Bomba::setDerecha(bool newDerecha)
     derecha = newDerecha;
 }
 
-Bomba::Bomba(float x,float y)
+Bomba::Bomba(float x,float y):objetoDinamico(x,y,25,25)
 {
-    posx = x;
-    posy = y;
     velocidadx = 0;
-    velocidady = 0;
-    ancho = 25;
-    alto = 25;
-    setPos(posx,posy);
+    velocidady = 0;  
     timer = new QTimer(this);
     connect(timer,&QTimer::timeout,this,&Bomba::actualizarPosicion);
 
@@ -42,7 +37,8 @@ void Bomba::actualizarPosicion()
         posx = posx + (velocidadx*dt);
         posy -= (velocidady*dt) - (0.5*GR*dt*dt);
 
-    }else{
+    }
+    else{
         posx -= (velocidadx*dt);
         posy -= (velocidady*dt) - (0.5*GR*dt*dt);
     }
