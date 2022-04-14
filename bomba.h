@@ -1,5 +1,6 @@
 #ifndef BOMBA_H
 #define BOMBA_H
+
 #include <objetodinamico.h>
 #include <math.h>
 #define GR 9.8

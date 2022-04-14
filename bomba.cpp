@@ -1,5 +1,6 @@
 #include "bomba.h"
 
+
 void Bomba::setDerecha(bool newDerecha)
 {
     derecha = newDerecha;
@@ -52,4 +53,5 @@ void Bomba::activarMovimiento(float ang)
     this->ang = ang*(PI/180);
     VelocidadInicial();
     timer->start(10);
+
 }
