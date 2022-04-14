@@ -32,7 +32,7 @@ public:
 
     void setAng(float newAng);
 
-    void setDerecha(bool newDerecha);
+    void setDireccion(bool newDerecha);
 
     bool getDireccion();
 

@@ -73,7 +73,7 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
 
     if(evento->key()==Qt::Key_D){
         player->MoveRight(30);
-        player->setDerecha(true);
+        player->setDireccion(true);
         scene->setSceneRect(player->getPosx()-50,0,969,500);
 
         if(colisionConMuro<PersonajePrincipal,resorte>(player,resort)){
@@ -85,7 +85,7 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
     }
     else if(evento->key()==Qt::Key_A){
         player->MoveLeft(30);
-        player->setDerecha(false);
+        player->setDireccion(false);
         scene->setSceneRect(player->getPosx()-50,0,969,500);
 
        if(colisionConMuro<PersonajePrincipal,resorte>(player,resort) ){
@@ -104,7 +104,7 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
     }
     else if (evento->key()==Qt::Key_F){
         bomba = new Bomba(player->getPosx(),player->getPosy());
-        if (player->getDerecha()){
+        if (player->getDireccion()){
             bomba->setDerecha(true);
         }
         else{

@@ -6,8 +6,6 @@
 
 #include<objetodinamico.h>
 #include<QMetaType>
-#include<piso.h>
-
 #define B 20.0
 #define dT 0.1
 
@@ -29,7 +27,9 @@ public:
     void activarMovimiento();
     void cambiarForma();
 
-    double getVelocidad() const;
+    float getVelocidad() const;
+    bool getActivado() const ;
+    void setActivado(bool newActivado);
 
 
 
