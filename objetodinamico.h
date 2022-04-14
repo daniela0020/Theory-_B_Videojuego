@@ -25,10 +25,6 @@ public:
     objetoDinamico(float posx,float posy,int ancho,int alto);
 
     //metodos
-    void MoveRight();
-    void MoveLeft();
-    void MoveUp();
-    void MoveDown();
     float getPosx() ;
     void setPosx(float newPosx);
     float getPosy() ;

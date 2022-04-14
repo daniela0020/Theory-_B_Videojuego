@@ -8,10 +8,16 @@
 #include"objetomovcircular.h"
 #include <QKeyEvent>
 #include <bomba.h>
+#include <button.h>
+
 #include<enemigovolador.h>
+#include<enemigoterrestre.h>
+
+
 #include<resorte.h>
+
+
 #include<QMetaType>
-#include<basededatos.h>
 
 
 
@@ -27,30 +33,25 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow(QWidget *parent = nullptr);
+    void menu();
 //    ~MainWindow();
 
 private:
     Ui::MainWindow *ui;
-
     QGraphicsScene *scene;
 
     PersonajePrincipal* player;
-
-    baseDeDatos *bbdd = new baseDeDatos();
-
     ObjetoMovCircular* movCircular;
-
     QSet<int> pressedKeys;
-
     enemigoVolador *enemigovolador;
+    enemigoTerrestre *enemigoterrestre;
 
     resorte *resort;
 
     QList<QTimer *> timers;
 
-    QList<float*> murosHorizontales;
-
     Bomba *bomba;
+ 
 
     void keyPressEvent(QKeyEvent *evento);
     void inicializacionTimers();
@@ -60,11 +61,12 @@ public slots:
 
     void verificarPosicionPersonaje();
     void colisionResorte();
+    void PlayStart();
 
 
 };
 template<typename T1,typename T2>
-bool colision(T1 *objeto1, T2 *objeto2)
+bool colisionConMuro(T1 *objeto1, T2 *objeto2)
 {
     bool colision=false;
     if(objeto1->collidesWithItem(objeto2)){

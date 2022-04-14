@@ -13,8 +13,8 @@ class Bomba:public objetoDinamico
     float velocidadInicial =90;
     bool derecha = true;
 public:
-    Bomba(float x,float y);
     Bomba();
+    Bomba(float x,float y);
     void setDerecha(bool newDerecha);
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr);

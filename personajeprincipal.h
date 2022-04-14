@@ -11,18 +11,20 @@ class PersonajePrincipal:public objetoDinamico
 private:
     float velocidadx;
     float velocidady;
-    float velocidadInicial=50;
+    float velocidad = 50;
     float ang = 0;
     int vidas;
     bool direccion=true,parabolico=true,saltando=false;
 
 public:
 
-    PersonajePrincipal(double x, double y);
+    PersonajePrincipal(float x, float y);
 
     QRectF boundingRect() const ;
-
+    
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr);
+
+    void actualizarImagen();
 
     void activarSalto(double angulo);
 
@@ -30,19 +32,21 @@ public:
 
     void setAng(float newAng);
 
-    void setVelocidadInicial(float newVelocidadInicial);
+    void setDireccion(bool newDerecha);
 
-    float getVelocidadInicial();
+    bool getDireccion();
 
-    void setDireccion(bool newDireccion);
+    void setVelocidad(float newVelocidadPaso);
 
-    void setParabolico(bool newParabolico);
+    float getVelocidad() const;
 
-    bool getParabolico() const;
-
-    void setSaltando(bool newSaltando);
-
-    bool getSaltando() const;
+    void MoveRight(float pixeles);
+    
+    void MoveLeft(float pixeles);
+    
+    void MoveUp(float pixeles);
+    
+    void MoveDown(float pixeles);
 
 signals:
 
