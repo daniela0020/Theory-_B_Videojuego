@@ -56,7 +56,7 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
         player->setDireccion(true);
         if(player->getSaltando())player->setParabolico(false);
 
-        scene->setSceneRect(player->getPosx()-150,0,969,500);
+        scene->setSceneRect(player->getPosx()-100,0,969,500);
 
         if(colision<PersonajePrincipal,resorte>(player,resortes,index) || colision<PersonajePrincipal,objetoEstatico>(player,muros,index)){
 
@@ -69,7 +69,7 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
         player->MoveLeft(10);
         player->setDireccion(false);
         if(player->getSaltando())player->setParabolico(false);
-        scene->setSceneRect(player->getPosx()-150,0,969,500);
+        scene->setSceneRect(player->getPosx()-100,0,969,500);
 
        if(colision<PersonajePrincipal,resorte>(player,resortes,index) || colision<PersonajePrincipal,objetoEstatico>(player,muros,index)){
 
@@ -82,7 +82,7 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
     else if(evento->key()==Qt::Key_Space){
 
          player->activarSalto(70);
-         scene->setSceneRect(player->getPosx()-150,0,969,500);
+         scene->setSceneRect(player->getPosx()-100,0,969,500);
 
     }
     else if (evento->key()==Qt::Key_F){
@@ -96,7 +96,7 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
 
         }
         scene->addItem(bomba);
-        bomba->activarMovimiento(70);
+        bomba->activarMovimiento(30);
 
     }
 
