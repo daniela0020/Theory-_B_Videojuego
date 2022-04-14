@@ -10,13 +10,6 @@ CONFIG += c++11
 
 SOURCES += \
     basededatos.cpp \
-<<<<<<< HEAD
-    bomba.cpp \
-    button.cpp \
-    enemigo.cpp \
-    enemigoterrestre.cpp \
-=======
->>>>>>> 71d70ad141037c54629a8f4e86abf235f1c339bb
     enemigovolador.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -29,13 +22,10 @@ SOURCES += \
     ventana.cpp
 
 HEADERS += \
-<<<<<<< HEAD
     bomba.h \
     button.h \
     enemigo.h \
     enemigoterrestre.h \
-=======
->>>>>>> 71d70ad141037c54629a8f4e86abf235f1c339bb
     enemigovolador.h \
     mainwindow.h \
     objetodinamico.h \
