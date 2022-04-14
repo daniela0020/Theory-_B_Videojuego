@@ -21,7 +21,7 @@ public:
     PersonajePrincipal(float x, float y);
 
     QRectF boundingRect() const ;
-
+    
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr);
 
     void actualizarImagen();
@@ -41,11 +41,19 @@ public:
     float getVelocidad() const;
 
     void MoveRight(float pixeles);
+<<<<<<< HEAD
 
     void MoveLeft(float pixeles);
 
     void MoveUp(float pixeles);
 
+=======
+    
+    void MoveLeft(float pixeles);
+    
+    void MoveUp(float pixeles);
+    
+>>>>>>> 8d7a53ce2a97f33380614d25e9257f773b663413
     void MoveDown(float pixeles);
 
 signals:

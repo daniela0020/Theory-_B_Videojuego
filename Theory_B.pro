@@ -12,12 +12,16 @@ SOURCES += \
     basededatos.cpp \
     bomba.cpp \
     enemigo.cpp \
+    button.cpp \
+    enemigo.cpp \
+    enemigoterrestre.cpp \
     enemigovolador.cpp \
     main.cpp \
     mainwindow.cpp \
     objetodinamico.cpp \
     objetomovcircular.cpp \
     personajeprincipal.cpp \
+    reloj.cpp \
     resorte.cpp \
     utilidades.cpp
     ventana.cpp
@@ -25,12 +29,16 @@ SOURCES += \
 HEADERS += \
     bomba.h \
     enemigo.h \
+    button.h \
+    enemigo.h \
+    enemigoterrestre.h \
     enemigovolador.h \
     mainwindow.h \
     objetodinamico.h \
     objetomovcircular.h \
     personajeprincipal.h \
     basededatos.h \
+    reloj.h \
     resorte.h \
     utilidades.h
     ventana.h

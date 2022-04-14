@@ -25,9 +25,9 @@ public:
     objetoDinamico(float posx,float posy,int ancho,int alto);
 
     //metodos
-    double getPosx() ;
+    float getPosx() ;
     void setPosx(float newPosx);
-    double getPosy() ;
+    float getPosy() ;
     void setPosy(float newPosy);
 
     //Metodos abstractos

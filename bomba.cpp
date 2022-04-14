@@ -9,7 +9,9 @@ void Bomba::setDerecha(bool newDerecha)
 Bomba::Bomba(float x,float y):objetoDinamico(x,y,25,25)
 {
     velocidadx = 0;
+
     velocidady = 0;
+
     timer = new QTimer(this);
     connect(timer,&QTimer::timeout,this,&Bomba::actualizarPosicion);
 

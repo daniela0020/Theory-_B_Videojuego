@@ -31,3 +31,7 @@ QRectF Enemigo::boundingRect() const
 {
     return QRectF(-ancho,-alto,ancho,alto);
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 8d7a53ce2a97f33380614d25e9257f773b663413
