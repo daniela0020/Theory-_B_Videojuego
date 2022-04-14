@@ -1,8 +1,7 @@
 #ifndef BOMBA_H
 #define BOMBA_H
-
 #include <objetodinamico.h>
-#include <math.h>
+
 #define GR 9.8
 #define dt 0.1
 
@@ -14,8 +13,9 @@ class Bomba:public objetoDinamico
     float velocidad = 30;
     bool derecha = true;
 public:
+    Bomba();
     Bomba(float x,float y);
-
+    void setDerecha(bool newDerecha);
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr);
 
@@ -30,9 +30,6 @@ public slots:
 
     void actualizarPosicion();
 
-public:
-    Bomba();
-    void setDerecha(bool newDerecha);
 };
 
 #endif // BOMBA_H
