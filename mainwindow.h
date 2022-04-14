@@ -8,17 +8,12 @@
 #include"objetomovcircular.h"
 #include <QKeyEvent>
 #include <bomba.h>
-<<<<<<< HEAD
-
-
 #include<enemigovolador.h>
-
-=======
 #include <button.h>
 
 #include<enemigovolador.h>
 #include<enemigoterrestre.h>
->>>>>>> 8d7a53ce2a97f33380614d25e9257f773b663413
+
 
 
 #include<resorte.h>

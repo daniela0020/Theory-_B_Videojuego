@@ -28,16 +28,9 @@ public:
     void cambiarForma();
 
     float getVelocidad() const;
-<<<<<<< HEAD
-=======
     bool getActivado() const ;
     void setActivado(bool newActivado);
->>>>>>> 8d7a53ce2a97f33380614d25e9257f773b663413
 
-
-
-    bool getActivado() const;
-    void setActivado(bool newActivado);
 
 signals:
 public slots:

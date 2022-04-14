@@ -129,11 +129,7 @@ void MainWindow::verificarPosicionPersonaje()
     if(player->getPosy()>551){
         player->setPosy(550);
         player->timer->stop();
-<<<<<<< HEAD
 
-=======
-             
->>>>>>> 8d7a53ce2a97f33380614d25e9257f773b663413
     }
 
 }

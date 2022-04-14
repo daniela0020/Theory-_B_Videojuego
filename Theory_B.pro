@@ -13,7 +13,6 @@ SOURCES += \
     bomba.cpp \
     enemigo.cpp \
     button.cpp \
-    enemigo.cpp \
     enemigoterrestre.cpp \
     enemigovolador.cpp \
     main.cpp \
@@ -30,7 +29,6 @@ HEADERS += \
     bomba.h \
     enemigo.h \
     button.h \
-    enemigo.h \
     enemigoterrestre.h \
     enemigovolador.h \
     mainwindow.h \

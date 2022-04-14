@@ -21,17 +21,15 @@ Enemigo::Enemigo(float posx, float posy)
     connect(timer,&QTimer::timeout,this,&Enemigo::actualizarPosicion);
 
 }
+
+QRectF Enemigo::boundingRect() const
+{
+    return QRectF(-ancho,-alto,ancho,alto);
+}
 void Enemigo::actualizarPosicion()
 {
     posx+=5*sin(angu);
     setPos(posx,posy);
     angu+=W*dT;
 }
-QRectF Enemigo::boundingRect() const
-{
-    return QRectF(-ancho,-alto,ancho,alto);
-}
-<<<<<<< HEAD
-=======
 
->>>>>>> 8d7a53ce2a97f33380614d25e9257f773b663413
