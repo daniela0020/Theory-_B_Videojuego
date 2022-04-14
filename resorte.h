@@ -29,12 +29,9 @@ public:
     void activarMovimiento();
     void cambiarForma();
 
-    double getVelocidad() const;
+    float getVelocidad() const;
 
 
-
-
-    void setCounterColision(int newCounterColision);
 
     bool getActivado() const;
     void setActivado(bool newActivado);

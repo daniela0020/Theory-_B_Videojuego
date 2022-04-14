@@ -8,37 +8,63 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->setupUi(this);
 
-    scene=new QGraphicsScene(0,0,969,499);
 
-    QImage imgBackground(":/imagenes/mapa1.png");
+    scene=new QGraphicsScene(0,0,969,500);
 
-    QBrush background(imgBackground);
-
-    scene->setBackgroundBrush(background);
 
     ui->graphicsView->setScene(scene);
 
-    player = new PersonajePrincipal(40,390);
 
-    movCircular = new ObjetoMovCircular(400,410);
+    //player = new PersonajePrincipal(300,550);
 
-    scene->addItem(movCircular);
+    //movCircular = new ObjetoMovCircular(400,410);
 
-    scene->addItem(player);
+    //scene->addItem(movCircular);
 
-    resort=new resorte(250,550,50);
-
-    scene->addItem(resort);
-
-    enemigovolador=new enemigoVolador(500,300);
-
-    scene->addItem(enemigovolador);
-
-    inicializacionTimers();
-
-    bbdd->getStaticObjects<float>("murosHorizontales.txt","muros",murosHorizontales);
+    //scene->addItem(player);
 
 
+    //resort=new resorte(250,550,50);
+
+    //scene->addItem(resort);
+
+    //enemigovolador=new enemigoVolador(500,300);
+
+    //scene->addItem(enemigovolador);
+
+    //inicializacionTimers();
+
+
+}
+
+void MainWindow::menu()
+{
+    scene->clear();
+    //setBackgroundBrush(QBrush(QImage("")));
+    QGraphicsTextItem * titleText = new QGraphicsTextItem(QString("Theory B"));
+    QFont titleFont("comic sans",50);
+    titleText->setFont(titleFont);
+
+    int txPos = this->width()/2 -titleText->boundingRect().width()/2;
+    int tyPos = 150;
+    titleText->setPos(txPos,tyPos);
+    scene->addItem(titleText);
+
+    //Crear botones
+
+    Button * playButton = new Button(QString("Nueva partida"));
+    int bxPos = this->width()/2-playButton->boundingRect().width()/2;
+    int byPos = 275;
+    playButton->setPos(bxPos,byPos);
+    connect(playButton,SIGNAL(clicked()),this,SLOT(PlayStart()));
+    scene->addItem(playButton);
+
+    Button * loadButton = new Button(QString("Cargar partida"));
+    int lxPos = this->width()/2-loadButton->boundingRect().width()/2;
+    int lyPos = 350;
+    loadButton->setPos(lxPos,lyPos);
+    //connect(playButton,SIGNAL(clicked()),this,SLOT(start()));
+    scene->addItem(loadButton);
 }
 
 
@@ -46,93 +72,100 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
 {
 
     if(evento->key()==Qt::Key_D){
-        player->MoveRight();
-        player->setParabolico(false);
-        if(colision<PersonajePrincipal,resorte>(player,resort)){
+        player->MoveRight(30);
+        player->setDerecha(true);
+        scene->setSceneRect(player->getPosx()-50,0,969,500);
 
-        player->MoveLeft();
+        if(colisionConMuro<PersonajePrincipal,resorte>(player,resort)){
+
+        player->MoveLeft(30);
 
         }
 
     }
     else if(evento->key()==Qt::Key_A){
-        player->MoveLeft();
-        player->setParabolico(false);
-       if(colision<PersonajePrincipal,resorte>(player,resort) ){
+        player->MoveLeft(30);
+        player->setDerecha(false);
+        scene->setSceneRect(player->getPosx()-50,0,969,500);
 
-        player->MoveRight();
+       if(colisionConMuro<PersonajePrincipal,resorte>(player,resort) ){
+
+        player->MoveRight(30);
 
         }
 
     }
 
-    if (evento->type() == QEvent::KeyPress ) {
+    else if(evento->key()==Qt::Key_Space){
 
-           pressedKeys += ((QKeyEvent*)evento)->key();
+         player->activarSalto(45);
+         scene->setSceneRect(player->getPosx()-50,0,969,500);
 
-           if ( pressedKeys.contains(Qt::Key_A) && pressedKeys.contains(Qt::Key_Space) )
-           {
-
-               player->setParabolico(true);
-               player->setDireccion(false);
-               player->activarSalto(70);
-               pressedKeys.clear();
-           }
-           else if ( pressedKeys.contains(Qt::Key_D) && pressedKeys.contains(Qt::Key_Space) )
-           {
-
-               player->setParabolico(true);
-               player->setDireccion(true);
-               player->activarSalto(70);
-               pressedKeys.clear();
-           }
-           else if ( pressedKeys.contains(Qt::Key_A) && pressedKeys.contains(Qt::Key_F) )
-           {
-               bomba = new Bomba(player->getPosx(),player->getPosy());
-               bomba->setDerecha(false);
-               scene->addItem(bomba);
-               bomba->activarMovimiento(70);
-               pressedKeys.clear();
-           }
-           else if ( pressedKeys.contains(Qt::Key_D) && pressedKeys.contains(Qt::Key_F) )
-           {
-               bomba = new Bomba(player->getPosx(),player->getPosy());
-               bomba->setDerecha(true);
-               scene->addItem(bomba);
-               bomba->activarMovimiento(70);
-               pressedKeys.clear();
-           }
     }
+    else if (evento->key()==Qt::Key_F){
+        bomba = new Bomba(player->getPosx(),player->getPosy());
+        if (player->getDerecha()){
+            bomba->setDerecha(true);
+        }
+        else{
+            bomba->setDerecha(false);
+
+        }
+        scene->addItem(bomba);
+        bomba->activarMovimiento(70);
+
+    }
+    else if (evento->key()==Qt::Key_Up){
+
+    }
+
 }
 
 
 
 void MainWindow::verificarPosicionPersonaje()
 {
-    if(player->getPosy()>492){
-        player->setPosy(492);
+    if(player->getPosy()>551){
+        player->setPosy(550);
         player->timer->stop();
 
-        player->setSaltando(false);
-             
-    }
-    for(int i=0;i<murosHorizontales.size()-3;i++){
-        murosHorizontales.at(i);
     }
 
 }
 
 void MainWindow::colisionResorte()
 {
-    if(colision<PersonajePrincipal,resorte>(player,resort)&& resort->getActivado()){
-        player->setVelocidadInicial(player->getVelocidadInicial()+resort->getVelocidad());
-        player->setParabolico(true);
-        player->activarSalto(70);
-    }
-    if(colision<PersonajePrincipal,resorte>(player,resort)&&player->getPosy()<resort->getPosy() && !resort->getActivado()){
-        resort->activarMovimiento();
-    }
 
+}
+
+void MainWindow::PlayStart()
+{
+    scene->clear();
+    QImage imgBackground(":imagenes/escenario-1.png");
+    QBrush background(imgBackground);
+
+    scene->setBackgroundBrush(background);
+
+    //setBackgroundBrush(QBrush(QImage("")));
+    player = new PersonajePrincipal(300,300);
+    movCircular = new ObjetoMovCircular(400,410);
+
+    scene->addItem(movCircular);
+
+    scene->addItem(player);
+
+
+    resort=new resorte(250,550,50);
+
+    scene->addItem(resort);
+
+    enemigovolador=new enemigoVolador(500,300);
+    enemigoterrestre = new enemigoTerrestre(400,550);
+
+    scene->addItem(enemigovolador);
+    scene->addItem(enemigoterrestre);
+
+    inicializacionTimers();
 }
 
 void MainWindow::inicializacionTimers()
@@ -145,7 +178,6 @@ void MainWindow::inicializacionTimers()
     }
 
     connect(timers.at(0),&QTimer::timeout,this,&MainWindow::verificarPosicionPersonaje);
-    connect(timers.at(1),&QTimer::timeout,this,&MainWindow::colisionResorte);
 }
 
 

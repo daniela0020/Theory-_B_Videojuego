@@ -1,19 +1,15 @@
 #include "bomba.h"
 
+
 void Bomba::setDerecha(bool newDerecha)
 {
     derecha = newDerecha;
 }
 
-Bomba::Bomba(float x,float y)
+Bomba::Bomba(float x,float y):objetoDinamico(x,y,25,25)
 {
-    posx = x;
-    posy = y;
     velocidadx = 0;
     velocidady = 0;
-    ancho = 25;
-    alto = 25;
-    setPos(posx,posy);
     timer = new QTimer(this);
     connect(timer,&QTimer::timeout,this,&Bomba::actualizarPosicion);
 
@@ -30,9 +26,9 @@ void Bomba::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
 }
 void Bomba::VelocidadInicial()
 {
-    velocidadx=velocidadInicial*cos(ang);
-    velocidady=velocidadInicial*sin(ang)-GR*dt;
-    velocidadInicial=sqrt((velocidadx*velocidadx)+(velocidady*velocidady));
+    velocidadx=velocidad*cos(ang);
+    velocidady=velocidad*sin(ang)-GR*dt;
+    velocidad=sqrt((velocidadx*velocidadx)+(velocidady*velocidady));
     ang=atan2(velocidady,velocidadx);
 }
 
@@ -42,7 +38,8 @@ void Bomba::actualizarPosicion()
         posx = posx + (velocidadx*dt);
         posy -= (velocidady*dt) - (0.5*GR*dt*dt);
 
-    }else{
+    }
+    else{
         posx -= (velocidadx*dt);
         posy -= (velocidady*dt) - (0.5*GR*dt*dt);
     }

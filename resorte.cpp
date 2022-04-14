@@ -2,7 +2,7 @@
 
 
 
-double resorte::getVelocidad() const
+float resorte::getVelocidad() const
 {
     return velocidad;
 }

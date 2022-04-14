@@ -10,7 +10,7 @@ class Bomba:public objetoDinamico
 {
     float velocidadx;
     float velocidady;
-    float velocidadInicial =90;
+    float velocidad =90;
     bool derecha = true;
 public:
     Bomba(float x,float y);
