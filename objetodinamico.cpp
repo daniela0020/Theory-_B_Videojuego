@@ -1,6 +1,6 @@
 #include "objetodinamico.h"
 
-double objetoDinamico::getPosx()
+float objetoDinamico::getPosx()
 {
     return posx;
 }
@@ -10,7 +10,7 @@ void objetoDinamico::setPosx(float newPosx)
     posx = newPosx;
 }
 
-double objetoDinamico::getPosy()
+float objetoDinamico::getPosy()
 {
     return posy;
 }
