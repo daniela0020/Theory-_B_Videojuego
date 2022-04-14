@@ -10,7 +10,7 @@ class personaje:public objetoDinamico
 
 public:
      personaje();
-     personaje(double posx,double posy,double ancho,double alto);
+     personaje(float posx,float posy,float ancho,float alto);
      QRectF boundingRect() const;
      void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr);
      void actualizarPosicion();
