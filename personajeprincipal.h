@@ -48,6 +48,12 @@ public:
 
     void MoveDown(float pixeles);
 
+    bool getParabolico() const;
+    void setParabolico(bool newParabolico);
+
+    bool getSaltando() const;
+    void setSaltando(bool newSaltando);
+
 signals:
 
 public slots:

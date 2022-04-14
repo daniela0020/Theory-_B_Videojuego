@@ -15,26 +15,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->graphicsView->setScene(scene);
 
 
-    //player = new PersonajePrincipal(300,550);
-
-    //movCircular = new ObjetoMovCircular(400,410);
-
-    //scene->addItem(movCircular);
-
-    //scene->addItem(player);
-
-
-    //resort=new resorte(250,550,50);
-
-    //scene->addItem(resort);
-
-    //enemigovolador=new enemigoVolador(500,300);
-
-    //scene->addItem(enemigovolador);
-
-    //inicializacionTimers();
-
-
 }
 
 void MainWindow::menu()
@@ -72,25 +52,28 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
 {
 
     if(evento->key()==Qt::Key_D){
-        player->MoveRight(30);
+        player->MoveRight(10);
         player->setDireccion(true);
-        scene->setSceneRect(player->getPosx()-50,0,969,500);
+        if(player->getSaltando())player->setParabolico(false);
 
-        if(colisionConMuro<PersonajePrincipal,resorte>(player,resort)){
+        scene->setSceneRect(player->getPosx()-150,0,969,500);
 
-        player->MoveLeft(30);
+        if(colision<PersonajePrincipal,resorte>(player,resortes,index) || colision<PersonajePrincipal,objetoEstatico>(player,muros,index)){
+
+        player->MoveLeft(10);
 
         }
 
     }
     else if(evento->key()==Qt::Key_A){
-        player->MoveLeft(30);
+        player->MoveLeft(10);
         player->setDireccion(false);
-        scene->setSceneRect(player->getPosx()-50,0,969,500);
+        if(player->getSaltando())player->setParabolico(false);
+        scene->setSceneRect(player->getPosx()-150,0,969,500);
 
-       if(colisionConMuro<PersonajePrincipal,resorte>(player,resort) ){
+       if(colision<PersonajePrincipal,resorte>(player,resortes,index) || colision<PersonajePrincipal,objetoEstatico>(player,muros,index)){
 
-        player->MoveRight(30);
+        player->MoveRight(10);
 
         }
 
@@ -98,8 +81,8 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
 
     else if(evento->key()==Qt::Key_Space){
 
-         player->activarSalto(45);
-         scene->setSceneRect(player->getPosx()-50,0,969,500);
+         player->activarSalto(70);
+         scene->setSceneRect(player->getPosx()-150,0,969,500);
 
     }
     else if (evento->key()==Qt::Key_F){
@@ -116,9 +99,7 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
         bomba->activarMovimiento(70);
 
     }
-    else if (evento->key()==Qt::Key_Up){
 
-    }
 
 }
 
@@ -126,13 +107,38 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
 
 void MainWindow::verificarPosicionPersonaje()
 {
-    if(player->getPosy()>551){
-        player->setPosy(550);
+    if(player->getPosy()>458){
+        player->setPosy(457);
         player->timer->stop();
+        player->setSaltando(false);
+        player->setParabolico(true);
+
+    }
+    else if(player->getPosx()<14){
+        player->setPosx(15);
+        if(player->getSaltando()){
+            player->setParabolico(false);
+        }
+    }
+    if(colision<PersonajePrincipal,objetoEstatico>(player,muros,index)){
+
+             player->MoveUp(1);
+             player->timer->stop();
+             player->setSaltando(false);
+
+
+    }
+    if(colision<PersonajePrincipal,resorte>(player,resortes,index)){
+        resortes.at(index)->activarMovimiento();
+        player->setSaltando(false);
+        player->setParabolico(true);
+        player->activarSalto(70);
 
     }
 
 }
+
+
 
 void MainWindow::colisionResorte()
 {
@@ -142,31 +148,36 @@ void MainWindow::colisionResorte()
 void MainWindow::PlayStart()
 {
     scene->clear();
+
     QImage imgBackground(":imagenes/escenario-1.png");
+
     QBrush background(imgBackground);
 
     scene->setBackgroundBrush(background);
 
-    //setBackgroundBrush(QBrush(QImage("")));
-    player = new PersonajePrincipal(300,300);
-    movCircular = new ObjetoMovCircular(400,410);
+    player = new PersonajePrincipal(15,380);
+
+    movCircular = new ObjetoMovCircular(410,450,50);
 
     scene->addItem(movCircular);
 
     scene->addItem(player);
 
+    resortes.append(new resorte(600 ,366,50));
 
-    resort=new resorte(250,550,50);
+    scene->addItem(resortes.back());
 
-    scene->addItem(resort);
+    enemigosvoladores.append(new enemigoVolador(500,300));
 
-    enemigovolador=new enemigoVolador(500,300);
-    enemigoterrestre = new enemigoTerrestre(400,550);
+    enemigosterrestres.append( new enemigoTerrestre(400,550));
 
-    scene->addItem(enemigovolador);
-    scene->addItem(enemigoterrestre);
+    scene->addItem(enemigosvoladores.back());
+
+    scene->addItem(enemigosterrestres.back());
 
     inicializacionTimers();
+
+    cargarObstaculosEstaticos();
 }
 
 void MainWindow::inicializacionTimers()
@@ -179,6 +190,16 @@ void MainWindow::inicializacionTimers()
     }
 
     connect(timers.at(0),&QTimer::timeout,this,&MainWindow::verificarPosicionPersonaje);
+}
+
+void MainWindow::cargarObstaculosEstaticos()
+{
+    bbdd = new baseDeDatos();
+    bbdd->getStaticObjects("muros.txt",muros);
+    for(objetoEstatico *ite:muros){
+        scene->addItem(ite);
+    }
+
 }
 
 

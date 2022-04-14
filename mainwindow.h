@@ -10,10 +10,10 @@
 #include <bomba.h>
 #include<enemigovolador.h>
 #include <button.h>
-
+#include<basededatos.h>
 #include<enemigovolador.h>
 #include<enemigoterrestre.h>
-
+#include<objetoestatico.h>
 
 
 #include<resorte.h>
@@ -35,6 +35,7 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow(QWidget *parent = nullptr);
+    int index;
     void menu();
 //    ~MainWindow();
 
@@ -45,11 +46,11 @@ private:
     PersonajePrincipal* player;
     ObjetoMovCircular* movCircular;
     QSet<int> pressedKeys;
-    enemigoVolador *enemigovolador;
-    enemigoTerrestre *enemigoterrestre;
-
-    resorte *resort;
-
+    QList<enemigoVolador *>enemigosvoladores;
+    QList<enemigoTerrestre *>enemigosterrestres;
+    baseDeDatos *bbdd;
+    QList<resorte*> resortes;
+    QList<objetoEstatico *> muros;
     QList<QTimer *> timers;
 
     Bomba *bomba;
@@ -58,6 +59,7 @@ private:
 
     void keyPressEvent(QKeyEvent *evento);
     void inicializacionTimers();
+    void cargarObstaculosEstaticos();
 
 signals:
 public slots:
@@ -69,12 +71,17 @@ public slots:
 
 };
 template<typename T1,typename T2>
-bool colisionConMuro(T1 *objeto1, T2 *objeto2)
+bool colision(T1 *objeto1, QList<T2 *> objeto2, int &index)
 {
     bool colision=false;
-    if(objeto1->collidesWithItem(objeto2)){
-        colision=true;
-    }
+   for(T2 *ite:objeto2){
+       if(objeto1->collidesWithItem(ite)){
+           index=objeto2.indexOf(ite);
+           colision=true;
+           break;
+       }
+   }
+
     return colision;
 }
 #endif // MAINWINDOW_H

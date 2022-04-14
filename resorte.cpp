@@ -22,16 +22,8 @@ resorte::resorte()
 
 }
 
-resorte::resorte(float posx, float posy, float k)
+resorte::resorte(float posx, float posy, float k):objetoDinamico(posx,posy,30,35)
 {
-
-    this->posx=posx;
-
-    this->posy=posy;
-
-    ancho=20;
-
-    alto=50;
 
     this->k=k;
 
@@ -51,6 +43,7 @@ QRectF resorte::boundingRect() const
 void resorte::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     painter->setBrush(Qt::green);
+
     painter->drawRect(boundingRect());
 }
 
@@ -78,8 +71,6 @@ void resorte::actualizarPosicion()
 {
     float oldPosy=posy;
     posy+=sin(angu);
-    velocidad=30*abs(W*cos(angu));
-
     alto+=(oldPosy-posy);
     setPos(posx,posy);
     actualizarValores();

@@ -18,7 +18,27 @@ float PersonajePrincipal::getVelocidad() const
     return velocidad;
 }
 
-PersonajePrincipal::PersonajePrincipal(float x, float y):objetoDinamico(x,y,25,25)
+bool PersonajePrincipal::getParabolico() const
+{
+    return parabolico;
+}
+
+void PersonajePrincipal::setParabolico(bool newParabolico)
+{
+    parabolico = newParabolico;
+}
+
+bool PersonajePrincipal::getSaltando() const
+{
+    return saltando;
+}
+
+void PersonajePrincipal::setSaltando(bool newSaltando)
+{
+    saltando = newSaltando;
+}
+
+PersonajePrincipal::PersonajePrincipal(float x, float y):objetoDinamico(x,y,30,50)
 {
     velocidadx = 0;
     velocidady = 0;
@@ -36,7 +56,7 @@ QRectF PersonajePrincipal::boundingRect() const
 
 void PersonajePrincipal::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    painter->setBrush(Qt::black);
+    painter->setBrush(Qt::green);
     painter->drawRect(boundingRect());
 }
 
@@ -55,27 +75,36 @@ void PersonajePrincipal::VelocidadInicial()
 
 void PersonajePrincipal::actualizarPosicion()
 {
-    if(direccion){
-        posx = posx + (velocidadx*Dt);
-        posy -= (velocidady*Dt) - (0.5*GR*Dt*Dt);
+    if(parabolico){
+        if(direccion){
+            posx = posx + (velocidadx*Dt);
+            posy -= (velocidady*Dt) - (0.5*GR*Dt*Dt);
 
-    }else{
-        posx -= (velocidadx*Dt);
-        posy -= (velocidady*Dt) - (0.5*GR*Dt*Dt);
+        }else{
+            posx -= (velocidadx*Dt);
+            posy -= (velocidady*Dt) - (0.5*GR*Dt*Dt);
+        }
+
+    }
+    else{
+        ang=0;
+        posy -= 5*(velocidady*Dt) - (0.5*GR*Dt*Dt);
     }
 
     setPos(posx,posy);
     VelocidadInicial();
 
-
-
 }
 
 void PersonajePrincipal::activarSalto(double ang)
 {
-    this->ang = ang*(PI/180);
-    VelocidadInicial();
-    timer->start(10);
+    if(!saltando){
+        this->ang = ang*(PI/180);
+        velocidad=50;
+        VelocidadInicial();
+        timer->start(10);
+        saltando=true;
+    }
 
 }
 

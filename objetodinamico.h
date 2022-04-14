@@ -13,9 +13,9 @@ class objetoDinamico:public QObject,public QGraphicsItem
 {
 public:
     //atributos publicos para su facil empleo en la herencia
-    float posx=0,posy=0,alto=0;
+    float posx=0,posy=0,alto=0,ancho=0;
 
-    int ancho=0,filas=0, columnas=0;
+    int filas=0, columnas=0;
 
 
 
