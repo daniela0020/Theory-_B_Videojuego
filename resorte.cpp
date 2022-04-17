@@ -27,6 +27,8 @@ resorte::resorte(float posx, float posy, float k):objetoDinamico(posx,posy,30,35
 
     this->k=k;
 
+    equilibrio=posy;
+
     setPos(posx,posy);
 
     W=(k/Masa);
@@ -56,7 +58,7 @@ void resorte::activarMovimiento()
 {
     activado=true;
 
-    timer->start(10);
+    timer->start(20);
 
     connect(timer,&QTimer::timeout,this,&resorte::actualizarPosicion);
 
@@ -76,11 +78,13 @@ void resorte::actualizarPosicion()
     actualizarValores();
 
     counterTime++;
-    if(counterTime>500){
+
+    if(counterTime>1000){
+        posy=equilibrio;
+        setPos(posx,posy);
         activado=false;
         timer->stop();
         counterTime=0;
-
     }
 }
 

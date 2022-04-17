@@ -8,6 +8,7 @@ class Enemigo:public objetoDinamico
 public:
     Enemigo(float posx, float posy);
     QRectF boundingRect() const ;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr);
 signals:
 public slots:
     void actualizarPosicion();

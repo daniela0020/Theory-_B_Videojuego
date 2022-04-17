@@ -20,7 +20,7 @@ MainWindow::MainWindow(QWidget *parent)
 void MainWindow::menu()
 {
     scene->clear();
-    //setBackgroundBrush(QBrush(QImage("")));
+
     QGraphicsTextItem * titleText = new QGraphicsTextItem(QString("Theory B"));
     QFont titleFont("comic sans",50);
     titleText->setFont(titleFont);
@@ -58,7 +58,7 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
 
         scene->setSceneRect(player->getPosx()-100,0,969,500);
 
-        if(colision<PersonajePrincipal,resorte>(player,resortes,index) || colision<PersonajePrincipal,objetoEstatico>(player,muros,index)){
+        if(colision<PersonajePrincipal,objetoEstatico>(player,muros,index)){
 
         player->MoveLeft(10);
 
@@ -71,7 +71,7 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
         if(player->getSaltando())player->setParabolico(false);
         scene->setSceneRect(player->getPosx()-100,0,969,500);
 
-       if(colision<PersonajePrincipal,resorte>(player,resortes,index) || colision<PersonajePrincipal,objetoEstatico>(player,muros,index)){
+       if(colision<PersonajePrincipal,objetoEstatico>(player,muros,index)){
 
         player->MoveRight(10);
 
@@ -81,7 +81,7 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
 
     else if(evento->key()==Qt::Key_Space){
 
-         player->activarSalto(70);
+         player->activarSalto(70,40);
          scene->setSceneRect(player->getPosx()-100,0,969,500);
 
     }
@@ -114,38 +114,52 @@ void MainWindow::verificarPosicionPersonaje()
         player->setParabolico(true);
 
     }
-    else if(player->getPosx()<14){
-        player->setPosx(15);
+    if(player->getPosx()<14){
+        player->MoveRight(3);
+        if(player->getSaltando()){
+            player->setParabolico(false);
+        }
+    }
+    else if(player->getPosx()>3360){
+        player->MoveLeft(3);
         if(player->getSaltando()){
             player->setParabolico(false);
         }
     }
     if(colision<PersonajePrincipal,objetoEstatico>(player,muros,index)){
 
-             player->MoveUp(1);
-             player->timer->stop();
-             player->setSaltando(false);
-             player->collidesWithItem(muros.back());
+        if(player->getPosy()>=muros.at(index)->getPosy()){
+
+            player->setParabolico(false);
+
+        }else if(player->getPosy()<=muros.at(index)->getPosy()){
+                player->MoveUp(1);
+                player->timer->stop();
+                player->setSaltando(false);
+                player->setParabolico(true);
+        }
+
+
 
 
     }
-    if(colision<PersonajePrincipal,resorte>(player,resortes,index)){
 
-       // resortes.at(index)->activarMovimiento();
+    if(colision<PersonajePrincipal,resorte>(player,resortes,index) && !resortes.at(index)->getActivado()){
+
+        resortes.at(index)->activarMovimiento();
         player->setSaltando(false);
+        player->setDireccion(true);
         player->setParabolico(true);
-        player->activarSalto(70);
+        player->activarSalto(70,80);
 
     }
 
-}
-
-
-
-void MainWindow::colisionResorte()
-{
 
 }
+
+
+
+
 
 void MainWindow::PlayStart()
 {
@@ -165,6 +179,10 @@ void MainWindow::PlayStart()
 
     cargarBolas("bolasFuego.txt",bolasFuego);
 
+    cargarEnemigos("enemigos.txt",enemigos);
+
+    cargarResortes("resortes.txt",resortes);
+
     inicializacionTimers();
 
 
@@ -182,16 +200,16 @@ void MainWindow::inicializacionTimers()
     connect(timers.at(0),&QTimer::timeout,this,&MainWindow::verificarPosicionPersonaje);
 }
 
-void MainWindow::cargarObjetoEstatico(string nombreFichero, QList<objetoEstatico *> lista)
+void MainWindow::cargarObjetoEstatico(string nombreFichero, QList<objetoEstatico *> &lista)
 {
-    bbdd = new baseDeDatos();
+
     bbdd->getStaticObjects(nombreFichero,lista);
     for(objetoEstatico *ite:lista){
         scene->addItem(ite);
     }
 }
 
-void MainWindow::cargarBolas(string nombreFichero, QList<ObjetoMovCircular*> listaBolas)
+void MainWindow::cargarBolas(string nombreFichero, QList<ObjetoMovCircular*> &listaBolas)
 {
     bbdd->getBolasFuego(nombreFichero,listaBolas);
     for(ObjetoMovCircular *ite:listaBolas){
@@ -199,7 +217,7 @@ void MainWindow::cargarBolas(string nombreFichero, QList<ObjetoMovCircular*> lis
     }
 }
 
-void MainWindow::cargarEnemigos(string nombreFichero, QList<Enemigo *> listaEnemigos)
+void MainWindow::cargarEnemigos(string nombreFichero, QList<Enemigo *> &listaEnemigos)
 {
     bbdd->getEnemigos(nombreFichero,listaEnemigos);
     for(Enemigo *ite:listaEnemigos){
@@ -207,7 +225,7 @@ void MainWindow::cargarEnemigos(string nombreFichero, QList<Enemigo *> listaEnem
     }
 }
 
-void MainWindow::cargarResortes(string nombreFichero, QList<resorte *> listaResortes)
+void MainWindow::cargarResortes(string nombreFichero, QList<resorte *> &listaResortes)
 {
     bbdd->getResortes(nombreFichero,listaResortes);
     for(resorte *ite:listaResortes){
@@ -215,13 +233,6 @@ void MainWindow::cargarResortes(string nombreFichero, QList<resorte *> listaReso
     }
 }
 
-//void MainWindow::cargarObjetoDinamico(string nombreFichero, QList<objetoDinamico *> lista)
-//{
-//    bbdd = new baseDeDatos();
-//    bbdd->getDinamicObjects(nombreFichero,lista);
-//    for(objetoDinamico *ite:lista){
-//        scene->addItem(ite);
-//    }
-//}
+
 
 

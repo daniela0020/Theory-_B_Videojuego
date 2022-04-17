@@ -1,5 +1,25 @@
 #include "objetoestatico.h"
 
+float objetoEstatico::getPosy() const
+{
+    return posy;
+}
+
+void objetoEstatico::setPosy(float newPosy)
+{
+    posy = newPosy;
+}
+
+float objetoEstatico::getPosx() const
+{
+    return posx;
+}
+
+void objetoEstatico::setPosx(float newPosx)
+{
+    posx = newPosx;
+}
+
 objetoEstatico::objetoEstatico()
 {
 
@@ -20,7 +40,7 @@ QRectF objetoEstatico::boundingRect() const
 }
 void objetoEstatico::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    painter->setBrush(Qt::green);
+
 
     painter->drawRect(boundingRect());
 }

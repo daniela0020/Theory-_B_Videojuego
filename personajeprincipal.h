@@ -26,7 +26,7 @@ public:
 
     void actualizarImagen();
 
-    void activarSalto(double angulo);
+    void activarSalto(double angulo, float velocidad);
 
     void VelocidadInicial();
 
@@ -35,10 +35,6 @@ public:
     void setDireccion(bool newDerecha);
 
     bool getDireccion();
-
-    void setVelocidad(float newVelocidadPaso);
-
-    float getVelocidad() const;
 
     void MoveRight(float pixeles);
 

@@ -15,6 +15,10 @@ public:
     objetoEstatico(float posx,float posy,float ancho,float alto);
     QRectF boundingRect() const ;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr);
+    float getPosy() const;
+    void setPosy(float newPosy);
+    float getPosx() const;
+    void setPosx(float newPosx);
 };
 
 #endif // OBJETOESTATICO_H

@@ -8,16 +8,6 @@ bool PersonajePrincipal::getDireccion(){
     return direccion;
 }
 
-void PersonajePrincipal::setVelocidad(float newVelocidad)
-{
-    velocidad += newVelocidad;
-}
-
-float PersonajePrincipal::getVelocidad() const
-{
-    return velocidad;
-}
-
 bool PersonajePrincipal::getParabolico() const
 {
     return parabolico;
@@ -88,7 +78,7 @@ void PersonajePrincipal::actualizarPosicion()
     }
     else{
         ang=0;
-        posy -= 5*(velocidady*Dt) - (0.5*GR*Dt*Dt);
+        posy -= 15*(velocidady*Dt) - (0.5*GR*Dt*Dt);
     }
 
     setPos(posx,posy);
@@ -96,11 +86,11 @@ void PersonajePrincipal::actualizarPosicion()
 
 }
 
-void PersonajePrincipal::activarSalto(double ang)
+void PersonajePrincipal::activarSalto(double ang,float velocidad)
 {
     if(!saltando){
         this->ang = ang*(PI/180);
-        velocidad=50;
+        this->velocidad=velocidad;
         VelocidadInicial();
         timer->start(10);
         saltando=true;

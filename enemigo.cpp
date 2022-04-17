@@ -26,6 +26,12 @@ QRectF Enemigo::boundingRect() const
 {
     return QRectF(-ancho,-alto,ancho,alto);
 }
+
+void Enemigo::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+    painter->setBrush(Qt::blue);
+    painter->drawRect(boundingRect());
+}
 void Enemigo::actualizarPosicion()
 {
     posx+=5*sin(angu);
