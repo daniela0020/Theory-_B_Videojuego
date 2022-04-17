@@ -11,7 +11,8 @@ public:
     utilidades();
 
     static int contadorDigitos(string numero);
-    static int conversionStr2Int(string numero);
+    static float conversionStr2float(string numero);
+    static int conversionStrInt(string numero);
     static QString conversionInt2Str(int numero);
 };
 #endif // UTILIDADES_H

@@ -14,7 +14,7 @@
 #include<enemigovolador.h>
 #include<enemigoterrestre.h>
 #include<objetoestatico.h>
-
+#include<string.h>
 
 #include<resorte.h>
 
@@ -44,22 +44,25 @@ private:
     QGraphicsScene *scene;
 
     PersonajePrincipal* player;
-    ObjetoMovCircular* movCircular;
+    QList<ObjetoMovCircular*> bolasFuego;
     QSet<int> pressedKeys;
-    QList<enemigoVolador *>enemigosvoladores;
-    QList<enemigoTerrestre *>enemigosterrestres;
+    QList<Enemigo *>enemigosvoladores;
+    QList<Enemigo *>enemigosterrestres;
     baseDeDatos *bbdd;
     QList<resorte*> resortes;
     QList<objetoEstatico *> muros;
     QList<QTimer *> timers;
 
-    Bomba *bomba;
+    QList <Bomba *> bombas;
  
 
 
     void keyPressEvent(QKeyEvent *evento);
     void inicializacionTimers();
-    void cargarObstaculosEstaticos();
+    void cargarObjetoEstatico(string nombreFichero,QList<objetoEstatico*> lista);
+    void cargarBolas(string nombreFichero,QList<ObjetoMovCircular*> listaBolas);
+    void cargarEnemigos(string nombreFichero,QList<Enemigo*> listaEnemigos);
+    void cargarResortes(string nombreFichero,QList<resorte*> listaResortes);
 
 signals:
 public slots:

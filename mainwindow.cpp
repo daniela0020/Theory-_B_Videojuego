@@ -86,17 +86,17 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
 
     }
     else if (evento->key()==Qt::Key_F){
-        bomba = new Bomba(player->getPosx(),player->getPosy());
+        bombas.append( new Bomba(player->getPosx(),player->getPosy()));
 
         if (player->getDireccion()){
-            bomba->setDerecha(true);
+            bombas.back()->setDerecha(true);
         }
         else{
-            bomba->setDerecha(false);
+            bombas.back()->setDerecha(false);
 
         }
-        scene->addItem(bomba);
-        bomba->activarMovimiento(30);
+        scene->addItem(bombas.back());
+        bombas.back()->activarMovimiento(30);
 
     }
 
@@ -125,11 +125,13 @@ void MainWindow::verificarPosicionPersonaje()
              player->MoveUp(1);
              player->timer->stop();
              player->setSaltando(false);
+             player->collidesWithItem(muros.back());
 
 
     }
     if(colision<PersonajePrincipal,resorte>(player,resortes,index)){
-        resortes.at(index)->activarMovimiento();
+
+       // resortes.at(index)->activarMovimiento();
         player->setSaltando(false);
         player->setParabolico(true);
         player->activarSalto(70);
@@ -157,27 +159,15 @@ void MainWindow::PlayStart()
 
     player = new PersonajePrincipal(15,380);
 
-    movCircular = new ObjetoMovCircular(410,450,50);
-
-    scene->addItem(movCircular);
-
     scene->addItem(player);
 
-    resortes.append(new resorte(600 ,366,50));
+    cargarObjetoEstatico("muros.txt",muros);
 
-    scene->addItem(resortes.back());
-
-    enemigosvoladores.append(new enemigoVolador(500,300));
-
-    enemigosterrestres.append( new enemigoTerrestre(400,550));
-
-    scene->addItem(enemigosvoladores.back());
-
-    scene->addItem(enemigosterrestres.back());
+    cargarBolas("bolasFuego.txt",bolasFuego);
 
     inicializacionTimers();
 
-    cargarObstaculosEstaticos();
+
 }
 
 void MainWindow::inicializacionTimers()
@@ -192,20 +182,46 @@ void MainWindow::inicializacionTimers()
     connect(timers.at(0),&QTimer::timeout,this,&MainWindow::verificarPosicionPersonaje);
 }
 
-void MainWindow::cargarObstaculosEstaticos()
+void MainWindow::cargarObjetoEstatico(string nombreFichero, QList<objetoEstatico *> lista)
 {
     bbdd = new baseDeDatos();
-    bbdd->getStaticObjects("muros.txt",muros);
-    for(objetoEstatico *ite:muros){
+    bbdd->getStaticObjects(nombreFichero,lista);
+    for(objetoEstatico *ite:lista){
         scene->addItem(ite);
     }
-
 }
 
+void MainWindow::cargarBolas(string nombreFichero, QList<ObjetoMovCircular*> listaBolas)
+{
+    bbdd->getBolasFuego(nombreFichero,listaBolas);
+    for(ObjetoMovCircular *ite:listaBolas){
+        scene->addItem(ite);
+    }
+}
 
+void MainWindow::cargarEnemigos(string nombreFichero, QList<Enemigo *> listaEnemigos)
+{
+    bbdd->getEnemigos(nombreFichero,listaEnemigos);
+    for(Enemigo *ite:listaEnemigos){
+        scene->addItem(ite);
+    }
+}
 
+void MainWindow::cargarResortes(string nombreFichero, QList<resorte *> listaResortes)
+{
+    bbdd->getResortes(nombreFichero,listaResortes);
+    for(resorte *ite:listaResortes){
+        scene->addItem(ite);
+    }
+}
 
-
-
+//void MainWindow::cargarObjetoDinamico(string nombreFichero, QList<objetoDinamico *> lista)
+//{
+//    bbdd = new baseDeDatos();
+//    bbdd->getDinamicObjects(nombreFichero,lista);
+//    for(objetoDinamico *ite:lista){
+//        scene->addItem(ite);
+//    }
+//}
 
 

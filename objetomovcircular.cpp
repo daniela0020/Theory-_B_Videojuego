@@ -1,14 +1,12 @@
 #include "objetomovcircular.h"
 
-ObjetoMovCircular::ObjetoMovCircular(int x,int y,int distancia)
+ObjetoMovCircular::ObjetoMovCircular(float x,float y,float distancia)
 {
     angulo = 0;
-    this->distancia = distancia;
     radio=12;
-    this->x = x;
-    this->y = y;
-    ancho = 10;
-    alto = 10;
+    this->x=x;
+    this->y=y;
+    this->distancia=distancia;
     timer = new QTimer(this);
     connect(timer,&QTimer::timeout,this,&ObjetoMovCircular::actualizarPosicion);
 

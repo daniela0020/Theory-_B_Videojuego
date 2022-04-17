@@ -24,7 +24,10 @@ public:
     objetoDinamico();
     objetoDinamico(float posx,float posy,int ancho,int alto);
 
+
     //metodos
+    QRectF boundingRect() const ;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr);
     float getPosx() ;
     void setPosx(float newPosx);
     float getPosy() ;

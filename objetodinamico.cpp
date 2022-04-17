@@ -49,6 +49,17 @@ objetoDinamico::objetoDinamico(float posx,float posy,int ancho,int alto)
 
 }
 
+
+QRectF objetoDinamico::boundingRect() const
+{
+    return QRectF();
+}
+
+void objetoDinamico::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+
+}
+
 void objetoDinamico::actualizarPosicion()
 {
 

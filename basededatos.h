@@ -4,8 +4,10 @@
 #include<string>
 #include<fstream>
 #include<utilidades.h>
+#include<resorte.h>
 #include<objetoestatico.h>
-#include<objetodinamico.h>
+#include<objetomovcircular.h>
+#include<enemigo.h>
 
 using namespace std;
 
@@ -19,7 +21,9 @@ public:
     void getPartida();
     void setPartida();
     void getStaticObjects(string fileName, QList<objetoEstatico*> &objects);
-    void getDinamicObjects(string fileName, QList<objetoDinamico*> &objects);
+    void getBolasFuego(string fileName, QList<ObjetoMovCircular*> &objects);
+    void getEnemigos(string fileName, QList<Enemigo*> &objects);
+    void getResortes(string fileName, QList<resorte*> &objects);
 
 
 };
