@@ -1,6 +1,5 @@
 #include "bomba.h"
 
-
 void Bomba::setDerecha(bool newDerecha)
 {
     derecha = newDerecha;
@@ -26,9 +25,9 @@ void Bomba::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
 }
 void Bomba::VelocidadInicial()
 {
-    velocidadx=velocidad*cos(ang);
-    velocidady=velocidad*sin(ang)-GR*dt;
-    velocidad=sqrt((velocidadx*velocidadx)+(velocidady*velocidady));
+    velocidadx=velocidadInicial*cos(ang);
+    velocidady=velocidadInicial*sin(ang)-GR*dt;
+    velocidadInicial=sqrt((velocidadx*velocidadx)+(velocidady*velocidady));
     ang=atan2(velocidady,velocidadx);
 }
 
