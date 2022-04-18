@@ -1,12 +1,12 @@
 #include "objetomovcircular.h"
 
-ObjetoMovCircular::ObjetoMovCircular(int k,int h)
+ObjetoMovCircular::ObjetoMovCircular(float x,float y,float distancia)
 {
     angulo = 0;
-    distancia = 125;
+    this->distancia = distancia;
     radio=12;
-    this->h = h;
-    this->k = k;
+    this->x = x;
+    this->y = y;
     ancho = 10;
     alto = 10;
     timer = new QTimer(this);
@@ -23,15 +23,15 @@ QRectF ObjetoMovCircular::boundingRect() const
 
 void ObjetoMovCircular::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    painter->setBrush(Qt::black);
+    painter->setBrush(Qt::red);
     painter->drawEllipse(boundingRect());
 }
 
 void ObjetoMovCircular::actualizarPosicion()
 
 { 
-    posx = (distancia*cos(angulo)) + h;
-    posy = (distancia*sin(angulo)) + k;
+    posx = (distancia*cos(angulo)) + x;
+    posy = (distancia*sin(angulo)) + y;
     angulo+=Wa*dt;
     setPos(posx,posy);
 }

@@ -12,8 +12,9 @@ private:
     float velocidadx;
     float velocidady;
     float velocidad = 50;
-    float ang = 0;
-    bool direccion=true,parabolico=true,saltando=false;
+    float ang = 0; 
+    float alturaMax=350;
+    bool direccion=true,parabolico=true,saltando=false,subiendo=false;
 
 public:
 
@@ -24,8 +25,6 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr);
 
     void actualizarImagen();
-
-    void activarSalto(double angulo);
 
     void VelocidadInicial();
 
@@ -46,6 +45,22 @@ public:
     void MoveUp(float pixeles);
     
     void MoveDown(float pixeles);
+
+    void activarSalto(float angulo, float velocidad);
+
+    bool getParabolico() const;
+    void setParabolico(bool newParabolico);
+
+    bool getSaltando() const;
+    void setSaltando(bool newSaltando);
+
+    int getVidas() const;
+    void setVidas(int newVidas);
+
+    bool getSubiendo() const;
+    void setSubiendo(bool newSubiendo);
+
+    void establecerPosicion(float posx,float posy);
 
 signals:
 

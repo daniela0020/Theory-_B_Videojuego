@@ -9,11 +9,11 @@
 
 class ObjetoMovCircular:public objetoDinamico
 {
-    int h,k;
+    float x,y;
     float angulo,radio,distancia;
 
 public:
-    ObjetoMovCircular(int k,int h);
+    ObjetoMovCircular(float k,float h,float distancia);
     QRectF boundingRect() const ;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr);
 

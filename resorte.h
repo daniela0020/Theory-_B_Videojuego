@@ -7,12 +7,11 @@
 #include<objetodinamico.h>
 #include<QMetaType>
 #define B 20.0
-#define dT 1
 
 
 class resorte:public objetoDinamico
 {
-    float k=0,W=0,angu=0,velocidad=0;
+    float k=0,W=0,angu=0,velocidad=0,dT = 0.1;
     int counterTime=0;
     bool activado=false;
 

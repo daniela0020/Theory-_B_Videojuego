@@ -16,7 +16,30 @@ int utilidades::contadorDigitos(string numero)
     return digitos;
 }
 
-int utilidades::conversionStr2Int(string numero)
+float utilidades::conversionStr2float(string numero)
+{
+    float multi=1,char2int=0,signo=1;
+
+    for(int i=0;i<contadorDigitos(numero)-1;++i)
+    {
+        multi*=10;
+    }
+
+    for(int i=0;i<numero.length();++i){
+
+        if(numero.at(i)!='-'){
+            char2int+=(numero.at(i)-48)*multi;
+            multi/=10;
+        }else{
+            signo=-1;
+        }
+
+    }
+
+    return char2int*signo;
+}
+
+int utilidades::conversionStrInt(string numero)
 {
     int multi=1,char2int=0,signo=1;
 
@@ -38,6 +61,7 @@ int utilidades::conversionStr2Int(string numero)
 
     return char2int*signo;
 }
+
 
 QString utilidades::conversionInt2Str(int numero)
 {

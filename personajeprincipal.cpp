@@ -35,7 +35,7 @@ QRectF PersonajePrincipal::boundingRect() const
 
 void PersonajePrincipal::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    painter->setBrush(Qt::black);
+    painter->setBrush(Qt::green);
     painter->drawRect(boundingRect());
 }
 
@@ -54,27 +54,42 @@ void PersonajePrincipal::VelocidadInicial()
 
 void PersonajePrincipal::actualizarPosicion()
 {
-    if(direccion){
-        posx = posx + (velocidadx*Dt);
-        posy -= (velocidady*Dt) - (0.5*GR*Dt*Dt);
-
-    }else{
-        posx -= (velocidadx*Dt);
-        posy -= (velocidady*Dt) - (0.5*GR*Dt*Dt);
-    }
-
     setPos(posx,posy);
     VelocidadInicial();
+    if(parabolico){
+          if(direccion){
+              posx = posx + (velocidadx*Dt);
+              posy -= (velocidady*Dt) - (0.5*GR*Dt*Dt);
 
+          }else{
+              posx -= (velocidadx*Dt);
+              posy -= (velocidady*Dt) - (0.5*GR*Dt*Dt);
+          }
+          if(posy<alturaMax){
+              subiendo=false;
+          }
+      }
+      else{
+          ang=0;
+          posy -= 15*(velocidady*Dt) - (0.5*GR*Dt*Dt);
 
+      }
+
+      setPos(posx,posy);
+      VelocidadInicial();
 
 }
 
-void PersonajePrincipal::activarSalto(double ang)
+void PersonajePrincipal::activarSalto(float ang, float velocidad)
 {
-    this->ang = ang*(PI/180);
-    VelocidadInicial();
-    timer->start(10);
+    if(!saltando){
+        this->ang = ang*(PI/180);
+        this->velocidad=velocidad;
+        VelocidadInicial();
+        timer->start(10);
+        saltando=true;
+        subiendo=true;
+    }
 
 }
 
@@ -102,6 +117,38 @@ void PersonajePrincipal::MoveDown(float velocidad)
 {
     this->posy+=velocidad;
 
+    setPos(posx,posy);
+}
+
+bool PersonajePrincipal::getParabolico() const
+{
+    return parabolico;
+}
+
+void PersonajePrincipal::setParabolico(bool newParabolico)
+{
+    parabolico = newParabolico;
+}
+
+bool PersonajePrincipal::getSaltando() const
+{
+    return saltando;
+}
+
+void PersonajePrincipal::setSaltando(bool newSaltando)
+{
+    saltando = newSaltando;
+}
+
+bool PersonajePrincipal::getSubiendo() const
+{
+    return subiendo;
+}
+
+void PersonajePrincipal::establecerPosicion(float posx, float posy)
+{
+    this->posx=posx;
+    this->posy=posy;
     setPos(posx,posy);
 }
 

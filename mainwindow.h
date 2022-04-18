@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-
+#include<ui_ventana.h>
+#include<ventana.h>
 #include <QMainWindow>
 #include<QGraphicsScene>
 #include<QScreen>
@@ -8,17 +9,16 @@
 #include"objetomovcircular.h"
 #include <QKeyEvent>
 #include <bomba.h>
+#include <QLineEdit>
+#include <QLabel>
 #include <button.h>
 #include <tiempo.h>
-#include<enemigovolador.h>
-#include<enemigoterrestre.h>
 #include<vidas.h>
 #include<angulo.h>
-
+#include<enemigo.h>
+#include<basededatos.h>
+#include<objetoEstatico.h>
 #include<resorte.h>
-
-
-#include<QMetaType>
 
 
 
@@ -35,47 +35,44 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     void menu();
+    int index;
 //    ~MainWindow();
 
 private:
     Ui::MainWindow *ui;
     QGraphicsScene *scene;
-
     PersonajePrincipal* player;
-    ObjetoMovCircular* movCircular;
-    QSet<int> pressedKeys;
-    enemigoVolador *enemigovolador;
-    enemigoTerrestre *enemigoterrestre;
+    QList<ObjetoMovCircular*> bolasFuego;
+    QList<Enemigo *>enemigos;
+    baseDeDatos *bbdd;
+    QList<resorte*> resortes;
+    QList<objetoEstatico *> muros;
+    QList<QTimer *> timers;
+    QList <Bomba *> bombas;
+    Ui_Ventana * ventana;
     Tiempo * time;
     Vidas * vida;
     Angulo * angulo;
-
-    resorte *resort;
-
-    QList<QTimer *> timers;
-
-    Bomba *bomba;
  
 
     void keyPressEvent(QKeyEvent *evento);
     void inicializacionTimers();
+    void cargarObjetoEstatico(string nombreFichero,QList<objetoEstatico*> &lista);
+    void cargarBolas(string nombreFichero,QList<ObjetoMovCircular*> &listaBolas);
+    void cargarEnemigos(string nombreFichero,QList<Enemigo*> &listaEnemigos);
+    void cargarResortes(string nombreFichero,QList<resorte*> &listaResortes);
+    bool colisionMuros(int &index);
+    bool colisionEnemigos();
+    bool colisionBolasFuego();
+    bool colisionResortes(int &index);
    
 signals:
 public slots:
 
     void verificarPosicionPersonaje();
-    void colisionResorte();
     void PlayStart();
-
+    void NuevaPartida();
 
 };
-template<typename T1,typename T2>
-bool colisionConMuro(T1 *objeto1, T2 *objeto2)
-{
-    bool colision=false;
-    if(objeto1->collidesWithItem(objeto2)){
-        colision=true;
-    }
-    return colision;
-}
+
 #endif // MAINWINDOW_H
