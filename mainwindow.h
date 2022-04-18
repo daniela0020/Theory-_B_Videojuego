@@ -61,6 +61,10 @@ private:
     void cargarBolas(string nombreFichero,QList<ObjetoMovCircular*> &listaBolas);
     void cargarEnemigos(string nombreFichero,QList<Enemigo*> &listaEnemigos);
     void cargarResortes(string nombreFichero,QList<resorte*> &listaResortes);
+    bool colisionMuros(int &index);
+    bool colisionEnemigos();
+    bool colisionBolasFuego();
+    bool colisionResortes(int &index);
 
 signals:
 public slots:
@@ -70,18 +74,5 @@ public slots:
 
 
 };
-template<typename T1,typename T2>
-bool colision(T1 *objeto1, QList<T2 *> objeto2, int &index)
-{
-    bool colision=false;
-    for(T2 *ite:objeto2){
-        if(objeto1->collidesWithItem(ite)){
-            index=objeto2.indexOf(ite);
-            colision=true;
-            break;
-        }
-    }
 
-    return colision;
-}
 #endif // MAINWINDOW_H

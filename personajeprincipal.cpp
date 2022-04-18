@@ -28,6 +28,26 @@ void PersonajePrincipal::setSaltando(bool newSaltando)
     saltando = newSaltando;
 }
 
+int PersonajePrincipal::getVidas() const
+{
+    return vidas;
+}
+
+void PersonajePrincipal::setVidas(int newVidas)
+{
+    vidas = newVidas;
+}
+
+bool PersonajePrincipal::getSubiendo() const
+{
+    return subiendo;
+}
+
+void PersonajePrincipal::setSubiendo(bool newSubiendo)
+{
+    subiendo = newSubiendo;
+}
+
 PersonajePrincipal::PersonajePrincipal(float x, float y):objetoDinamico(x,y,30,50)
 {
     velocidadx = 0;
@@ -74,11 +94,14 @@ void PersonajePrincipal::actualizarPosicion()
             posx -= (velocidadx*Dt);
             posy -= (velocidady*Dt) - (0.5*GR*Dt*Dt);
         }
-
+        if(posy<alturaMax){
+            subiendo=false;
+        }
     }
     else{
         ang=0;
         posy -= 15*(velocidady*Dt) - (0.5*GR*Dt*Dt);
+
     }
 
     setPos(posx,posy);
@@ -94,6 +117,7 @@ void PersonajePrincipal::activarSalto(double ang,float velocidad)
         VelocidadInicial();
         timer->start(10);
         saltando=true;
+        subiendo=true;
     }
 
 }

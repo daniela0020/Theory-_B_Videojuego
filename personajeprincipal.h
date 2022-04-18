@@ -12,9 +12,10 @@ private:
     float velocidadx;
     float velocidady;
     float velocidad = 50;
+    float alturaMax=350;
     float ang = 0;
     int vidas;
-    bool direccion=true,parabolico=true,saltando=false;
+    bool direccion=true,parabolico=true,saltando=false,subiendo=false;
 
 public:
 
@@ -49,6 +50,13 @@ public:
 
     bool getSaltando() const;
     void setSaltando(bool newSaltando);
+
+    int getVidas() const;
+    void setVidas(int newVidas);
+
+    bool getSubiendo() const;
+
+    void setSubiendo(bool newSubiendo);
 
 signals:
 

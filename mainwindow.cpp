@@ -54,39 +54,32 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
     if(evento->key()==Qt::Key_D){
         player->MoveRight(10);
         player->setDireccion(true);
-        if(player->getSaltando())player->setParabolico(false);
-
         scene->setSceneRect(player->getPosx()-100,0,969,500);
-
-        if(colision<PersonajePrincipal,objetoEstatico>(player,muros,index)){
-
-        player->MoveLeft(10);
-
-        }
+        if(player->getSaltando()){
+            player->setParabolico(false);
+       }
 
     }
     else if(evento->key()==Qt::Key_A){
         player->MoveLeft(10);
         player->setDireccion(false);
-        if(player->getSaltando())player->setParabolico(false);
         scene->setSceneRect(player->getPosx()-100,0,969,500);
 
-       if(colision<PersonajePrincipal,objetoEstatico>(player,muros,index)){
-
-        player->MoveRight(10);
-
+        if(player->getSaltando())
+        {
+            player->setParabolico(false);
         }
 
     }
 
     else if(evento->key()==Qt::Key_Space){
 
-         player->activarSalto(70,40);
-         scene->setSceneRect(player->getPosx()-100,0,969,500);
+        player->activarSalto(70,50);
+        scene->setSceneRect(player->getPosx()-100,0,969,500);
 
     }
     else if (evento->key()==Qt::Key_F){
-        bombas.append( new Bomba(player->getPosx(),player->getPosy()));
+        bombas.append(new Bomba(player->getPosx(),player->getPosy()));
 
         if (player->getDireccion()){
             bombas.back()->setDerecha(true);
@@ -101,8 +94,8 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
     }
 
 
-}
 
+}
 
 
 void MainWindow::verificarPosicionPersonaje()
@@ -114,7 +107,7 @@ void MainWindow::verificarPosicionPersonaje()
         player->setParabolico(true);
 
     }
-    if(player->getPosx()<14){
+    else if(player->getPosx()<14){
         player->MoveRight(3);
         if(player->getSaltando()){
             player->setParabolico(false);
@@ -126,25 +119,34 @@ void MainWindow::verificarPosicionPersonaje()
             player->setParabolico(false);
         }
     }
-    if(colision<PersonajePrincipal,objetoEstatico>(player,muros,index)){
+    if(player->getSaltando()){
 
-        if(player->getPosy()>=muros.at(index)->getPosy()){
+        if(player->getSubiendo() && colisionMuros(index) && player->getPosy()>muros.at(index)->getPosy()){
 
             player->setParabolico(false);
 
-        }else if(player->getPosy()<=muros.at(index)->getPosy()){
-                player->MoveUp(1);
-                player->timer->stop();
-                player->setSaltando(false);
-                player->setParabolico(true);
+        }else if(!player->getSubiendo() && colisionMuros(index)){
+            player->MoveUp(1);
+            player->timer->stop();
+            player->setSaltando(false);
+            player->setParabolico(true);
         }
 
-
-
-
+    }
+    if(!player->getSaltando() && !colisionMuros(index) && player->getPosy()<457)
+    {
+        player->setParabolico(false);
+        player->activarSalto(0,40);
+    }
+    else if(!player->getParabolico() && colisionMuros(index) && player->getPosy()<muros.at(index)->getPosy()){
+        player->MoveUp(1);
+        player->timer->stop();
+        player->setSaltando(false);
+        player->setParabolico(true);
     }
 
-    if(colision<PersonajePrincipal,resorte>(player,resortes,index) && !resortes.at(index)->getActivado()){
+
+    if(colisionResortes(index) && !resortes.at(index)->getActivado()){
 
         resortes.at(index)->activarMovimiento();
         player->setSaltando(false);
@@ -154,10 +156,17 @@ void MainWindow::verificarPosicionPersonaje()
 
     }
 
+    if(colisionEnemigos() || colisionBolasFuego()){
+        if(player->getVidas()>0){
+            int vida=player->getVidas()-1;
+            player->setVidas(vida);
+            player->setPos(15,380);
+        }else{
+            this->PlayStart();
+        }
+    }
 
 }
-
-
 
 
 
@@ -171,7 +180,7 @@ void MainWindow::PlayStart()
 
     scene->setBackgroundBrush(background);
 
-    player = new PersonajePrincipal(15,380);
+    player = new PersonajePrincipal(15,457);
 
     scene->addItem(player);
 
@@ -231,6 +240,60 @@ void MainWindow::cargarResortes(string nombreFichero, QList<resorte *> &listaRes
     for(resorte *ite:listaResortes){
         scene->addItem(ite);
     }
+}
+
+bool MainWindow::colisionMuros(int &index)
+{
+    bool colision=false;
+    for(objetoEstatico *ite:muros){
+        if(player->collidesWithItem(ite)){
+            index=muros.indexOf(ite);
+            colision=true;
+            break;
+        }
+    }
+
+    return colision;
+}
+
+bool MainWindow::colisionEnemigos()
+{
+    bool colision=false;
+    for(Enemigo *ite:enemigos){
+        if(player->collidesWithItem(ite)){
+            colision=true;
+            break;
+        }
+    }
+
+    return colision;
+}
+
+bool MainWindow::colisionBolasFuego()
+{
+    bool colision=false;
+    for(ObjetoMovCircular *ite:bolasFuego){
+        if(player->collidesWithItem(ite)){
+            colision=true;
+            break;
+        }
+    }
+
+    return colision;
+}
+
+bool MainWindow::colisionResortes(int &index)
+{
+    bool colision=false;
+    for(resorte *ite:resortes){
+        if(player->collidesWithItem(ite)){
+            index=resortes.indexOf(ite);
+            colision=true;
+            break;
+        }
+    }
+
+    return colision;
 }
 
 
