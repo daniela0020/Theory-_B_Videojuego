@@ -12,6 +12,7 @@ class Bomba:public objetoDinamico
     float velocidady;
     float velocidad = 30;
     bool derecha = true;
+    float ang = 0;
 public:
     Bomba();
     Bomba(float x,float y);
@@ -19,10 +20,8 @@ public:
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr);
 
-    float ang = 0;
-
     void VelocidadInicial();
-    void activarMovimiento(float ang);
+    void activarMovimiento( unsigned short int ang );
 
 signals:
 

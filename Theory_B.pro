@@ -9,6 +9,7 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    angulo.cpp \
     basededatos.cpp \
     bomba.cpp \
     button.cpp \
@@ -22,10 +23,13 @@ SOURCES += \
     personajeprincipal.cpp \
     reloj.cpp \
     resorte.cpp \
-    utilidades.cpp
+    tiempo.cpp \
+    utilidades.cpp \
+    vidas.cpp
     ventana.cpp
 
 HEADERS += \
+    angulo.h \
     bomba.h \
     button.h \
     enemigo.h \
@@ -38,7 +42,9 @@ HEADERS += \
     basededatos.h \
     reloj.h \
     resorte.h \
-    utilidades.h
+    tiempo.h \
+    utilidades.h \
+    vidas.h
     ventana.h
 
     

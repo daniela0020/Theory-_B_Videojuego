@@ -13,7 +13,6 @@ private:
     float velocidady;
     float velocidad = 50;
     float ang = 0;
-    int vidas;
     bool direccion=true,parabolico=true,saltando=false;
 
 public:

@@ -48,7 +48,7 @@ void Bomba::actualizarPosicion()
     VelocidadInicial();
 
 }
-void Bomba::activarMovimiento(float ang)
+void Bomba::activarMovimiento( unsigned short int ang)
 {
     this->ang = ang*(PI/180);
     VelocidadInicial();

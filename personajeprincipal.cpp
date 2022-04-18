@@ -22,7 +22,6 @@ PersonajePrincipal::PersonajePrincipal(float x, float y):objetoDinamico(x,y,25,2
 {
     velocidadx = 0;
     velocidady = 0;
-    vidas = 3;
     timer = new QTimer(this);
     connect(timer,&QTimer::timeout,this,&PersonajePrincipal::actualizarPosicion);
 

@@ -9,10 +9,11 @@
 #include <QKeyEvent>
 #include <bomba.h>
 #include <button.h>
-
+#include <tiempo.h>
 #include<enemigovolador.h>
 #include<enemigoterrestre.h>
-
+#include<vidas.h>
+#include<angulo.h>
 
 #include<resorte.h>
 
@@ -45,6 +46,9 @@ private:
     QSet<int> pressedKeys;
     enemigoVolador *enemigovolador;
     enemigoTerrestre *enemigoterrestre;
+    Tiempo * time;
+    Vidas * vida;
+    Angulo * angulo;
 
     resorte *resort;
 
