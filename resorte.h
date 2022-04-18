@@ -36,8 +36,6 @@ public:
 
     void setCounterColision(int newCounterColision);
 
-    bool getActivado() const;
-    void setActivado(bool newActivado);
 
 signals:
 public slots:
