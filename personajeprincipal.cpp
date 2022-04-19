@@ -18,6 +18,16 @@ float PersonajePrincipal::getVelocidad() const
     return velocidad;
 }
 
+void PersonajePrincipal::setNivel(short newNivel)
+{
+    nivel = newNivel;
+}
+
+short PersonajePrincipal::getNivel() const
+{
+    return nivel;
+}
+
 PersonajePrincipal::PersonajePrincipal(float x, float y):objetoDinamico(x,y,25,25)
 {
     velocidadx = 0;

@@ -14,6 +14,7 @@ private:
     float velocidad = 50;
     float ang = 0; 
     float alturaMax=350;
+    short int nivel =1;
     bool direccion=true,parabolico=true,saltando=false,subiendo=false;
 
 public:
@@ -61,6 +62,10 @@ public:
     void setSubiendo(bool newSubiendo);
 
     void establecerPosicion(float posx,float posy);
+
+    void setNivel(short newNivel);
+
+    short getNivel() const;
 
 signals:
 

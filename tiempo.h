@@ -10,7 +10,10 @@ class Tiempo:public QGraphicsTextItem
 public:
     Tiempo();
     unsigned short int getTiempo();
+
     QTimer *timer;
+
+    void setTiempo(unsigned short newTiempo);
 
 signals:
 public slots:

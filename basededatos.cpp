@@ -1,5 +1,69 @@
 #include "basededatos.h"
 
+void baseDeDatos::getPartida(QString usuario, short int &mapa, float &posx, float &posy, short int &tiempo, short int &vidas)
+{
+    ifstream reader;
+    reader.open("Partida.txt");
+    string leido;
+    int contador=0;
+    if(!reader.fail()){
+
+        while(!reader.eof()){
+
+            contador++;
+            if (contador == 1){
+                reader>>leido;
+                if(leido == usuario.toStdString()){
+                    reader>>leido;
+                    reader>>leido;
+                    mapa = utilidades::conversionStrShortInt(leido);
+                    reader>>leido;
+                    posx = utilidades::conversionStr2float(leido);
+                    reader>>leido;
+                    posy = utilidades::conversionStr2float(leido);
+                    reader>>leido;
+                    tiempo = utilidades::conversionStrShortInt(leido);
+                    reader>>leido;
+                    vidas = utilidades::conversionStrShortInt(leido);
+
+                    break;
+                }
+            }
+            else if(contador == 7){
+                contador = 0;
+            }
+            else {
+                reader>>leido;
+            }
+
+
+        }
+    }
+
+    reader.close();
+}
+
+void baseDeDatos::setPartida(QString usuario, QString contrasena, int mapa, float posx, float posy, short int tiempo, short int vidas)
+{
+  ofstream writer;
+  string textoleido;
+  writer.open("Partida.txt",ios::app);
+
+
+  if(!verificarDatos(usuario)){
+      writer<<usuario.toStdString()<<" ";
+      writer<<contrasena.toStdString()<<" ";
+      writer<<mapa<<" ";
+      writer<<posx<<" ";
+      writer<<posy<<" ";
+      writer<<tiempo<<" ";
+      writer<<vidas<<" ";
+      writer<<endl;
+
+  }
+  writer.close();
+}
+
 void baseDeDatos::getStaticObjects(string fileName, QList<objetoEstatico *> &objects)
 {
     ifstream reader;
@@ -24,6 +88,79 @@ void baseDeDatos::getStaticObjects(string fileName, QList<objetoEstatico *> &obj
         }
 
         reader.close();
+}
+
+bool baseDeDatos::verificarDatos(QString dato)
+{
+    ifstream reader;
+    reader.open("Partida.txt");
+    string leido;
+    int contador=0;
+    bool esta=false;
+
+        if(!reader.fail()){
+
+            while(!reader.eof()){
+
+                contador++;
+                if (contador == 1){
+                    reader>>leido;
+                    if(leido == dato.toStdString()){
+                        esta = true;
+                        break;
+                    }
+                }
+                else if(contador == 7){
+                    contador = 0;
+                }
+                else {
+                    reader>>leido;
+                }
+
+
+            }
+        }
+
+        reader.close();
+        return esta;
+
+}
+
+bool baseDeDatos::verificarContrasena(QString usuario, QString contrasena)
+{
+    bool bandera=false;
+    short int con=0;
+    string textoleido;
+    ifstream lector;
+    lector.open("Partida.txt");
+    while(!lector.eof())
+    {
+        con++;
+        if (con == 1){
+            lector>>textoleido;//lectura de usuario
+            if(textoleido==usuario.toStdString())
+            {
+                lector>>textoleido;//leo contraseña
+                if(textoleido==contrasena.toStdString())
+                {
+                   bandera = true;
+                   break;
+                }
+
+            }
+
+        }
+        else if(con == 7){
+            con = 0;
+        }
+        else {
+            lector>>textoleido;
+        }
+
+    }
+
+    lector.close();
+    return bandera;
 }
 
 

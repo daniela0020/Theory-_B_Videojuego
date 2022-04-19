@@ -19,7 +19,12 @@
 #include<basededatos.h>
 #include<objetoEstatico.h>
 #include<resorte.h>
-
+#include <QtCore/QVariant>
+#include <QtWidgets/QApplication>
+#include <QGraphicsView>
+#include <QPushButton>
+#include <QTextEdit>
+#include <QtWidgets/QWidget>
 
 
 using namespace std;
@@ -41,6 +46,9 @@ public:
 private:
     Ui::MainWindow *ui;
     QGraphicsScene *scene;
+    QGraphicsScene *scene2;
+    QMainWindow *w2;
+    QMainWindow *w3;
     PersonajePrincipal* player;
     QList<ObjetoMovCircular*> bolasFuego;
     QList<Enemigo *>enemigos;
@@ -53,6 +61,10 @@ private:
     Tiempo * time;
     Vidas * vida;
     Angulo * angulo;
+    QGraphicsView *graphicsView;
+    QTextEdit *Usuario;
+    QTextEdit *Contrasena;
+    QPushButton *pushButton;
  
 
     void keyPressEvent(QKeyEvent *evento);
@@ -65,13 +77,18 @@ private:
     bool colisionEnemigos();
     bool colisionBolasFuego();
     bool colisionResortes(int &index);
-   
+    void GuardarPartida();
+
 signals:
 public slots:
 
     void verificarPosicionPersonaje();
-    void PlayStart();
     void NuevaPartida();
+    void ClickNuevaPartida();
+    void ClickcargarPartida();
+    void partidaGuardada();
+    void verificarNuevaPartida();
+    void verificarPartidaGuardada();
 
 };
 

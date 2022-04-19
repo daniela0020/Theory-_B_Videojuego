@@ -13,5 +13,6 @@ public:
     static float conversionStr2float(string numero);
     static int conversionStrInt(string numero);
     static QString conversionInt2Str(int numero);
+    static short int conversionStrShortInt(string numero);
 };
 #endif // UTILIDADES_H

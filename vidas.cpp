@@ -1,6 +1,11 @@
 #include "vidas.h"
 #include <QFont>
 
+void Vidas::setVidas(unsigned short newVidas)
+{
+    vidas = newVidas;
+}
+
 Vidas::Vidas()
 {
     vidas = 3;

@@ -1,6 +1,11 @@
 #include "tiempo.h"
 #include <QFont>
 
+void Tiempo::setTiempo(unsigned short newTiempo)
+{
+    tiempo = newTiempo;
+}
+
 Tiempo::Tiempo()
 {
     tiempo = 120;

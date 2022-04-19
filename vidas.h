@@ -9,6 +9,8 @@ public:
     Vidas();
     unsigned short int getVidas();
 
+    void setVidas(unsigned short newVidas);
+
 signals:
 public slots:
     void decrease();

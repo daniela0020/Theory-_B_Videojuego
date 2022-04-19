@@ -9,7 +9,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->setupUi(this);
 
-
     scene=new QGraphicsScene(0,0,969,500);
 
 
@@ -42,13 +41,13 @@ void MainWindow::menu()
     int byPos = 275;
     playButton->setPos(bxPos,byPos);
     scene->addItem(playButton);
-    connect(playButton,SIGNAL(clicked()),this,SLOT(NuevaPartida()));
+    connect(playButton,SIGNAL(clicked()),this,SLOT(ClickNuevaPartida()));
 
     Button * loadButton = new Button(QString("Cargar partida"));
     int lxPos = this->width()/2-loadButton->boundingRect().width()/2;
     int lyPos = 350;
     loadButton->setPos(lxPos,lyPos);
-    //connect(playButton,SIGNAL(clicked()),this,SLOT(start()));
+    connect(loadButton,SIGNAL(clicked()),this,SLOT(ClickcargarPartida()));
     scene->addItem(loadButton);
 }
 
@@ -245,22 +244,23 @@ void MainWindow::verificarPosicionPersonaje()
             vida->decrease();
             player->establecerPosicion(15,457);
         }else{
-            this->PlayStart();
+            this->NuevaPartida();
         }
     }
 
 }
 
-void MainWindow::PlayStart()
+void MainWindow::NuevaPartida()
 {
     scene->clear();
+
+    w2->deleteLater();
     QImage imgBackground(":imagenes/escenario-1.png");
     QBrush background(imgBackground);
     player = new PersonajePrincipal(15,457);
 
     scene->setBackgroundBrush(background);
 
-    //setBackgroundBrush(QBrush(QImage("")));
     scene->addItem(player);
 
     // Tiempo
@@ -290,16 +290,110 @@ void MainWindow::PlayStart()
     cargarResortes("resortes.txt",resortes);
 
     inicializacionTimers();
+    bbdd->setPartida(Usuario->toPlainText(),Contrasena->toPlainText(),player->getNivel(),player->getPosx(),player->getPosy(),time->getTiempo(),vida->getVidas());
+
 }
 
-void MainWindow::NuevaPartida()
+void MainWindow::ClickNuevaPartida()
 {
-     scene->clear();
-     //scene=new QGraphicsScene(0,0,969,500);
-     ventana->graphicsView->setScene(scene);
+     w2 = new QMainWindow(this);
+     w2->setGeometry(0,0,1000,550);
+     scene2 = new QGraphicsScene();
+     graphicsView = new QGraphicsView(scene2,w2);
+     graphicsView->setGeometry(0,0,1000,550);
+     graphicsView->show();
+     Usuario = new QTextEdit(w2);
+     Usuario->setGeometry(QRect(330, 130, 221, 41));
+     Usuario->setPlaceholderText("Usuario");
+     Contrasena = new QTextEdit(w2);
+     Contrasena->setGeometry(QRect(330, 190, 221, 41));
+     Contrasena->setPlaceholderText("Contraseña");
 
-     ventana->Usuario->setPlaceholderText("Usuario");
-     ventana->Contrasena->setPlaceholderText("Contraseña");
+     pushButton = new QPushButton(QString("Play"),w2);
+     pushButton->setObjectName(QString::fromUtf8("pushButton"));
+     pushButton->setGeometry(QRect(410, 270, 80, 25));
+     w2->show();
+     connect(pushButton,SIGNAL(clicked()),this,SLOT(verificarNuevaPartida()));
+
+}
+
+void MainWindow::ClickcargarPartida()
+{
+    w2 = new QMainWindow(this);
+    w2->setGeometry(0,0,1000,550);
+    scene2 = new QGraphicsScene();
+    graphicsView = new QGraphicsView(scene2,w2);
+    graphicsView->setGeometry(0,0,1000,550);
+    graphicsView->show();
+    Usuario = new QTextEdit(w2);
+    Usuario->setGeometry(QRect(330, 130, 221, 41));
+    Usuario->setPlaceholderText("Usuario");
+
+    Contrasena = new QTextEdit(w2);
+    Contrasena->setGeometry(QRect(330, 190, 221, 41));
+    Contrasena->setPlaceholderText("Contraseña");
+
+    pushButton = new QPushButton(QString("Play"),w2);
+    pushButton->setObjectName(QString::fromUtf8("pushButton"));
+    pushButton->setGeometry(QRect(410, 270, 80, 25));
+    w2->show();
+    connect(pushButton,SIGNAL(clicked()),this,SLOT(verificarPartidaGuardada()));
+
+
+}
+
+void MainWindow::partidaGuardada()
+{
+    scene->clear();
+    float posx,posy;
+    short int tiempo,vidas,mapa;
+    string archivoMuros,archivoBolas,archivoResortes,archivoEnemigos;
+    bbdd->getPartida(Usuario->toPlainText(), mapa, posx,posy,tiempo,vidas);
+    w2->deleteLater();
+    if (mapa == 1){
+        QImage imgBackground(":imagenes/escenario-1.png");
+        QBrush background(imgBackground);
+        scene->setBackgroundBrush(background);
+        archivoMuros = "muros.txt";
+        archivoBolas = "bolasFuego.txt";
+        archivoEnemigos = "enemigos.txt";
+        archivoResortes = "resortes.txt";
+    }
+
+
+    player = new PersonajePrincipal(posx,posy);
+
+    scene->addItem(player);
+
+    // Tiempo
+    time = new  Tiempo();
+    time->setX(player->getPosx());
+    time->setTiempo(tiempo);
+    scene->addItem(time);
+
+    //vidas
+
+    vida = new Vidas();
+    vida->setPos(player->getPosx(),vida->y()+25);
+    vida->setVidas(vidas);
+    scene->addItem(vida);
+
+    //Ángulo
+
+    angulo = new Angulo();
+    angulo->setPos(player->getPosx(),angulo->y()+50);
+
+    scene->addItem(angulo);
+
+    cargarObjetoEstatico(archivoMuros,muros);
+
+    cargarBolas(archivoBolas,bolasFuego);
+
+    cargarEnemigos(archivoEnemigos,enemigos);
+
+    cargarResortes(archivoResortes,resortes);
+
+    inicializacionTimers();
 
 }
 
@@ -399,6 +493,34 @@ bool MainWindow::colisionResortes(int &index)
     }
 
     return colision;
+}
+
+void MainWindow::GuardarPartida()
+{
+
+}
+
+void MainWindow::verificarNuevaPartida()
+{
+    if (!bbdd->verificarDatos(Usuario->toPlainText())){
+        connect(pushButton,SIGNAL(clicked()),this,SLOT(NuevaPartida()));
+    }
+    else{
+        w2->deleteLater();
+        ClickNuevaPartida();
+    }
+}
+
+void MainWindow::verificarPartidaGuardada()
+{
+    if (bbdd->verificarContrasena(Usuario->toPlainText(),Contrasena->toPlainText())){
+        connect(pushButton,SIGNAL(clicked()),this,SLOT(partidaGuardada()));
+    }
+    else{
+        w2->deleteLater();
+        ClickcargarPartida();
+    }
+
 }
 
 
