@@ -87,12 +87,13 @@ void MainWindow::NuevaPartida()
 {
     scene->clear();
     w2->close();
+    nivel=1;
     QImage imgBackground(":imagenes/escenario-1.png");
     QBrush background(imgBackground);
     scene->setBackgroundBrush(background);
 
 
-    player = new PersonajePrincipal(15,457);
+    player = new PersonajePrincipal(15,457);  
     scene->addItem(player);
 
     // Tiempo
@@ -117,7 +118,7 @@ void MainWindow::NuevaPartida()
 void MainWindow::partidaGuardada()
 {
     scene->clear();
-    //w2->close();
+    w2->close();
     float posx,posy;
     short int tiempo,vidas,mapa;
     string archivoMuros,archivoBolas,archivoResortes,archivoEnemigos;
@@ -142,6 +143,7 @@ void MainWindow::partidaGuardada()
 
 
     player = new PersonajePrincipal(posx,posy);
+    nivel=mapa;
     scene->addItem(player);
 
     // Tiempo
@@ -164,14 +166,14 @@ void MainWindow::partidaGuardada()
 
 
     cargarObjetos(archivoMuros,archivoBolas,archivoResortes,archivoEnemigos);
-
+    inicializacionTimers();
 }
 
 void MainWindow::siguientePartida()
 {
     scene->clear();
     string archivoMuros,archivoBolas,archivoResortes,archivoEnemigos;
-    if (player->getNivel() == 1){
+    if (nivel == 1){
         QImage imgBackground(":imagenes/escenario-1.png");
         QBrush background(imgBackground);
         scene->setBackgroundBrush(background);
@@ -179,7 +181,7 @@ void MainWindow::siguientePartida()
         archivoBolas = "bolasFuego.txt";
         archivoEnemigos = "enemigos.txt";
         archivoResortes = "resortes.txt";
-    }else if (player->getNivel()==2){
+    }else if (nivel==2){
         QImage imgBackground(":imagenes/escenario-2.png");
         QBrush background(imgBackground);
         scene->setBackgroundBrush(background);
@@ -189,8 +191,8 @@ void MainWindow::siguientePartida()
         archivoResortes = "resortes2.txt";
     }
 
-
-    player->establecerPosicion(15,457);
+    player= new PersonajePrincipal(15,457);
+    scene->addItem(player);
 
     // Tiempo
     time = new  Tiempo();
@@ -245,7 +247,7 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
 
     else if(evento->key()==Qt::Key_Space){
 
-        player->activarSalto(angulo->angulo,60);
+        player->activarSalto(angulo->angulo,70);
         if (player->getPosx()>30 && player->getPosx()<2448){
             scene->setSceneRect(player->getPosx()-50,0,969,500);
             time->setX(player->getPosx());
@@ -281,7 +283,7 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
         }
     }
     else if(evento->key()==Qt::Key_Escape){
-        bbdd->setPartida(Usuario->toPlainText(),Contrasena->toPlainText(),player->getNivel(), player->getPosx(), player->getPosy(), time->getTiempo(),vida->getVidas());
+        bbdd->setPartida(Usuario->toPlainText(),Contrasena->toPlainText(),nivel, player->getPosx(), player->getPosy(), time->getTiempo(),vida->getVidas());
         menu();
     }
 
@@ -299,13 +301,13 @@ void MainWindow::verificarPosicionPersonaje()
         player->setParabolico(true);
 
     }
-    else if(player->getPosx()<14){
+    if(player->getPosx()<14){
         player->MoveRight(30);
         if(player->getSaltando()){
             player->setParabolico(false);
         }
     }
-    else if(player->getPosx()>3360){
+    if(player->getPosx()>3360){
         player->MoveLeft(30);
         if(player->getSaltando()){
             player->setParabolico(false);
@@ -319,8 +321,8 @@ void MainWindow::verificarPosicionPersonaje()
         angulo->setX(player->getPosx());
 
     }
-    if (player->getPosx()>3200 && player->getPosy()>= 357){
-        player->setNivel(player->getNivel()+1);
+    if (player->getPosx()>3200){
+        nivel++;
         siguientePartida();
     }
     if(player->getSaltando()){
@@ -356,7 +358,7 @@ void MainWindow::verificarPosicionPersonaje()
         player->setSaltando(false);
         player->setDireccion(true);
         player->setParabolico(true);
-        player->activarSalto(angulo->angulo,80);
+        player->activarSalto(angulo->angulo,90);
 
     }
 
