@@ -24,37 +24,32 @@ MainWindow::MainWindow(QWidget *parent)
 void MainWindow::menu()
 {
     scene->clear();
-    //setBackgroundBrush(QBrush(QImage("")));
     QGraphicsTextItem * titleText = new QGraphicsTextItem(QString("Theory B"));
     QFont titleFont("comic sans",50);
     titleText->setFont(titleFont);
 
-    int txPos = this->width()/2 -titleText->boundingRect().width()/2;
-    int tyPos = 150;
-    titleText->setPos(txPos,tyPos);
+    titleText->setPos(this->width()/2 -titleText->boundingRect().width()/2,150);
     scene->addItem(titleText);
 
     //Crear botones
 
     Button * playButton = new Button(QString("Nueva partida"));
-    int bxPos = this->width()/2-playButton->boundingRect().width()/2;
-    int byPos = 275;
-    playButton->setPos(bxPos,byPos);
-    scene->addItem(playButton);
-    connect(playButton,SIGNAL(clicked()),this,SLOT(ClickNuevaPartida()));
-
+    playButton->setPos(this->width()/2-playButton->boundingRect().width()/2,275);
     Button * loadButton = new Button(QString("Cargar partida"));
-    int lxPos = this->width()/2-loadButton->boundingRect().width()/2;
-    int lyPos = 350;
-    loadButton->setPos(lxPos,lyPos);
+    loadButton->setPos(this->width()/2-loadButton->boundingRect().width()/2,350);
+    //crear hilos
+    connect(playButton,SIGNAL(clicked()),this,SLOT(ClickNuevaPartida()));
     connect(loadButton,SIGNAL(clicked()),this,SLOT(ClickcargarPartida()));
+    //mostrar en escena
+    scene->addItem(playButton);
     scene->addItem(loadButton);
 }
 
 
 void MainWindow::keyPressEvent(QKeyEvent *evento)
 {
-    static bool escena2 = false;
+    bool escena2 = false;
+
     if(evento->key()==Qt::Key_D){
         player->MoveRight(10);
         player->setDireccion(true);
@@ -68,7 +63,7 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
             player->MoveLeft(30);
         }
         if(player->getSaltando()){
-                    player->setParabolico(false);
+            player->setParabolico(false);
         }
         if(colisionMuros(index)&& player->getPosy()>muros.at(index)->getPosy()){
             player->MoveLeft(30);
@@ -76,13 +71,13 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
 
         if (player->getPosx()>3200 && player->getPosy()>= 357){
             if (!escena2){
+                //hacer metodo para el segundo nivel de partida
                 scene->clear();
                 QImage imgBackground(":imagenes/escenario-2.png");
                 QBrush background(imgBackground);
-
                 scene->setBackgroundBrush(background);
 
-                //setBackgroundBrush(QBrush(QImage("")));
+
                 player = new PersonajePrincipal(50,379);
 
 
@@ -133,7 +128,7 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
             player->MoveRight(30);
         }
         if(player->getSaltando()){
-             player->setParabolico(false);
+            player->setParabolico(false);
         }
         if(colisionMuros(index)&& player->getPosy()>muros.at(index)->getPosy()){
             player->MoveRight(30);
@@ -143,14 +138,14 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
 
     else if(evento->key()==Qt::Key_Space){
 
-         player->activarSalto(angulo->angulo,50);
-         if (player->getPosx()>30 && player->getPosx()<2448){
-             scene->setSceneRect(player->getPosx()-50,0,969,500);
-             time->setX(player->getPosx());
-             vida->setX(player->getPosx());
-             angulo->setX(player->getPosx());
+        player->activarSalto(angulo->angulo,50);
+        if (player->getPosx()>30 && player->getPosx()<2448){
+            scene->setSceneRect(player->getPosx()-50,0,969,500);
+            time->setX(player->getPosx());
+            vida->setX(player->getPosx());
+            angulo->setX(player->getPosx());
 
-         }
+        }
     }
     else if (evento->key()==Qt::Key_F){
 
@@ -253,14 +248,13 @@ void MainWindow::verificarPosicionPersonaje()
 void MainWindow::NuevaPartida()
 {
     scene->clear();
-
-    w2->deleteLater();
+    //w2->deleteLater();
     QImage imgBackground(":imagenes/escenario-1.png");
     QBrush background(imgBackground);
-    player = new PersonajePrincipal(15,457);
-
     scene->setBackgroundBrush(background);
 
+
+    player = new PersonajePrincipal(15,457);
     scene->addItem(player);
 
     // Tiempo
@@ -269,24 +263,18 @@ void MainWindow::NuevaPartida()
     scene->addItem(time);
 
     //vidas
-
     vida = new Vidas();
     vida->setPos(player->getPosx(),vida->y()+25);
     scene->addItem(vida);
 
     //Ángulo
-
     angulo = new Angulo();
     angulo->setPos(player->getPosx(),angulo->y()+50);
-
     scene->addItem(angulo);
-
+    //cargar objetos en el mapa
     cargarObjetoEstatico("muros.txt",muros);
-
     cargarBolas("bolasFuego.txt",bolasFuego);
-
     cargarEnemigos("enemigos.txt",enemigos);
-
     cargarResortes("resortes.txt",resortes);
 
     inicializacionTimers();
@@ -297,11 +285,11 @@ void MainWindow::NuevaPartida()
 void MainWindow::ClickNuevaPartida()
 {
      w2 = new QMainWindow(this);
-     w2->setGeometry(0,0,1000,550);
-     scene2 = new QGraphicsScene();
-     graphicsView = new QGraphicsView(scene2,w2);
+     w2->setGeometry(100,100,1000,550);
+     graphicsView = new QGraphicsView(new QGraphicsScene(),w2);
      graphicsView->setGeometry(0,0,1000,550);
      graphicsView->show();
+
      Usuario = new QTextEdit(w2);
      Usuario->setGeometry(QRect(330, 130, 221, 41));
      Usuario->setPlaceholderText("Usuario");
@@ -310,7 +298,6 @@ void MainWindow::ClickNuevaPartida()
      Contrasena->setPlaceholderText("Contraseña");
 
      pushButton = new QPushButton(QString("Play"),w2);
-     pushButton->setObjectName(QString::fromUtf8("pushButton"));
      pushButton->setGeometry(QRect(410, 270, 80, 25));
      w2->show();
      connect(pushButton,SIGNAL(clicked()),this,SLOT(verificarNuevaPartida()));
@@ -321,24 +308,21 @@ void MainWindow::ClickcargarPartida()
 {
     w2 = new QMainWindow(this);
     w2->setGeometry(0,0,1000,550);
-    scene2 = new QGraphicsScene();
-    graphicsView = new QGraphicsView(scene2,w2);
+    graphicsView = new QGraphicsView(new QGraphicsScene(),w2);
     graphicsView->setGeometry(0,0,1000,550);
     graphicsView->show();
+
     Usuario = new QTextEdit(w2);
     Usuario->setGeometry(QRect(330, 130, 221, 41));
     Usuario->setPlaceholderText("Usuario");
-
     Contrasena = new QTextEdit(w2);
     Contrasena->setGeometry(QRect(330, 190, 221, 41));
     Contrasena->setPlaceholderText("Contraseña");
 
     pushButton = new QPushButton(QString("Play"),w2);
-    pushButton->setObjectName(QString::fromUtf8("pushButton"));
     pushButton->setGeometry(QRect(410, 270, 80, 25));
     w2->show();
     connect(pushButton,SIGNAL(clicked()),this,SLOT(verificarPartidaGuardada()));
-
 
 }
 
@@ -358,11 +342,18 @@ void MainWindow::partidaGuardada()
         archivoBolas = "bolasFuego.txt";
         archivoEnemigos = "enemigos.txt";
         archivoResortes = "resortes.txt";
+    }else if (mapa==2){
+        QImage imgBackground(":imagenes/escenario-2.png");
+        QBrush background(imgBackground);
+        scene->setBackgroundBrush(background);
+        archivoMuros = "muros2.txt";
+        archivoBolas = "bolasFuego2.txt";
+        archivoEnemigos = "enemigos2.txt";
+        archivoResortes = "resortes2.txt";
     }
 
 
     player = new PersonajePrincipal(posx,posy);
-
     scene->addItem(player);
 
     // Tiempo
@@ -382,17 +373,13 @@ void MainWindow::partidaGuardada()
 
     angulo = new Angulo();
     angulo->setPos(player->getPosx(),angulo->y()+50);
-
     scene->addItem(angulo);
 
+
     cargarObjetoEstatico(archivoMuros,muros);
-
     cargarBolas(archivoBolas,bolasFuego);
-
     cargarEnemigos(archivoEnemigos,enemigos);
-
     cargarResortes(archivoResortes,resortes);
-
     inicializacionTimers();
 
 }

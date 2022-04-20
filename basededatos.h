@@ -25,6 +25,7 @@ public:
     void getBolasFuego(string fileName, QList<ObjetoMovCircular*> &objects);
     void getEnemigos(string fileName, QList<Enemigo*> &objects);
     void getResortes(string fileName, QList<resorte*> &objects);
+    void modificarPartida(QString usuario,short int mapa, float posx, float posy, short int tiempo, short int vidas);
 
 
 };
