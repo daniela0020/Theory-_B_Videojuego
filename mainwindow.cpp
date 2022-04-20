@@ -48,19 +48,10 @@ void MainWindow::menu()
 
 void MainWindow::keyPressEvent(QKeyEvent *evento)
 {
-    bool escena2 = false;
 
     if(evento->key()==Qt::Key_D){
         player->MoveRight(10);
         player->setDireccion(true);
-        if (player->getPosx()<2448){
-            scene->setSceneRect(player->getPosx()-50,0,969,500);
-            time->setX(player->getPosx());
-            vida->setX(player->getPosx());
-            angulo->setX(player->getPosx());
-        }
-        else if (player->getPosx()>=3270){
-            player->MoveLeft(30);
         }
         if(player->getSaltando()){
             player->setParabolico(false);
@@ -69,76 +60,24 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
             player->MoveLeft(30);
         }
 
-        if (player->getPosx()>3200 && player->getPosy()>= 357){
-            if (!escena2){
-                //hacer metodo para el segundo nivel de partida
-                scene->clear();
-                QImage imgBackground(":imagenes/escenario-2.png");
-                QBrush background(imgBackground);
-                scene->setBackgroundBrush(background);
 
 
-                player = new PersonajePrincipal(50,379);
-
-
-                scene->addItem(player);
-
-                // Tiempo
-                time = new  Tiempo();
-                scene->addItem(time);
-
-                //vidas
-
-                vida = new Vidas();
-                vida->setPos(vida->x(),vida->y()+25);
-                scene->addItem(vida);
-
-                //Ángulo
-
-                angulo = new Angulo();
-                angulo->setPos(player->getPosx(),angulo->y()+50);
-                scene->addItem(angulo);
-
-
-
-
-
-                inicializacionTimers();
-                escena2 = true;
-            }
-
-
-        }
-
-    }
     else if(evento->key()==Qt::Key_A){
         player->MoveLeft(30);
         player->setDireccion(false);
 
-        if (player->getPosx()>30 && player->getPosx()<2448){
-
-            scene->setSceneRect(player->getPosx()-50,0,969,500);
-            time->setX(player->getPosx());
-            vida->setX(player->getPosx());
-            angulo->setX(player->getPosx());
-
-
-        }
-        else if(player->getPosx()<=30){
+        if((colisionMuros(index)&& player->getPosy()>muros.at(index)->getPosy())){
             player->MoveRight(30);
         }
         if(player->getSaltando()){
             player->setParabolico(false);
-        }
-        if(colisionMuros(index)&& player->getPosy()>muros.at(index)->getPosy()){
-            player->MoveRight(30);
         }
 
     }
 
     else if(evento->key()==Qt::Key_Space){
 
-        player->activarSalto(angulo->angulo,50);
+        player->activarSalto(angulo->angulo,60);
         if (player->getPosx()>30 && player->getPosx()<2448){
             scene->setSceneRect(player->getPosx()-50,0,969,500);
             time->setX(player->getPosx());
@@ -162,7 +101,7 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
 
 
     }
-    if (evento->key()==Qt::Key_K){
+    else if (evento->key()==Qt::Key_K){
         if (angulo->angulo<90){
             angulo->SumAngulo();
         }
@@ -173,12 +112,15 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
             angulo->ResAngulo();
         }
     }
+    else if(evento->key()==Qt::Key_Escape){
+            GuardarPartida();
+    }
 
 
 }
 void MainWindow::verificarPosicionPersonaje()
 {
-    if(player->getPosy()>458){
+   if(player->getPosy()>458){
             player->setPosy(457);
             player->timer->stop();
             player->setSaltando(false);
@@ -186,16 +128,59 @@ void MainWindow::verificarPosicionPersonaje()
 
     }
     else if(player->getPosx()<14){
-        player->MoveRight(3);
+        player->MoveRight(30);
         if(player->getSaltando()){
             player->setParabolico(false);
         }
     }
     else if(player->getPosx()>3360){
-        player->MoveLeft(3);
+        player->MoveLeft(30);
         if(player->getSaltando()){
             player->setParabolico(false);
         }
+    }
+   if (player->getPosx()>30 && player->getPosx()<2448){
+
+       scene->setSceneRect(player->getPosx()-50,0,969,500);
+       time->setX(player->getPosx());
+       vida->setX(player->getPosx());
+       angulo->setX(player->getPosx());
+
+   }
+   if (player->getPosx()>3200 && player->getPosy()>= 357){
+           //hacer metodo para el segundo nivel de partida
+           scene->clear();
+           QImage imgBackground(":imagenes/escenario-2.png");
+           QBrush background(imgBackground);
+           scene->setBackgroundBrush(background);
+
+
+           player = new PersonajePrincipal(50,379);
+
+
+           scene->addItem(player);
+
+           // Tiempo
+           time = new  Tiempo();
+           scene->addItem(time);
+
+           //vidas
+
+           vida = new Vidas();
+           vida->setPos(vida->x(),vida->y()+25);
+           scene->addItem(vida);
+
+           //Ángulo
+
+           angulo = new Angulo();
+           angulo->setPos(player->getPosx(),angulo->y()+50);
+           scene->addItem(angulo);
+
+
+
+
+
+           inicializacionTimers();
     }
     if(player->getSaltando()){
 
@@ -234,14 +219,14 @@ void MainWindow::verificarPosicionPersonaje()
 
     }
 
-    if(colisionEnemigos() || colisionBolasFuego()){
-        if(vida->getVidas()>0){
-            vida->decrease();
-            player->establecerPosicion(15,457);
-        }else{
-            this->NuevaPartida();
-        }
-    }
+//    if(colisionEnemigos() || colisionBolasFuego()){
+//        if(vida->getVidas()>0){
+//            vida->decrease();
+//            player->establecerPosicion(15,457);
+//        }else{
+//            this->menu();
+//        }
+//    }
 
 }
 
@@ -278,7 +263,6 @@ void MainWindow::NuevaPartida()
     cargarResortes("resortes.txt",resortes);
 
     inicializacionTimers();
-    bbdd->setPartida(Usuario->toPlainText(),Contrasena->toPlainText(),player->getNivel(),player->getPosx(),player->getPosy(),time->getTiempo(),vida->getVidas());
 
 }
 
@@ -484,7 +468,8 @@ bool MainWindow::colisionResortes(int &index)
 
 void MainWindow::GuardarPartida()
 {
-
+    bbdd->setPartida(Usuario->toPlainText(),Contrasena->toPlainText(),player->getNivel(), player->getPosx(), player->getPosy(), time->getTiempo(),vida->getVidas());
+    menu();
 }
 
 void MainWindow::verificarNuevaPartida()

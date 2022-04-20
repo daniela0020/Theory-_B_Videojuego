@@ -241,3 +241,8 @@ void baseDeDatos::getResortes(string fileName, QList<resorte *> &objects)
 
         reader.close();
 }
+
+void baseDeDatos::modificarPartida(QString usuario, short mapa, float posx, float posy, short tiempo, short vidas)
+{
+
+}
