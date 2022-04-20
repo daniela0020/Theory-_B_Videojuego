@@ -45,23 +45,73 @@ void baseDeDatos::getPartida(QString usuario, short int &mapa, float &posx, floa
 
 void baseDeDatos::setPartida(QString usuario, QString contrasena, int mapa, float posx, float posy, short int tiempo, short int vidas)
 {
-    ofstream writer;
+    ofstream writer1,writer2;
+    ifstream reader;
     string textoleido;
-    writer.open("Partida.txt",ios::app);
 
 
     if(!verificarDatos(usuario)){
-        writer<<usuario.toStdString()<<" ";
-        writer<<contrasena.toStdString()<<" ";
-        writer<<mapa<<" ";
-        writer<<posx<<" ";
-        writer<<posy<<" ";
-        writer<<tiempo<<" ";
-        writer<<vidas<<" ";
-        writer<<endl;
+        writer1.open("Partida.txt",ios::app);
+        writer1<<usuario.toStdString()<<" ";
+        writer1<<contrasena.toStdString()<<" ";
+        writer1<<mapa<<" ";
+        writer1<<posx<<" ";
+        writer1<<posy<<" ";
+        writer1<<tiempo<<" ";
+        writer1<<vidas<<" ";
+        writer1<<endl;
+        writer1.close();
+    }else{
+        reader.open("Partida.txt");
+        writer2.open("temp.txt",ios::app);
+        while(!reader.eof()){
+            reader>>textoleido;
+            if(textoleido!=""){
+                if(textoleido==usuario.toStdString()){
+                    writer2<<usuario.toStdString()<<" ";
+                    writer2<<contrasena.toStdString()<<" ";
+                    reader>>textoleido;
+                    writer2<<mapa<<" ";
+                    reader>>textoleido;
+                    writer2<<posx<<" ";
+                    reader>>textoleido;
+                    writer2<<posy<<" ";
+                    reader>>textoleido;
+                    writer2<<tiempo<<" ";
+                    reader>>textoleido;
+                    writer2<<vidas<<" ";
+                    reader>>textoleido;
+                    textoleido="";
+                    writer2<<endl;
+                }
+                else{
+                    writer2<<textoleido<<" ";//user
+                    reader>>textoleido;
+                    writer2<<textoleido<<" ";//pass
+                    reader>>textoleido;
+                    writer2<<textoleido<<" ";//mapa
+                    reader>>textoleido;
+                    writer2<<textoleido<<" ";//posx
+                    reader>>textoleido;
+                    writer2<<textoleido<<" ";//pasy
+                    reader>>textoleido;
+                    writer2<<textoleido<<" ";//tiempo
+                    reader>>textoleido;
+                    writer2<<textoleido<<" ";//vidas
+                    textoleido="";
+                    writer2<<endl;
+                }
 
+            }
+        }
+        writer2.close();
+        reader.close();
+        remove("Partida.txt");
+        rename("temp.txt","Partida.txt");
     }
-    writer.close();
+
+
+
 }
 
 void baseDeDatos::getStaticObjects(string fileName, QList<objetoEstatico *> &objects)

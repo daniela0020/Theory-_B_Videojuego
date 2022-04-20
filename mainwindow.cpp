@@ -283,6 +283,8 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
         }
     }
     else if(evento->key()==Qt::Key_Escape){
+
+
         bbdd->setPartida(Usuario->toPlainText(),Contrasena->toPlainText(),nivel, player->getPosx(), player->getPosy(), time->getTiempo(),vida->getVidas());
         menu();
     }
