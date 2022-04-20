@@ -11,8 +11,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     scene=new QGraphicsScene(0,0,969,500);
 
-
-
     ui->graphicsView->setScene(scene);
 
 }
@@ -20,12 +18,20 @@ MainWindow::MainWindow(QWidget *parent)
 void MainWindow::menu()
 {
     scene->clear();
+
+    w2 = new QMainWindow(this);
+    w2->setGeometry(150,90,1000,550);
+    QGraphicsScene *scenen= new QGraphicsScene(0,0,1000,550);
+    graphicsView = new QGraphicsView(scenen,w2);
+    graphicsView->setGeometry(0,0,1000,550);
+    graphicsView->show();
+
     QGraphicsTextItem * titleText = new QGraphicsTextItem(QString("Theory B"));
     QFont titleFont("comic sans",50);
     titleText->setFont(titleFont);
 
     titleText->setPos(this->width()/2 -titleText->boundingRect().width()/2,150);
-    scene->addItem(titleText);
+    scenen->addItem(titleText);
 
     //Crear botones
 
@@ -33,17 +39,20 @@ void MainWindow::menu()
     playButton->setPos(this->width()/2-playButton->boundingRect().width()/2,275);
     Button * loadButton = new Button(QString("Cargar partida"));
     loadButton->setPos(this->width()/2-loadButton->boundingRect().width()/2,350);
+    scenen->addItem(playButton);
+    scenen->addItem(loadButton);
+    w2->show();
     //crear hilos
     connect(playButton,SIGNAL(clicked()),this,SLOT(ClickNuevaPartida()));
     connect(loadButton,SIGNAL(clicked()),this,SLOT(ClickcargarPartida()));
     //mostrar en escena
-    scene->addItem(playButton);
-    scene->addItem(loadButton);
+
 }
 void MainWindow::ClickNuevaPartida()
 {
+    if(w2->isActiveWindow())w2->close();
     w2 = new QMainWindow(this);
-    w2->setGeometry(100,100,1000,550);
+    w2->setGeometry(150,90,1000,550);
     graphicsView = new QGraphicsView(new QGraphicsScene(),w2);
     graphicsView->setGeometry(0,0,1000,550);
     graphicsView->show();
@@ -64,8 +73,9 @@ void MainWindow::ClickNuevaPartida()
 
 void MainWindow::ClickcargarPartida()
 {
+    if(w2->isActiveWindow())w2->close();
     w2 = new QMainWindow(this);
-    w2->setGeometry(0,0,1000,550);
+    w2->setGeometry(150,90,1000,550);
     graphicsView = new QGraphicsView(new QGraphicsScene(),w2);
     graphicsView->setGeometry(0,0,1000,550);
     graphicsView->show();
@@ -213,7 +223,35 @@ void MainWindow::siguientePartida()
     scene->addItem(angulo);
 
 
-   cargarObjetos(archivoMuros,archivoBolas,archivoResortes,archivoEnemigos);
+    cargarObjetos(archivoMuros,archivoBolas,archivoResortes,archivoEnemigos);
+}
+
+void MainWindow::creditos()
+{
+    this->close();
+    w2 = new QMainWindow(this);
+    w2->setGeometry(150,90,1000,550);
+    QGraphicsScene *scenen= new QGraphicsScene(0,0,1000,550);
+    graphicsView = new QGraphicsView(scenen,w2);
+    graphicsView->setGeometry(0,0,1000,550);
+    graphicsView->show();
+
+    QGraphicsTextItem * titleText = new QGraphicsTextItem(QString("Theory B"));
+    QGraphicsTextItem * desarrollador1 = new QGraphicsTextItem(QString("Daniela Alvares Bernal"));
+    QGraphicsTextItem * desarrollador2 = new QGraphicsTextItem(QString("Edisson Chamorro Coral"));
+    QFont titleFont("comic sans",50);
+    QFont devFont("comic sans",20);
+    titleText->setFont(titleFont);
+    desarrollador1->setFont(devFont);
+    desarrollador2->setFont(devFont);
+
+    titleText->setPos(this->width()/2 -titleText->boundingRect().width()/2,150);
+    desarrollador1->setPos(this->width()/2 -titleText->boundingRect().width()/2,250);
+    desarrollador2->setPos(this->width()/2 -titleText->boundingRect().width()/2,290);
+    scenen->addItem(titleText);
+    scenen->addItem(desarrollador1);
+    scenen->addItem(desarrollador2);
+
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *evento)
@@ -283,10 +321,9 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
         }
     }
     else if(evento->key()==Qt::Key_Escape){
-
-
         bbdd->setPartida(Usuario->toPlainText(),Contrasena->toPlainText(),nivel, player->getPosx(), player->getPosy(), time->getTiempo(),vida->getVidas());
-        menu();
+        //menu();
+        this->close();
     }
 
 }
@@ -323,9 +360,12 @@ void MainWindow::verificarPosicionPersonaje()
         angulo->setX(player->getPosx());
 
     }
-    if (player->getPosx()>3200){
+    if (player->getPosx()>3200 && nivel==1){
         nivel++;
         siguientePartida();
+    }
+    else{
+        creditos();
     }
     if(player->getSaltando()){
 
@@ -346,7 +386,7 @@ void MainWindow::verificarPosicionPersonaje()
         player->setParabolico(false);
         player->activarSalto(0,40);
     }
-    else if(!player->getParabolico() && colisionMuros(index) && player->getPosy()<muros.at(index)->getPosy()){
+    if(!player->getParabolico() && colisionMuros(index) && player->getPosy()<muros.at(index)->getPosy()){
         player->MoveUp(1);
         player->timer->stop();
         player->setSaltando(false);
@@ -364,14 +404,17 @@ void MainWindow::verificarPosicionPersonaje()
 
     }
 
-    //    if(colisionEnemigos() || colisionBolasFuego()){
-    //        if(vida->getVidas()>0){
-    //            vida->decrease();
-    //            player->establecerPosicion(15,457);
-    //        }else{
-    //            this->menu();
-    //        }
-    //    }
+    if(colisionEnemigos() || colisionBolasFuego()){
+        if(vida->getVidas()>0){
+            vida->decrease();
+            player->establecerPosicion(15,457);
+        }else{
+            this->close();
+        }
+    }
+    if(time->getTiempo()==0){
+        this->close();
+    }
 
 }
 
@@ -508,12 +551,3 @@ void MainWindow::verificarPartidaGuardada()
     }
 
 }
-
-
-
-
-
-
-
-
-

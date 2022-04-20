@@ -31,7 +31,7 @@ resorte::resorte(float posx, float posy, float k)
 
     ancho=20;
 
-    alto=50;
+    alto=30;
 
     this->k=k;
 
