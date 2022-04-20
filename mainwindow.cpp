@@ -111,7 +111,7 @@ void MainWindow::NuevaPartida()
     angulo->setPos(player->getPosx(),angulo->y()+50);
     scene->addItem(angulo);
     //cargar objetos en el mapa
-    cargarObjetos("muros.txt","bolasFuego.txt","enemigos.txt","resortes.txt");
+    cargarObjetos("muros.txt","bolasFuego.txt","resortes.txt","enemigos.txt");
     inicializacionTimers();
 
 }
