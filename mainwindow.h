@@ -77,7 +77,8 @@ private:
     bool colisionEnemigos();
     bool colisionBolasFuego();
     bool colisionResortes(int &index);
-    void GuardarPartida();
+    void cargarObjetos(string archivoMuros,string archivoBolas, string archivoResortes,string archivoEnemigos);
+    void siguientePartida();
 
 signals:
 public slots:

@@ -29,7 +29,7 @@ void baseDeDatos::getPartida(QString usuario, short int &mapa, float &posx, floa
                     break;
                 }
             }
-            else if(contador == 7){
+            else if(contador == 8){
                 contador = 0;
             }
             else {
@@ -45,23 +45,23 @@ void baseDeDatos::getPartida(QString usuario, short int &mapa, float &posx, floa
 
 void baseDeDatos::setPartida(QString usuario, QString contrasena, int mapa, float posx, float posy, short int tiempo, short int vidas)
 {
-  ofstream writer;
-  string textoleido;
-  writer.open("Partida.txt",ios::app);
+    ofstream writer;
+    string textoleido;
+    writer.open("Partida.txt",ios::app);
 
 
-  if(!verificarDatos(usuario)){
-      writer<<usuario.toStdString()<<" ";
-      writer<<contrasena.toStdString()<<" ";
-      writer<<mapa<<" ";
-      writer<<posx<<" ";
-      writer<<posy<<" ";
-      writer<<tiempo<<" ";
-      writer<<vidas<<" ";
-      writer<<endl;
+    if(!verificarDatos(usuario)){
+        writer<<usuario.toStdString()<<" ";
+        writer<<contrasena.toStdString()<<" ";
+        writer<<mapa<<" ";
+        writer<<posx<<" ";
+        writer<<posy<<" ";
+        writer<<tiempo<<" ";
+        writer<<vidas<<" ";
+        writer<<endl;
 
-  }
-  writer.close();
+    }
+    writer.close();
 }
 
 void baseDeDatos::getStaticObjects(string fileName, QList<objetoEstatico *> &objects)
@@ -71,23 +71,23 @@ void baseDeDatos::getStaticObjects(string fileName, QList<objetoEstatico *> &obj
     string leido;
     int posicion[4],contador=0;
 
-        if(!reader.fail()){
+    if(!reader.fail()){
 
-            while(!reader.eof()){
+        while(!reader.eof()){
 
-                reader>>leido;
-                posicion[contador]=utilidades::conversionStrInt(leido);
-                contador++;
+            reader>>leido;
+            posicion[contador]=utilidades::conversionStrInt(leido);
+            contador++;
 
-                if(contador==4){
-                    objects.append(new objetoEstatico(posicion[0],posicion[1],posicion[2],posicion[3]));
-                    posicion[0]=0;posicion[1]=0;posicion[2]=0;posicion[3]=0;
-                    contador=0;
-                }
+            if(contador==4){
+                objects.append(new objetoEstatico(posicion[0],posicion[1],posicion[2],posicion[3]));
+                posicion[0]=0;posicion[1]=0;posicion[2]=0;posicion[3]=0;
+                contador=0;
             }
         }
+    }
 
-        reader.close();
+    reader.close();
 }
 
 bool baseDeDatos::verificarDatos(QString dato)
@@ -98,31 +98,31 @@ bool baseDeDatos::verificarDatos(QString dato)
     int contador=0;
     bool esta=false;
 
-        if(!reader.fail()){
+    if(!reader.fail()){
 
-            while(!reader.eof()){
+        while(!reader.eof()){
 
-                contador++;
-                if (contador == 1){
-                    reader>>leido;
-                    if(leido == dato.toStdString()){
-                        esta = true;
-                        break;
-                    }
+            contador++;
+            if (contador == 1){
+                reader>>leido;
+                if(leido == dato.toStdString()){
+                    esta = true;
+                    break;
                 }
-                else if(contador == 7){
-                    contador = 0;
-                }
-                else {
-                    reader>>leido;
-                }
-
-
             }
-        }
+            else if(contador == 8){
+                contador = 0;
+            }
+            else {
+                reader>>leido;
+            }
 
-        reader.close();
-        return esta;
+
+        }
+    }
+
+    reader.close();
+    return esta;
 
 }
 
@@ -143,14 +143,14 @@ bool baseDeDatos::verificarContrasena(QString usuario, QString contrasena)
                 lector>>textoleido;//leo contraseña
                 if(textoleido==contrasena.toStdString())
                 {
-                   bandera = true;
-                   break;
+                    bandera = true;
+                    break;
                 }
 
             }
 
         }
-        else if(con == 7){
+        else if(con == 8){
             con = 0;
         }
         else {
@@ -171,23 +171,23 @@ void baseDeDatos::getBolasFuego(string fileName, QList<ObjetoMovCircular*> &obje
     string leido;
     int posicion[3],contador=0;
 
-        if(!reader.fail()){
+    if(!reader.fail()){
 
-            while(!reader.eof()){
+        while(!reader.eof()){
 
-                reader>>leido;
-                posicion[contador]=utilidades::conversionStrInt(leido);
-                contador++;
+            reader>>leido;
+            posicion[contador]=utilidades::conversionStrInt(leido);
+            contador++;
 
-                if(contador==3){
-                    objects.append(new ObjetoMovCircular(posicion[0],posicion[1],posicion[2]));
-                    posicion[0]=0;posicion[1]=0;posicion[2]=0;
-                    contador=0;
-                }
+            if(contador==3){
+                objects.append(new ObjetoMovCircular(posicion[0],posicion[1],posicion[2]));
+                posicion[0]=0;posicion[1]=0;posicion[2]=0;
+                contador=0;
             }
         }
+    }
 
-        reader.close();
+    reader.close();
 }
 
 void baseDeDatos::getEnemigos(string fileName, QList<Enemigo *> &objects)
@@ -197,23 +197,23 @@ void baseDeDatos::getEnemigos(string fileName, QList<Enemigo *> &objects)
     string leido;
     int posicion[2],contador=0;
 
-        if(!reader.fail()){
+    if(!reader.fail()){
 
-            while(!reader.eof()){
+        while(!reader.eof()){
 
-                reader>>leido;
-                posicion[contador]=utilidades::conversionStrInt(leido);
-                contador++;
+            reader>>leido;
+            posicion[contador]=utilidades::conversionStrInt(leido);
+            contador++;
 
-                if(contador==2 ){
-                    objects.append(new Enemigo(posicion[0],posicion[1]));
-                    posicion[0]=0;posicion[1]=0;
-                    contador=0;
-                }
+            if(contador==2 ){
+                objects.append(new Enemigo(posicion[0],posicion[1]));
+                posicion[0]=0;posicion[1]=0;
+                contador=0;
             }
         }
+    }
 
-        reader.close();
+    reader.close();
 }
 
 void baseDeDatos::getResortes(string fileName, QList<resorte *> &objects)
@@ -223,26 +223,23 @@ void baseDeDatos::getResortes(string fileName, QList<resorte *> &objects)
     string leido;
     int posicion[3],contador=0;
 
-        if(!reader.fail()){
+    if(!reader.fail()){
 
-            while(!reader.eof()){
+        while(!reader.eof()){
 
-                reader>>leido;
-                posicion[contador]=utilidades::conversionStrInt(leido);
-                contador++;
+            reader>>leido;
+            posicion[contador]=utilidades::conversionStrInt(leido);
+            contador++;
 
-                if(contador==3){
-                    objects.append(new resorte(posicion[0],posicion[1],posicion[2]));
-                    posicion[0]=0;posicion[1]=0;posicion[2]=0;
-                    contador=0;
-                }
+            if(contador==3){
+                objects.append(new resorte(posicion[0],posicion[1],posicion[2]));
+                posicion[0]=0;posicion[1]=0;posicion[2]=0;
+                contador=0;
             }
         }
+    }
 
-        reader.close();
+    reader.close();
 }
 
-void baseDeDatos::modificarPartida(QString usuario, short mapa, float posx, float posy, short tiempo, short vidas)
-{
 
-}
