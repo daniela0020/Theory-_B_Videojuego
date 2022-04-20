@@ -80,6 +80,7 @@ private:
     bool colisionResortes(int &index);
     void cargarObjetos(string archivoMuros,string archivoBolas, string archivoResortes,string archivoEnemigos);
     void siguientePartida();
+    void creditos();
 
 signals:
 public slots:

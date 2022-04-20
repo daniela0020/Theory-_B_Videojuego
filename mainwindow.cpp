@@ -18,20 +18,12 @@ MainWindow::MainWindow(QWidget *parent)
 void MainWindow::menu()
 {
     scene->clear();
-
-    w2 = new QMainWindow(this);
-    w2->setGeometry(150,90,1000,550);
-    QGraphicsScene *scenen= new QGraphicsScene(0,0,1000,550);
-    graphicsView = new QGraphicsView(scenen,w2);
-    graphicsView->setGeometry(0,0,1000,550);
-    graphicsView->show();
-
     QGraphicsTextItem * titleText = new QGraphicsTextItem(QString("Theory B"));
     QFont titleFont("comic sans",50);
     titleText->setFont(titleFont);
 
     titleText->setPos(this->width()/2 -titleText->boundingRect().width()/2,150);
-    scenen->addItem(titleText);
+    scene->addItem(titleText);
 
     //Crear botones
 
@@ -39,18 +31,17 @@ void MainWindow::menu()
     playButton->setPos(this->width()/2-playButton->boundingRect().width()/2,275);
     Button * loadButton = new Button(QString("Cargar partida"));
     loadButton->setPos(this->width()/2-loadButton->boundingRect().width()/2,350);
-    scenen->addItem(playButton);
-    scenen->addItem(loadButton);
-    w2->show();
     //crear hilos
     connect(playButton,SIGNAL(clicked()),this,SLOT(ClickNuevaPartida()));
     connect(loadButton,SIGNAL(clicked()),this,SLOT(ClickcargarPartida()));
     //mostrar en escena
+    scene->addItem(playButton);
+    scene->addItem(loadButton);
 
 }
 void MainWindow::ClickNuevaPartida()
 {
-    if(w2->isActiveWindow())w2->close();
+
     w2 = new QMainWindow(this);
     w2->setGeometry(150,90,1000,550);
     graphicsView = new QGraphicsView(new QGraphicsScene(),w2);
@@ -73,7 +64,7 @@ void MainWindow::ClickNuevaPartida()
 
 void MainWindow::ClickcargarPartida()
 {
-    if(w2->isActiveWindow())w2->close();
+
     w2 = new QMainWindow(this);
     w2->setGeometry(150,90,1000,550);
     graphicsView = new QGraphicsView(new QGraphicsScene(),w2);
@@ -103,7 +94,7 @@ void MainWindow::NuevaPartida()
     scene->setBackgroundBrush(background);
 
 
-    player = new PersonajePrincipal(15,457);  
+    player = new PersonajePrincipal(149,377);
     scene->addItem(player);
 
     // Tiempo
@@ -201,7 +192,7 @@ void MainWindow::siguientePartida()
         archivoResortes = "resortes2.txt";
     }
 
-    player= new PersonajePrincipal(15,457);
+    player= new PersonajePrincipal(55,355);
     scene->addItem(player);
 
     // Tiempo
@@ -364,7 +355,7 @@ void MainWindow::verificarPosicionPersonaje()
         nivel++;
         siguientePartida();
     }
-    else{
+    else if(player->getPosx()>3200 && nivel==2){
         creditos();
     }
     if(player->getSaltando()){

@@ -18,7 +18,7 @@ float PersonajePrincipal::getVelocidad() const
     return velocidad;
 }
 
-PersonajePrincipal::PersonajePrincipal(float x, float y):objetoDinamico(x,y,25,25)
+PersonajePrincipal::PersonajePrincipal(float x, float y):objetoDinamico(x,y,30,50)
 {
     velocidadx = 0;
     velocidady = 0;
