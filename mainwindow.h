@@ -41,6 +41,7 @@ public:
     MainWindow(QWidget *parent = nullptr);
     void menu();
     int index;
+    short int nivel =0;
 //    ~MainWindow();
 
 private:

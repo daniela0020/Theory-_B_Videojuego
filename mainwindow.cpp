@@ -387,7 +387,7 @@ void MainWindow::inicializacionTimers()
 }
 void MainWindow::cargarObjetoEstatico(string nombreFichero, QList<objetoEstatico *> &lista)
 {
-
+    lista.clear();
     bbdd->getStaticObjects(nombreFichero,lista);
     for(objetoEstatico *ite:lista){
         scene->addItem(ite);
@@ -396,6 +396,7 @@ void MainWindow::cargarObjetoEstatico(string nombreFichero, QList<objetoEstatico
 
 void MainWindow::cargarBolas(string nombreFichero, QList<ObjetoMovCircular*> &listaBolas)
 {
+    listaBolas.clear();
     bbdd->getBolasFuego(nombreFichero,listaBolas);
     for(ObjetoMovCircular *ite:listaBolas){
         scene->addItem(ite);
@@ -404,6 +405,7 @@ void MainWindow::cargarBolas(string nombreFichero, QList<ObjetoMovCircular*> &li
 
 void MainWindow::cargarEnemigos(string nombreFichero, QList<Enemigo *> &listaEnemigos)
 {
+    listaEnemigos.clear();
     bbdd->getEnemigos(nombreFichero,listaEnemigos);
     for(Enemigo *ite:listaEnemigos){
         scene->addItem(ite);
@@ -412,6 +414,7 @@ void MainWindow::cargarEnemigos(string nombreFichero, QList<Enemigo *> &listaEne
 
 void MainWindow::cargarResortes(string nombreFichero, QList<resorte *> &listaResortes)
 {
+    listaResortes.clear();
     bbdd->getResortes(nombreFichero,listaResortes);
     for(resorte *ite:listaResortes){
         scene->addItem(ite);
