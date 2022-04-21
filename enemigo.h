@@ -5,6 +5,7 @@
 class Enemigo:public objetoDinamico
 {
     float k=0,W=0,angu=0,dT=0.01;
+    QPixmap *pixmap;
 public:
     Enemigo(float posx, float posy);
     QRectF boundingRect() const ;

@@ -94,7 +94,7 @@ void MainWindow::NuevaPartida()
     scene->setBackgroundBrush(background);
 
 
-    player = new PersonajePrincipal(149,377);
+    player = new PersonajePrincipal(30,355);
     scene->addItem(player);
 
     // Tiempo
@@ -181,7 +181,6 @@ void MainWindow::siguientePartida()
         archivoBolas = "bolasFuego2.txt";
         archivoEnemigos = "enemigos2.txt";
         archivoResortes = "resortes2.txt";
-
     }
 
     player= new PersonajePrincipal(20,432);
@@ -241,24 +240,24 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
 {
 
     if(evento->key()==Qt::Key_D){
-        player->MoveRight(10);
+        player->MoveRight(4);
         player->setDireccion(true);
     }
     if(player->getSaltando()){
         player->setParabolico(false);
     }
     if(colisionMuros(index)&& player->getPosy()>muros.at(index)->getPosy()){
-        player->MoveLeft(30);
+        player->MoveLeft(4);
     }
 
 
 
     else if(evento->key()==Qt::Key_A){
-        player->MoveLeft(30);
+        player->MoveLeft(4);
         player->setDireccion(false);
 
         if((colisionMuros(index)&& player->getPosy()>muros.at(index)->getPosy())){
-            player->MoveRight(30);
+            player->MoveRight(4);
         }
         if(player->getSaltando()){
             player->setParabolico(false);
@@ -289,7 +288,6 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
         }
         scene->addItem(bombas.back());
         bombas.back()->activarMovimiento(angulo->angulo);
-
 
 
     }
@@ -436,13 +434,11 @@ void MainWindow::inicializacionTimers()
     timers.append(new QTimer());
     timers.append(new QTimer());
 
-
-    for(int i=0;i<timers.size()-1;i++){
+    for(int i=0;i<timers.size();i++){
         timers.at(i)->start(10);
     }
 
     connect(timers.at(0),&QTimer::timeout,this,&MainWindow::verificarPosicionPersonaje);
-    connect(timers.at(1),&QTimer::timeout,this,&MainWindow::verificarPosicionBombas);
 }
 void MainWindow::cargarObjetoEstatico(string nombreFichero, QList<objetoEstatico *> &lista)
 {
@@ -494,12 +490,11 @@ bool MainWindow::colisionMuros(int &index)
     return colision;
 }
 
-bool MainWindow::colisionEnemigos(int &index)
+bool MainWindow::colisionEnemigos()
 {
     bool colision=false;
     for(Enemigo *ite:enemigos){
         if(player->collidesWithItem(ite)){
-            index=enemigos.indexOf(ite);
             colision=true;
             break;
         }
@@ -535,7 +530,6 @@ bool MainWindow::colisionResortes(int &index)
     return colision;
 }
 
-
 void MainWindow::cargarObjetos(string archivoMuros, string archivoBolas, string archivoResortes, string archivoEnemigos)
 {
     cargarObjetoEstatico(archivoMuros,muros);
@@ -567,33 +561,3 @@ void MainWindow::verificarPartidaGuardada()
     }
 
 }
-
-void MainWindow::verificarPosicionBombas()
-{
-    QList<Enemigo*>::iterator iteE;
-    QList<Bomba*>::iterator iteB;
-    for(iteE=enemigos.begin();iteE!=enemigos.end();iteE++){
-
-        for(iteB=bombas.begin();iteB!=bombas.end();iteB++){
-            if(((*iteB)->getPosy()>458 && nivel==1) || ((*iteB)->getPosy()>433 && nivel==2)){
-                //adiciona objeto fuego
-
-                scene->removeItem(*iteB);
-                bombas.erase(iteB);
-
-            }
-            else if((*iteE)->collidesWithItem((*iteB))){
-                  scene->removeItem(*iteE);
-                  enemigos.erase(iteE);
-                  scene->removeItem(*iteB);
-                  bombas.erase(iteB);
-
-            }
-
-        }
-
-    }
-
-}
-
-
