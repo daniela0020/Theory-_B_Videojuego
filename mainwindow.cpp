@@ -575,7 +575,7 @@ void MainWindow::evaluarPosicionBombas()
             bombas.erase(iteB);
             fuegos=fire->creacionExplosion(iteBomba->getPosx(),iteBomba->getPosy());
             scene->addItem(fuegos.at(0));
-            timers.at(2)->start(1000);
+            timers.at(2)->start(500);
             connect(timers.at(2),&QTimer::timeout,this,&MainWindow::temporizadorLLamas);
 
         }
@@ -589,7 +589,7 @@ void MainWindow::evaluarPosicionBombas()
                 bombas.erase(iteB);
                 fuegos=fire->creacionExplosion(iteBomba->getPosx(),iteBomba->getPosy());
                 scene->addItem(fuegos.at(0));
-                timers.at(2)->start(1000);
+                timers.at(2)->start(500);
                 connect(timers.at(2),&QTimer::timeout,this,&MainWindow::temporizadorLLamas);
 
             }
