@@ -9,6 +9,7 @@ ObjetoMovCircular::ObjetoMovCircular(float x,float y,float distancia)
     this->y = y;
     ancho = 10;
     alto = 10;
+    pixmap=new QPixmap(":/imagenes/Fuego.png");
     timer = new QTimer(this);
     connect(timer,&QTimer::timeout,this,&ObjetoMovCircular::actualizarPosicion);
 
@@ -23,8 +24,7 @@ QRectF ObjetoMovCircular::boundingRect() const
 
 void ObjetoMovCircular::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    painter->setBrush(Qt::red);
-    painter->drawEllipse(boundingRect());
+    painter->drawPixmap(-radio/2,-radio/2,*pixmap,columnas,filas,radio*2,radio*2);
 }
 
 void ObjetoMovCircular::actualizarPosicion()

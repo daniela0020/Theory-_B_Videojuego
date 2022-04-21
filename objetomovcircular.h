@@ -11,6 +11,7 @@ class ObjetoMovCircular:public objetoDinamico
 {
     float x,y;
     float angulo,radio,distancia;
+    QPixmap *pixmap;
 
 public:
     ObjetoMovCircular(float k,float h,float distancia);
