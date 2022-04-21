@@ -142,9 +142,8 @@ void MainWindow::partidaGuardada()
         archivoResortes = "resortes2.txt";
     }
 
-
-    player = new PersonajePrincipal(posx,posy);
     nivel=mapa;
+    player = new PersonajePrincipal(posx,posy);
     scene->addItem(player);
 
     // Tiempo
@@ -174,15 +173,7 @@ void MainWindow::siguientePartida()
 {
     scene->clear();
     string archivoMuros,archivoBolas,archivoResortes,archivoEnemigos;
-    if (nivel == 1){
-        QImage imgBackground(":imagenes/escenario-1.png");
-        QBrush background(imgBackground);
-        scene->setBackgroundBrush(background);
-        archivoMuros = "muros.txt";
-        archivoBolas = "bolasFuego.txt";
-        archivoEnemigos = "enemigos.txt";
-        archivoResortes = "resortes.txt";
-    }else if (nivel==2){
+    if (nivel == 2){
         QImage imgBackground(":imagenes/escenario-2.png");
         QBrush background(imgBackground);
         scene->setBackgroundBrush(background);
@@ -190,9 +181,10 @@ void MainWindow::siguientePartida()
         archivoBolas = "bolasFuego2.txt";
         archivoEnemigos = "enemigos2.txt";
         archivoResortes = "resortes2.txt";
+        nivel++;
     }
 
-    player= new PersonajePrincipal(55,355);
+    player= new PersonajePrincipal(90,360);
     scene->addItem(player);
 
     // Tiempo
@@ -324,14 +316,21 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
 
 void MainWindow::verificarPosicionPersonaje()
 {
-    if(player->getPosy()>458){
+    if(player->getPosy()>458 && nivel==1){//condicional para que no pase del piso
         player->setPosy(457);
         player->timer->stop();
         player->setSaltando(false);
         player->setParabolico(true);
 
     }
-    if(player->getPosx()<14){
+    if(player->getPosy()>433 && nivel==2){
+        player->setPosy(432);
+        player->timer->stop();
+        player->setSaltando(false);
+        player->setParabolico(true);
+    }
+
+    if(player->getPosx()<14){//condicional para que no pase de los limites del mapa
         player->MoveRight(30);
         if(player->getSaltando()){
             player->setParabolico(false);
@@ -351,14 +350,19 @@ void MainWindow::verificarPosicionPersonaje()
         angulo->setX(player->getPosx());
 
     }
-    if (player->getPosx()>3200 && nivel==1){
+
+
+    if (player->getPosx()>3200 && nivel==1){//cuando llega al final de la partida
         nivel++;
         siguientePartida();
     }
     else if(player->getPosx()>3200 && nivel==2){
         creditos();
     }
-    if(player->getSaltando()){
+
+
+
+    if(player->getSaltando()){//colisiones con los muros
 
         if(player->getSubiendo() && colisionMuros(index) && player->getPosy()>muros.at(index)->getPosy()){
 
@@ -372,11 +376,16 @@ void MainWindow::verificarPosicionPersonaje()
         }
 
     }
-    if(!player->getSaltando() && !colisionMuros(index) && player->getPosy()<457)
+    if(!player->getSaltando() && !colisionMuros(index) && player->getPosy()<457 && nivel==1)
     {
         player->setParabolico(false);
         player->activarSalto(0,40);
     }
+    else if(!player->getSaltando() && !colisionMuros(index) && player->getPosy()<433 && nivel==2){
+        player->setParabolico(false);
+        player->activarSalto(0,40);
+    }
+
     if(!player->getParabolico() && colisionMuros(index) && player->getPosy()<muros.at(index)->getPosy()){
         player->MoveUp(1);
         player->timer->stop();
@@ -384,8 +393,7 @@ void MainWindow::verificarPosicionPersonaje()
         player->setParabolico(true);
     }
 
-
-    if(colisionResortes(index) && !resortes.at(index)->getActivado()){
+    if(colisionResortes(index) && !resortes.at(index)->getActivado()){//colisiones con los objetos dinamicos
 
         resortes.at(index)->activarMovimiento();
         player->setSaltando(false);
@@ -395,14 +403,14 @@ void MainWindow::verificarPosicionPersonaje()
 
     }
 
-    if(colisionEnemigos() || colisionBolasFuego()){
-        if(vida->getVidas()>0){
-            vida->decrease();
-            player->establecerPosicion(15,457);
-        }else{
-            this->close();
-        }
-    }
+//    if(colisionEnemigos() || colisionBolasFuego()){
+//        if(vida->getVidas()>0){
+//            vida->decrease();
+//            player->establecerPosicion(15,457);
+//        }else{
+//            this->close();
+//        }
+//    }
     if(time->getTiempo()==0){
         this->close();
     }
