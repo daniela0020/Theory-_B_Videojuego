@@ -400,37 +400,38 @@ void MainWindow::verificarPosicionPersonaje()
 
     }
 
-//    if(colisionEnemigos() || colisionBolasFuego()){
-//        if(vida->getVidas()>0){
-//            vida->decrease();
-//            if(nivel==1){
-//                player->establecerPosicion(15,457);
-//            }else{
-//                player->establecerPosicion(20,432);
-//            }
-//        }else{
-//            this->close();
-//       }
-//    }
-//    if(time->getTiempo()==0){
-//        if(vida!=0){
-//            vida->decrease();
-//            if(nivel==1){
-//                player->establecerPosicion(15,457);
-//            }else{
-//                player->establecerPosicion(20,432);
-//            }
-//        }
-//        else{
-//            this->close();
-//        }
-//    }
+    if(colisionEnemigos() || colisionBolasFuego()){
+        if(vida->getVidas()>0){
+            vida->decrease();
+            if(nivel==1){
+                player->establecerPosicion(15,457);
+            }else{
+                player->establecerPosicion(20,432);
+            }
+        }else{
+            this->close();
+        }
+    }
+    if(time->getTiempo()==0){
+        if(vida!=0){
+            vida->decrease();
+            if(nivel==1){
+                player->establecerPosicion(15,457);
+            }else{
+                player->establecerPosicion(20,432);
+            }
+        }
+        else{
+            this->close();
+        }
+    }
 
 }
 
 
 void MainWindow::inicializacionTimers()
 {
+    timers.append(new QTimer());
     timers.append(new QTimer());
     timers.append(new QTimer());
 
@@ -572,6 +573,10 @@ void MainWindow::evaluarPosicionBombas()
         if((iteBomba->getPosy()>458 && nivel==1) || (iteBomba->getPosy()>433 && nivel==2)){
             scene->removeItem(iteBomba);
             bombas.erase(iteB);
+            fuegos=fire->creacionExplosion(iteBomba->getPosx(),iteBomba->getPosy());
+            scene->addItem(fuegos.at(0));
+            timers.at(2)->start(1000);
+            connect(timers.at(2),&QTimer::timeout,this,&MainWindow::temporizadorLLamas);
 
         }
         for(iteE=enemigos.begin();iteE!=enemigos.end();iteE++){
@@ -582,6 +587,10 @@ void MainWindow::evaluarPosicionBombas()
                 enemigos.erase(iteE);
                 scene->removeItem(iteBomba);
                 bombas.erase(iteB);
+                fuegos=fire->creacionExplosion(iteBomba->getPosx(),iteBomba->getPosy());
+                scene->addItem(fuegos.at(0));
+                timers.at(2)->start(1000);
+                connect(timers.at(2),&QTimer::timeout,this,&MainWindow::temporizadorLLamas);
 
             }
 
@@ -589,4 +598,17 @@ void MainWindow::evaluarPosicionBombas()
         iteB++;
 
     }
+}
+
+void MainWindow::temporizadorLLamas()
+{
+    QList<fuego*>::iterator ite;
+
+        for(ite=fuegos.begin();ite!=fuegos.end();ite++){
+            scene->removeItem(*ite);
+        }
+
+        fuegos.clear();
+        timers.at(2)->deleteLater();
+
 }

@@ -6,5 +6,6 @@
         <file>imagenes/Resorte.png</file>
         <file>imagenes/Enemigo.png</file>
         <file>imagenes/Fuego.png</file>
+        <file>imagenes/fire.png</file>
     </qresource>
 </RCC>

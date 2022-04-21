@@ -14,6 +14,7 @@ SOURCES += \
     bomba.cpp \
     button.cpp \
     enemigo.cpp \
+    fuego.cpp \
     main.cpp \
     mainwindow.cpp \
     objetodinamico.cpp \
@@ -32,6 +33,7 @@ HEADERS += \
     bomba.h \
     button.h \
     enemigo.h \
+    fuego.h \
     mainwindow.h \
     objetodinamico.h \
     objetoestatico.h \
