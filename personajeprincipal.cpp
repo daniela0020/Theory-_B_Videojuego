@@ -18,25 +18,32 @@ float PersonajePrincipal::getVelocidad() const
     return velocidad;
 }
 
-PersonajePrincipal::PersonajePrincipal(float x, float y):objetoDinamico(x,y,25,25)
+PersonajePrincipal::PersonajePrincipal(float x, float y):objetoDinamico(x,y,30,50)
 {
     velocidadx = 0;
     velocidady = 0;
     timer = new QTimer(this);
+    timer2= new QTimer(this);
+    pixmap=new QPixmap(":/imagenes/Personaje.png");
+    columnas = 0;
+    filas = 0;
+    timer2->start(100);
     connect(timer,&QTimer::timeout,this,&PersonajePrincipal::actualizarPosicion);
+    connect(timer2,&QTimer::timeout,this,&PersonajePrincipal::sprint);
+
 
 }
 
 QRectF PersonajePrincipal::boundingRect() const
 {
-    return QRectF(-ancho,-alto,ancho,alto) ;
+    return QRectF(-ancho/2,-alto/2,ancho,alto) ;
 }
 
 
 void PersonajePrincipal::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    painter->setBrush(Qt::green);
-    painter->drawRect(boundingRect());
+
+    painter->drawPixmap(-15,-25,*pixmap,columnas,filas,30,50);
 }
 
 void PersonajePrincipal::setAng(float newAng)
@@ -57,10 +64,12 @@ void PersonajePrincipal::actualizarPosicion()
     VelocidadInicial();
     if(parabolico){
           if(direccion){
+              filas = 100;
               posx = posx + (velocidadx*Dt);
               posy -= (velocidady*Dt) - (0.5*GR*Dt*Dt);
 
           }else{
+              filas = 150;
               posx -= (velocidadx*Dt);
               posy -= (velocidady*Dt) - (0.5*GR*Dt*Dt);
           }
@@ -68,14 +77,24 @@ void PersonajePrincipal::actualizarPosicion()
               subiendo=false;
           }
       }
-      else{
-          ang=0;
-          posy -= 15*(velocidady*Dt) - (0.5*GR*Dt*Dt);
+    else{
+         ang=0;
+         posy -= 15*(velocidady*Dt) - (0.5*GR*Dt*Dt);
 
-      }
+    }
 
-      setPos(posx,posy);
-      VelocidadInicial();
+    setPos(posx,posy);
+    VelocidadInicial();
+
+}
+
+void PersonajePrincipal::sprint()
+{
+    columnas+=30;
+    if(columnas>=90){
+        columnas=0;
+    }
+
 
 }
 
@@ -95,27 +114,26 @@ void PersonajePrincipal::activarSalto(float ang, float velocidad)
 void PersonajePrincipal::MoveRight(float velocidad)
 {
     this->posx+=velocidad;
+    filas = 0;
     setPos(posx,posy);
 }
 
 void PersonajePrincipal::MoveLeft(float velocidad)
 {
     this->posx-=velocidad;
-
+    filas = 49;
     setPos(posx,posy);
 }
 
 void PersonajePrincipal::MoveUp(float velocidad)
 {
     this->posy-=velocidad;
-
     setPos(posx,posy);
 }
 
 void PersonajePrincipal::MoveDown(float velocidad)
 {
     this->posy+=velocidad;
-
     setPos(posx,posy);
 }
 

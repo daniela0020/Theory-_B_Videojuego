@@ -93,7 +93,7 @@ void MainWindow::NuevaPartida()
     scene->setBackgroundBrush(background);
 
 
-    player = new PersonajePrincipal(15,457);  
+    player = new PersonajePrincipal(30,355);
     scene->addItem(player);
 
     // Tiempo
@@ -220,24 +220,24 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
 {
 
     if(evento->key()==Qt::Key_D){
-        player->MoveRight(10);
+        player->MoveRight(4);
         player->setDireccion(true);
     }
     if(player->getSaltando()){
         player->setParabolico(false);
     }
     if(colisionMuros(index)&& player->getPosy()>muros.at(index)->getPosy()){
-        player->MoveLeft(30);
+        player->MoveLeft(4);
     }
 
 
 
     else if(evento->key()==Qt::Key_A){
-        player->MoveLeft(30);
+        player->MoveLeft(4);
         player->setDireccion(false);
 
         if((colisionMuros(index)&& player->getPosy()>muros.at(index)->getPosy())){
-            player->MoveRight(30);
+            player->MoveRight(4);
         }
         if(player->getSaltando()){
             player->setParabolico(false);

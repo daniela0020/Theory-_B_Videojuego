@@ -15,6 +15,9 @@ private:
     float ang = 0; 
     float alturaMax=350;    
     bool direccion=true,parabolico=true,saltando=false,subiendo=false;
+    QPixmap *pixmap;
+    QTimer *timer2;
+
 
 public:
 
@@ -68,6 +71,7 @@ signals:
 public slots:
 
     void actualizarPosicion();
+    void sprint();
 
 
 };
