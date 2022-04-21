@@ -181,7 +181,6 @@ void MainWindow::siguientePartida()
         archivoBolas = "bolasFuego2.txt";
         archivoEnemigos = "enemigos2.txt";
         archivoResortes = "resortes2.txt";
-        nivel++;
     }
 
     player= new PersonajePrincipal(20,432);

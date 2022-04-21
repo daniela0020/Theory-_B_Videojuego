@@ -36,14 +36,14 @@ PersonajePrincipal::PersonajePrincipal(float x, float y):objetoDinamico(x,y,30,5
 
 QRectF PersonajePrincipal::boundingRect() const
 {
-    return QRectF(-ancho/2,-alto/2,ancho,alto) ;
+    return QRectF(-ancho,-alto,ancho,alto) ;
 }
 
 
 void PersonajePrincipal::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
 
-    painter->drawPixmap(-15,-25,*pixmap,columnas,filas,30,50);
+    painter->drawPixmap(-30,-50,*pixmap,columnas,filas,30,50);
 }
 
 void PersonajePrincipal::setAng(float newAng)

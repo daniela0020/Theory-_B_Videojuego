@@ -1,18 +1,13 @@
 #include "enemigo.h"
 
-Enemigo::Enemigo(float posx, float posy)
+Enemigo::Enemigo(float posx, float posy):objetoDinamico(posx,posy,25,25)
 {
-    this->posx=posx;
-    this->posy=posy;
-    this->ancho=25;
-    this->alto=25;
-
 
     this->k=300;
 
-    setPos(posx,posy);
-
     W=(k/Masa);
+
+    pixmap=new QPixmap(":/imagenes/Enemigo.png");
 
     timer = new QTimer();
 
@@ -33,6 +28,6 @@ QRectF Enemigo::boundingRect() const
 }
 void Enemigo::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    painter->setBrush(Qt::blue);
-    painter->drawRect(boundingRect());
+    painter->drawPixmap(-25,-25,*pixmap,columnas,filas,25,25);
+
 }

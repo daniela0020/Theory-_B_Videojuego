@@ -3,5 +3,7 @@
         <file>imagenes/escenario-1.png</file>
         <file>imagenes/escenario-2.png</file>
         <file>imagenes/Personaje.png</file>
+        <file>imagenes/Resorte.png</file>
+        <file>imagenes/Enemigo.png</file>
     </qresource>
 </RCC>
