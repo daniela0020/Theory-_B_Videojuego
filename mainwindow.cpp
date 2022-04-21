@@ -184,7 +184,7 @@ void MainWindow::siguientePartida()
         nivel++;
     }
 
-    player= new PersonajePrincipal(90,360);
+    player= new PersonajePrincipal(20,432);
     scene->addItem(player);
 
     // Tiempo
@@ -360,8 +360,6 @@ void MainWindow::verificarPosicionPersonaje()
         creditos();
     }
 
-
-
     if(player->getSaltando()){//colisiones con los muros
 
         if(player->getSubiendo() && colisionMuros(index) && player->getPosy()>muros.at(index)->getPosy()){
@@ -381,7 +379,7 @@ void MainWindow::verificarPosicionPersonaje()
         player->setParabolico(false);
         player->activarSalto(0,40);
     }
-    else if(!player->getSaltando() && !colisionMuros(index) && player->getPosy()<433 && nivel==2){
+    else if(!player->getSaltando() && !colisionMuros(index) && player->getPosy()<432 && nivel==2){
         player->setParabolico(false);
         player->activarSalto(0,40);
     }
@@ -406,14 +404,28 @@ void MainWindow::verificarPosicionPersonaje()
 //    if(colisionEnemigos() || colisionBolasFuego()){
 //        if(vida->getVidas()>0){
 //            vida->decrease();
-//            player->establecerPosicion(15,457);
+//            if(nivel==1){
+//                player->establecerPosicion(15,457);
+//            }else{
+//                player->establecerPosicion(20,432);
+//            }
 //        }else{
+//            this->close();
+//       }
+//    }
+//    if(time->getTiempo()==0){
+//        if(vida!=0){
+//            vida->decrease();
+//            if(nivel==1){
+//                player->establecerPosicion(15,457);
+//            }else{
+//                player->establecerPosicion(20,432);
+//            }
+//        }
+//        else{
 //            this->close();
 //        }
 //    }
-    if(time->getTiempo()==0){
-        this->close();
-    }
 
 }
 
