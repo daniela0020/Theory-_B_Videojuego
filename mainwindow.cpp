@@ -181,7 +181,7 @@ void MainWindow::siguientePartida()
         archivoBolas = "bolasFuego2.txt";
         archivoEnemigos = "enemigos2.txt";
         archivoResortes = "resortes2.txt";
-        nivel++;
+
     }
 
     player= new PersonajePrincipal(20,432);
@@ -289,6 +289,7 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
         }
         scene->addItem(bombas.back());
         bombas.back()->activarMovimiento(angulo->angulo);
+
 
 
     }
@@ -435,11 +436,13 @@ void MainWindow::inicializacionTimers()
     timers.append(new QTimer());
     timers.append(new QTimer());
 
-    for(int i=0;i<timers.size();i++){
+
+    for(int i=0;i<timers.size()-1;i++){
         timers.at(i)->start(10);
     }
 
     connect(timers.at(0),&QTimer::timeout,this,&MainWindow::verificarPosicionPersonaje);
+    connect(timers.at(1),&QTimer::timeout,this,&MainWindow::verificarPosicionBombas);
 }
 void MainWindow::cargarObjetoEstatico(string nombreFichero, QList<objetoEstatico *> &lista)
 {
@@ -491,11 +494,12 @@ bool MainWindow::colisionMuros(int &index)
     return colision;
 }
 
-bool MainWindow::colisionEnemigos()
+bool MainWindow::colisionEnemigos(int &index)
 {
     bool colision=false;
     for(Enemigo *ite:enemigos){
         if(player->collidesWithItem(ite)){
+            index=enemigos.indexOf(ite);
             colision=true;
             break;
         }
@@ -531,6 +535,7 @@ bool MainWindow::colisionResortes(int &index)
     return colision;
 }
 
+
 void MainWindow::cargarObjetos(string archivoMuros, string archivoBolas, string archivoResortes, string archivoEnemigos)
 {
     cargarObjetoEstatico(archivoMuros,muros);
@@ -562,3 +567,33 @@ void MainWindow::verificarPartidaGuardada()
     }
 
 }
+
+void MainWindow::verificarPosicionBombas()
+{
+    QList<Enemigo*>::iterator iteE;
+    QList<Bomba*>::iterator iteB;
+    for(iteE=enemigos.begin();iteE!=enemigos.end();iteE++){
+
+        for(iteB=bombas.begin();iteB!=bombas.end();iteB++){
+            if(((*iteB)->getPosy()>458 && nivel==1) || ((*iteB)->getPosy()>433 && nivel==2)){
+                //adiciona objeto fuego
+
+                scene->removeItem(*iteB);
+                bombas.erase(iteB);
+
+            }
+            else if((*iteE)->collidesWithItem((*iteB))){
+                  scene->removeItem(*iteE);
+                  enemigos.erase(iteE);
+                  scene->removeItem(*iteB);
+                  bombas.erase(iteB);
+
+            }
+
+        }
+
+    }
+
+}
+
+

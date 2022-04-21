@@ -27,6 +27,7 @@
 #include <QtWidgets/QWidget>
 
 
+
 using namespace std;
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -62,6 +63,7 @@ private:
     Tiempo * time;
     Vidas * vida;
     Angulo * angulo;
+
     QGraphicsView *graphicsView;
     QTextEdit *Usuario;
     QTextEdit *Contrasena;
@@ -75,12 +77,13 @@ private:
     void cargarEnemigos(string nombreFichero,QList<Enemigo*> &listaEnemigos);
     void cargarResortes(string nombreFichero,QList<resorte*> &listaResortes);
     bool colisionMuros(int &index);
-    bool colisionEnemigos();
+    bool colisionEnemigos(int &index);
     bool colisionBolasFuego();
     bool colisionResortes(int &index);
     void cargarObjetos(string archivoMuros,string archivoBolas, string archivoResortes,string archivoEnemigos);
     void siguientePartida();
     void creditos();
+
 
 signals:
 public slots:
@@ -92,6 +95,9 @@ public slots:
     void partidaGuardada();
     void verificarNuevaPartida();
     void verificarPartidaGuardada();
+    void verificarPosicionBombas();
+
+
 
 };
 
