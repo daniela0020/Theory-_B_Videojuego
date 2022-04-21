@@ -77,7 +77,7 @@ private:
     void cargarEnemigos(string nombreFichero,QList<Enemigo*> &listaEnemigos);
     void cargarResortes(string nombreFichero,QList<resorte*> &listaResortes);
     bool colisionMuros(int &index);
-    bool colisionEnemigos(int &index);
+    bool colisionEnemigos();
     bool colisionBolasFuego();
     bool colisionResortes(int &index);
     void cargarObjetos(string archivoMuros,string archivoBolas, string archivoResortes,string archivoEnemigos);
@@ -95,7 +95,7 @@ public slots:
     void partidaGuardada();
     void verificarNuevaPartida();
     void verificarPartidaGuardada();
-    void verificarPosicionBombas();
+    void evaluarPosicionBombas();
 
 
 

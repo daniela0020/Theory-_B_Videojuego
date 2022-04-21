@@ -2,12 +2,9 @@
     <qresource prefix="/">
         <file>imagenes/escenario-1.png</file>
         <file>imagenes/escenario-2.png</file>
-<<<<<<< HEAD
         <file>imagenes/fire.png</file>
-=======
         <file>imagenes/Personaje.png</file>
         <file>imagenes/Resorte.png</file>
         <file>imagenes/Enemigo.png</file>
->>>>>>> 6e4f90e7c3f73cdb8f48956309dea6df8224e4c0
     </qresource>
 </RCC>

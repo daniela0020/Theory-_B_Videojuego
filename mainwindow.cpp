@@ -439,6 +439,7 @@ void MainWindow::inicializacionTimers()
     }
 
     connect(timers.at(0),&QTimer::timeout,this,&MainWindow::verificarPosicionPersonaje);
+    connect(timers.at(1),&QTimer::timeout,this,&MainWindow::evaluarPosicionBombas);
 }
 void MainWindow::cargarObjetoEstatico(string nombreFichero, QList<objetoEstatico *> &lista)
 {
@@ -560,4 +561,32 @@ void MainWindow::verificarPartidaGuardada()
         ClickcargarPartida();
     }
 
+}
+
+void MainWindow::evaluarPosicionBombas()
+{
+    QList<Enemigo*>::iterator iteE=enemigos.begin();
+    QList<Bomba*>::iterator iteB=bombas.begin();
+
+    for(Bomba *iteBomba:bombas){
+        if((iteBomba->getPosy()>458 && nivel==1) || (iteBomba->getPosy()>433 && nivel==2)){
+            scene->removeItem(iteBomba);
+            bombas.erase(iteB);
+
+        }
+        for(iteE=enemigos.begin();iteE!=enemigos.end();iteE++){
+
+
+            if(iteBomba->collidesWithItem((*iteE))){
+                scene->removeItem(*iteE);
+                enemigos.erase(iteE);
+                scene->removeItem(iteBomba);
+                bombas.erase(iteB);
+
+            }
+
+        }
+        iteB++;
+
+    }
 }
