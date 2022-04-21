@@ -25,6 +25,7 @@
 #include <QPushButton>
 #include <QTextEdit>
 #include <QtWidgets/QWidget>
+#include<fuego.h>
 
 
 
@@ -59,6 +60,8 @@ private:
     QList<objetoEstatico *> muros;
     QList<QTimer *> timers;
     QList <Bomba *> bombas;
+    QList<fuego*> fuegos;
+    fuego *fire;
     Ui_Ventana * ventana;
     Tiempo * time;
     Vidas * vida;
@@ -96,6 +99,8 @@ public slots:
     void verificarNuevaPartida();
     void verificarPartidaGuardada();
     void evaluarPosicionBombas();
+    void temporizadorLLamas();
+
 
 
 
