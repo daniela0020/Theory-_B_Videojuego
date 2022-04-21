@@ -11,8 +11,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     scene=new QGraphicsScene(0,0,969,500);
 
-
-
     ui->graphicsView->setScene(scene);
 
 }
@@ -39,11 +37,13 @@ void MainWindow::menu()
     //mostrar en escena
     scene->addItem(playButton);
     scene->addItem(loadButton);
+
 }
 void MainWindow::ClickNuevaPartida()
 {
+
     w2 = new QMainWindow(this);
-    w2->setGeometry(100,100,1000,550);
+    w2->setGeometry(150,90,1000,550);
     graphicsView = new QGraphicsView(new QGraphicsScene(),w2);
     graphicsView->setGeometry(0,0,1000,550);
     graphicsView->show();
@@ -64,8 +64,9 @@ void MainWindow::ClickNuevaPartida()
 
 void MainWindow::ClickcargarPartida()
 {
+
     w2 = new QMainWindow(this);
-    w2->setGeometry(0,0,1000,550);
+    w2->setGeometry(150,90,1000,550);
     graphicsView = new QGraphicsView(new QGraphicsScene(),w2);
     graphicsView->setGeometry(0,0,1000,550);
     graphicsView->show();
@@ -141,9 +142,8 @@ void MainWindow::partidaGuardada()
         archivoResortes = "resortes2.txt";
     }
 
-
-    player = new PersonajePrincipal(posx,posy);
     nivel=mapa;
+    player = new PersonajePrincipal(posx,posy);
     scene->addItem(player);
 
     // Tiempo
@@ -173,15 +173,7 @@ void MainWindow::siguientePartida()
 {
     scene->clear();
     string archivoMuros,archivoBolas,archivoResortes,archivoEnemigos;
-    if (nivel == 1){
-        QImage imgBackground(":imagenes/escenario-1.png");
-        QBrush background(imgBackground);
-        scene->setBackgroundBrush(background);
-        archivoMuros = "muros.txt";
-        archivoBolas = "bolasFuego.txt";
-        archivoEnemigos = "enemigos.txt";
-        archivoResortes = "resortes.txt";
-    }else if (nivel==2){
+    if (nivel == 2){
         QImage imgBackground(":imagenes/escenario-2.png");
         QBrush background(imgBackground);
         scene->setBackgroundBrush(background);
@@ -189,9 +181,10 @@ void MainWindow::siguientePartida()
         archivoBolas = "bolasFuego2.txt";
         archivoEnemigos = "enemigos2.txt";
         archivoResortes = "resortes2.txt";
+        nivel++;
     }
 
-    player= new PersonajePrincipal(15,457);
+    player= new PersonajePrincipal(20,432);
     scene->addItem(player);
 
     // Tiempo
@@ -213,7 +206,35 @@ void MainWindow::siguientePartida()
     scene->addItem(angulo);
 
 
-   cargarObjetos(archivoMuros,archivoBolas,archivoResortes,archivoEnemigos);
+    cargarObjetos(archivoMuros,archivoBolas,archivoResortes,archivoEnemigos);
+}
+
+void MainWindow::creditos()
+{
+    w2 = new QMainWindow(this);
+    w2->setGeometry(150,90,1000,550);
+    QGraphicsScene *scenen= new QGraphicsScene(0,0,1000,550);
+    graphicsView = new QGraphicsView(scenen,w2);
+    graphicsView->setGeometry(0,0,1000,550);
+    graphicsView->show();
+
+    QGraphicsTextItem * titleText = new QGraphicsTextItem(QString("Theory B"));
+    QGraphicsTextItem * desarrollador1 = new QGraphicsTextItem(QString("Daniela Alvares Bernal"));
+    QGraphicsTextItem * desarrollador2 = new QGraphicsTextItem(QString("Edisson Chamorro Coral"));
+    QFont titleFont("comic sans",50);
+    QFont devFont("comic sans",20);
+    titleText->setFont(titleFont);
+    desarrollador1->setFont(devFont);
+    desarrollador2->setFont(devFont);
+
+    titleText->setPos(this->width()/2 -titleText->boundingRect().width()/2,150);
+    desarrollador1->setPos(this->width()/2 -titleText->boundingRect().width()/2,250);
+    desarrollador2->setPos(this->width()/2 -titleText->boundingRect().width()/2,290);
+    scenen->addItem(titleText);
+    scenen->addItem(desarrollador1);
+    scenen->addItem(desarrollador2);
+    if(w2->isHidden())this->close();
+
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *evento)
@@ -283,10 +304,9 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
         }
     }
     else if(evento->key()==Qt::Key_Escape){
-
-
         bbdd->setPartida(Usuario->toPlainText(),Contrasena->toPlainText(),nivel, player->getPosx(), player->getPosy(), time->getTiempo(),vida->getVidas());
-        menu();
+        //menu();
+        this->close();
     }
 
 }
@@ -296,14 +316,21 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
 
 void MainWindow::verificarPosicionPersonaje()
 {
-    if(player->getPosy()>458){
+    if(player->getPosy()>458 && nivel==1){//condicional para que no pase del piso
         player->setPosy(457);
         player->timer->stop();
         player->setSaltando(false);
         player->setParabolico(true);
 
     }
-    if(player->getPosx()<14){
+    if(player->getPosy()>433 && nivel==2){
+        player->setPosy(432);
+        player->timer->stop();
+        player->setSaltando(false);
+        player->setParabolico(true);
+    }
+
+    if(player->getPosx()<14){//condicional para que no pase de los limites del mapa
         player->MoveRight(30);
         if(player->getSaltando()){
             player->setParabolico(false);
@@ -323,11 +350,17 @@ void MainWindow::verificarPosicionPersonaje()
         angulo->setX(player->getPosx());
 
     }
-    if (player->getPosx()>3200){
+
+
+    if (player->getPosx()>3200 && nivel==1){//cuando llega al final de la partida
         nivel++;
         siguientePartida();
     }
-    if(player->getSaltando()){
+    else if(player->getPosx()>3200 && nivel==2){
+        creditos();
+    }
+
+    if(player->getSaltando()){//colisiones con los muros
 
         if(player->getSubiendo() && colisionMuros(index) && player->getPosy()>muros.at(index)->getPosy()){
 
@@ -341,20 +374,24 @@ void MainWindow::verificarPosicionPersonaje()
         }
 
     }
-    if(!player->getSaltando() && !colisionMuros(index) && player->getPosy()<457)
+    if(!player->getSaltando() && !colisionMuros(index) && player->getPosy()<457 && nivel==1)
     {
         player->setParabolico(false);
         player->activarSalto(0,40);
     }
-    else if(!player->getParabolico() && colisionMuros(index) && player->getPosy()<muros.at(index)->getPosy()){
+    else if(!player->getSaltando() && !colisionMuros(index) && player->getPosy()<432 && nivel==2){
+        player->setParabolico(false);
+        player->activarSalto(0,40);
+    }
+
+    if(!player->getParabolico() && colisionMuros(index) && player->getPosy()<muros.at(index)->getPosy()){
         player->MoveUp(1);
         player->timer->stop();
         player->setSaltando(false);
         player->setParabolico(true);
     }
 
-
-    if(colisionResortes(index) && !resortes.at(index)->getActivado()){
+    if(colisionResortes(index) && !resortes.at(index)->getActivado()){//colisiones con los objetos dinamicos
 
         resortes.at(index)->activarMovimiento();
         player->setSaltando(false);
@@ -364,14 +401,31 @@ void MainWindow::verificarPosicionPersonaje()
 
     }
 
-    //    if(colisionEnemigos() || colisionBolasFuego()){
-    //        if(vida->getVidas()>0){
-    //            vida->decrease();
-    //            player->establecerPosicion(15,457);
-    //        }else{
-    //            this->menu();
-    //        }
-    //    }
+//    if(colisionEnemigos() || colisionBolasFuego()){
+//        if(vida->getVidas()>0){
+//            vida->decrease();
+//            if(nivel==1){
+//                player->establecerPosicion(15,457);
+//            }else{
+//                player->establecerPosicion(20,432);
+//            }
+//        }else{
+//            this->close();
+//       }
+//    }
+//    if(time->getTiempo()==0){
+//        if(vida!=0){
+//            vida->decrease();
+//            if(nivel==1){
+//                player->establecerPosicion(15,457);
+//            }else{
+//                player->establecerPosicion(20,432);
+//            }
+//        }
+//        else{
+//            this->close();
+//        }
+//    }
 
 }
 
@@ -508,12 +562,3 @@ void MainWindow::verificarPartidaGuardada()
     }
 
 }
-
-
-
-
-
-
-
-
-
