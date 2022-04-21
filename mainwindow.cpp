@@ -219,7 +219,6 @@ void MainWindow::siguientePartida()
 
 void MainWindow::creditos()
 {
-    this->close();
     w2 = new QMainWindow(this);
     w2->setGeometry(150,90,1000,550);
     QGraphicsScene *scenen= new QGraphicsScene(0,0,1000,550);
@@ -242,6 +241,7 @@ void MainWindow::creditos()
     scenen->addItem(titleText);
     scenen->addItem(desarrollador1);
     scenen->addItem(desarrollador2);
+    if(w2->isHidden())this->close();
 
 }
 
