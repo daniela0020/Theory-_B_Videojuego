@@ -18,6 +18,9 @@ MainWindow::MainWindow(QWidget *parent)
 void MainWindow::menu()
 {
     scene->clear();
+    QImage imgBackground(":imagenes/fondo-inicio.png");
+    QBrush background(imgBackground);
+    scene->setBackgroundBrush(background);
     QGraphicsTextItem * titleText = new QGraphicsTextItem(QString("Theory B"));
     QFont titleFont("comic sans",50);
     titleText->setFont(titleFont);
@@ -46,6 +49,9 @@ void MainWindow::ClickNuevaPartida()
     w2->setGeometry(150,90,1000,550);
     graphicsView = new QGraphicsView(new QGraphicsScene(),w2);
     graphicsView->setGeometry(0,0,1000,550);
+    QImage imgBackground(":imagenes/fondo-inicioVentanas.png");
+    QBrush background(imgBackground);
+    graphicsView->setBackgroundBrush(background);
     graphicsView->show();
 
     Usuario = new QTextEdit(w2);

@@ -7,5 +7,7 @@
         <file>imagenes/Enemigo.png</file>
         <file>imagenes/Fuego.png</file>
         <file>imagenes/fire.png</file>
+        <file>imagenes/fondo-inicio.png</file>
+        <file>imagenes/fondo-inicioVentanas.png</file>
     </qresource>
 </RCC>
