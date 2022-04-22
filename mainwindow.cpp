@@ -412,7 +412,7 @@ void MainWindow::verificarPosicionPersonaje()
             this->close();
         }
     }
-    if(time->getTiempo()==0 || vida->getVidas()==0){
+    if(time->getTiempo()==0){
         if(vida!=0){
             vida->decrease();
             if(nivel==1){
@@ -424,6 +424,9 @@ void MainWindow::verificarPosicionPersonaje()
         else{
             this->close();
         }
+    }
+    if( vida->getVidas()==0){
+        this->close();
     }
 
 }
