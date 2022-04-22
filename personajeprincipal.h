@@ -1,62 +1,81 @@
 #ifndef PERSONAJEPRINCIPAL_H
 #define PERSONAJEPRINCIPAL_H
-#include <QPainter>
-#include <QGraphicsItem>
-#include <QTimer>
-#include <math.h>
-#define MASA 70
-#define GR -9.8
-#define dt 0.1
 
-class PersonajePrincipal:public QObject, public QGraphicsItem
+#include <objetodinamico.h>
+#define GR 9.8
+#define Dt 0.1
+
+class PersonajePrincipal:public objetoDinamico
 {
 
 private:
-    float posicionx;
-    float posiciony;
     float velocidadx;
     float velocidady;
-    float velInicialX;
-    float velInicialY;
-    //float aceleracionx;
-    //float aceleraciony;
-    float velocidadPaso = 30;
-    //float dt;
-    int ancho;
-    int alto;
-    int vidas;
-    QTimer *time;
-    int filas=0, columnas=0;
+    float velocidad = 50;
+    float ang = 0; 
+    float alturaMax=350;    
+    bool direccion=true,parabolico=true,saltando=false,subiendo=false;
+    QPixmap *pixmap;
+    QTimer *timer2;
+
+
 public:
+
     PersonajePrincipal(float x, float y);
 
-    QRectF boundingRect() const;
+    QRectF boundingRect() const ;
+    
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr);
-
-    void MoveRight();
-    void MoveLeft();
-
-    void setPosy(float newPosx);
-
-    void setPosx(float newPosy);
-
-    float getPosx() const;
-
-    float ang = 45;
-
-    float getPosy() const;
 
     void actualizarImagen();
 
-    void activarMovimiento();
+    void VelocidadInicial();
 
-    void VelocidadInicial(int angulo);
+    void setAng(float newAng);
+
+    void setDireccion(bool newDerecha);
+
+    bool getDireccion();
+
+    void setVelocidad(float newVelocidadPaso);
+
+    float getVelocidad() const;
+
+    void MoveRight(float pixeles);
+    
+    void MoveLeft(float pixeles);
+    
+    void MoveUp(float pixeles);
+    
+    void MoveDown(float pixeles);
+
+    void activarSalto(float angulo, float velocidad);
+
+    bool getParabolico() const;
+    void setParabolico(bool newParabolico);
+
+    bool getSaltando() const;
+    void setSaltando(bool newSaltando);
+
+    int getVidas() const;
+    void setVidas(int newVidas);
+
+    bool getSubiendo() const;
+    void setSubiendo(bool newSubiendo);
+
+    void establecerPosicion(float posx,float posy);
+
+
+signals:
 
 public slots:
 
-    void actualizarSalto();
+    void actualizarPosicion();
+    void sprint();
 
 
 };
+
+
 
 #endif // PERSONAJEPRINCIPAL_H

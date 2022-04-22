@@ -1,21 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <author/>
- <comment/>
- <exportmacro/>
  <class>Ventana</class>
- <widget name="Ventana" class="QWidget">
+ <widget class="QWidget" name="Ventana">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>932</width>
+    <height>500</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <widget class="QGraphicsView" name="graphicsView">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1000</width>
+     <height>550</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="Usuario">
+   <property name="geometry">
+    <rect>
+     <x>330</x>
+     <y>130</y>
+     <width>221</width>
+     <height>41</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="Contrasena">
+   <property name="geometry">
+    <rect>
+     <x>330</x>
+     <y>190</y>
+     <width>221</width>
+     <height>41</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton">
+   <property name="geometry">
+    <rect>
+     <x>410</x>
+     <y>270</y>
+     <width>80</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Play</string>
+   </property>
+  </widget>
  </widget>
- <pixmapfunction/>
+ <resources/>
  <connections/>
 </ui>

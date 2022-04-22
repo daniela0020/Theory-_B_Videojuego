@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>798</width>
-    <height>729</height>
+    <width>932</width>
+    <height>550</height>
    </rect>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>1000</width>
+    <height>550</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
@@ -18,9 +24,9 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>10</y>
-      <width>790</width>
-      <height>651</height>
+      <y>0</y>
+      <width>1000</width>
+      <height>550</height>
      </rect>
     </property>
    </widget>
@@ -30,7 +36,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>798</width>
+     <width>932</width>
      <height>25</height>
     </rect>
    </property>

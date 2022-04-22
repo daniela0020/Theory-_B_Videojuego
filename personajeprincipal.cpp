@@ -1,107 +1,175 @@
 #include "personajeprincipal.h"
 
-PersonajePrincipal::PersonajePrincipal(float x, float y)
+void PersonajePrincipal::setDireccion(bool isDerecha)
 {
-    posicionx = x;
-    posiciony = y;
+    direccion = isDerecha;
+}
+bool PersonajePrincipal::getDireccion(){
+    return direccion;
+}
+
+void PersonajePrincipal::setVelocidad(float newVelocidad)
+{
+    velocidad += newVelocidad;
+}
+
+float PersonajePrincipal::getVelocidad() const
+{
+    return velocidad;
+}
+
+PersonajePrincipal::PersonajePrincipal(float x, float y):objetoDinamico(x,y,30,50)
+{
     velocidadx = 0;
     velocidady = 0;
-    velInicialX = 0;
-    velInicialY = 4;
-    //float aceleracionx;
-    //float aceleraciony;
-    ancho = 25;
-    alto = 25;
-    vidas = 3;
-
-    time = new QTimer(this);
-    //connect(time,SIGNAL(timeout()), this, SLOT(actualizarSalto()));
-    connect(time,&QTimer::timeout,this,&PersonajePrincipal::actualizarSalto);
-    setPos(posicionx,posiciony);
-}
-
-float PersonajePrincipal::getPosx() const
-{
-    return posicionx;
-}
-/*
-void PersonajePrincipal::setPosx(float newPosx)
-{
-    posicionx = newPosx;
-}
-*/
-float PersonajePrincipal::getPosy() const
-{
-    return posiciony;
-}
-
-void PersonajePrincipal::setPosy(float newPosy)
-{
-    posiciony = newPosy;
-}
+    timer = new QTimer(this);
+    timer2= new QTimer(this);
+    pixmap=new QPixmap(":/imagenes/Personaje.png");
+    columnas = 0;
+    filas = 0;
+    timer2->start(100);
+    connect(timer,&QTimer::timeout,this,&PersonajePrincipal::actualizarPosicion);
+    connect(timer2,&QTimer::timeout,this,&PersonajePrincipal::sprint);
 
 
-void PersonajePrincipal::MoveRight()
-{
-    this->posicionx+=velocidadPaso;
-    //filas=0;
-    setPos(posicionx,posiciony);
-}
-
-void PersonajePrincipal::MoveLeft()
-{
-    this->posicionx-=velocidadPaso;
-    //filas=39;
-    setPos(posicionx,posiciony);
 }
 
 QRectF PersonajePrincipal::boundingRect() const
 {
-      return QRect(-ancho, -alto, ancho, alto);//return QRect(-ancho/2, -alto/2, ancho, alto);
+    return QRectF(-ancho,-alto,ancho,alto) ;
 }
+
 
 void PersonajePrincipal::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    // Hay que cambiar esto cuando tengamos el sprite
-    painter->setBrush(Qt::black);
-    painter->drawRect(boundingRect());
+
+    painter->drawPixmap(-30,-50,*pixmap,columnas,filas,30,50);
 }
 
-void PersonajePrincipal::VelocidadInicial(int angulo)
+void PersonajePrincipal::setAng(float newAng)
 {
-    velInicialX = velocidadPaso * cos(angulo);
-    velInicialY = velocidadPaso * sin(angulo);
-    velocidady = velInicialY;
+    ang = newAng;
 }
 
-void PersonajePrincipal::actualizarSalto()
+void PersonajePrincipal::VelocidadInicial()
 {
+    velocidadx=velocidad*cos(ang);
+    velocidady=velocidad*sin(ang)-GR*Dt;
+    velocidad=sqrt((velocidadx*velocidadx)+(velocidady*velocidady));
+    ang=atan2(velocidady,velocidadx);
+}
 
-    velocidadx = velInicialX;
-    velocidady = velocidady + (GR*dt);
+void PersonajePrincipal::actualizarPosicion()
+{
+    VelocidadInicial();
+    if(parabolico){
+          if(direccion){
+              filas = 100;
+              posx = posx + (velocidadx*Dt);
+              posy -= (velocidady*Dt) - (0.5*GR*Dt*Dt);
 
-    posicionx = posicionx + (velocidadx*dt);
-    posiciony = posiciony + (velocidady*dt) - (0.5*GR*(dt*dt));
+          }else{
+              filas = 150;
+              posx -= (velocidadx*Dt);
+              posy -= (velocidady*Dt) - (0.5*GR*Dt*Dt);
+          }
+          if(posy<alturaMax){
+              subiendo=false;
+          }
+      }
+    else{
+         ang=0;
+         posy -= 15*(velocidady*Dt) - (0.5*GR*Dt*Dt);
 
-    setPos(posicionx,posiciony);
+    }
 
-    if(posiciony < 310){
-        time->stop();
-        posiciony = 310;
+    setPos(posx,posy);
+    VelocidadInicial();
+
+}
+
+void PersonajePrincipal::sprint()
+{
+    columnas+=30;
+    if(columnas>=90){
+        columnas=0;
     }
 
 
 }
 
-void PersonajePrincipal::activarMovimiento()
+void PersonajePrincipal::activarSalto(float ang, float velocidad)
 {
-
-    time->start(10);
+    if(!saltando){
+        this->ang = ang*(PI/180);
+        this->velocidad=velocidad;
+        VelocidadInicial();
+        timer->start(10);
+        saltando=true;
+        subiendo=true;
+    }
 
 }
 
-void PersonajePrincipal::actualizarImagen()
+void PersonajePrincipal::MoveRight(float velocidad)
 {
-
+    this->posx+=velocidad;
+    filas = 0;
+    setPos(posx,posy);
 }
+
+void PersonajePrincipal::MoveLeft(float velocidad)
+{
+    this->posx-=velocidad;
+    filas = 49;
+    setPos(posx,posy);
+}
+
+void PersonajePrincipal::MoveUp(float velocidad)
+{
+    this->posy-=velocidad;
+    setPos(posx,posy);
+}
+
+void PersonajePrincipal::MoveDown(float velocidad)
+{
+    this->posy+=velocidad;
+    setPos(posx,posy);
+}
+
+bool PersonajePrincipal::getParabolico() const
+{
+    return parabolico;
+}
+
+void PersonajePrincipal::setParabolico(bool newParabolico)
+{
+    parabolico = newParabolico;
+}
+
+bool PersonajePrincipal::getSaltando() const
+{
+    return saltando;
+}
+
+void PersonajePrincipal::setSaltando(bool newSaltando)
+{
+    saltando = newSaltando;
+}
+
+bool PersonajePrincipal::getSubiendo() const
+{
+    return subiendo;
+}
+
+void PersonajePrincipal::establecerPosicion(float posx, float posy)
+{
+    this->posx=posx;
+    this->posy=posy;
+    setPos(posx,posy);
+}
+
+
+
+
 
