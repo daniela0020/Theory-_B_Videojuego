@@ -10,6 +10,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     scene=new QGraphicsScene(0,0,969,500);
+    scene2=new QGraphicsScene(0,0,969,500);
 
     ui->graphicsView->setScene(scene);
 
@@ -49,9 +50,10 @@ void MainWindow::ClickNuevaPartida()
     w2->setGeometry(150,90,1000,550);
     graphicsView = new QGraphicsView(new QGraphicsScene(),w2);
     graphicsView->setGeometry(0,0,1000,550);
+    graphicsView->setScene(scene2);
     QImage imgBackground(":imagenes/fondo-inicioVentanas.png");
     QBrush background(imgBackground);
-    graphicsView->setBackgroundBrush(background);
+    scene2->setForegroundBrush(background);
     graphicsView->show();
 
     Usuario = new QTextEdit(w2);
@@ -75,6 +77,10 @@ void MainWindow::ClickcargarPartida()
     w2->setGeometry(150,90,1000,550);
     graphicsView = new QGraphicsView(new QGraphicsScene(),w2);
     graphicsView->setGeometry(0,0,1000,550);
+    graphicsView->setScene(scene2);
+    QImage imgBackground(":imagenes/fondo-inicioVentanas.png");
+    QBrush background(imgBackground);
+    scene2->setForegroundBrush(background);
     graphicsView->show();
 
     Usuario = new QTextEdit(w2);
